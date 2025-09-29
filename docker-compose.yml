@@ -48,6 +48,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /etc/ssl/certs/zn-01.com.crt:/etc/ssl/certs/zn-01.com.crt:ro
       - /etc/ssl/private/zn-01.com.key:/etc/ssl/private/zn-01.com.key:ro
+      - /etc/ssl/dhparam.pem:/etc/ssl/dhparam.pem:ro
     restart: unless-stopped
 
   certbot:
