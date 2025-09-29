@@ -1,0 +1,105 @@
+# Environment Variables and Sensitive Data
+.env
+.env.local
+.env.production
+.env.staging
+.env.development
+.env*.local
+*.env
+secrets/
+config/secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Backup files
+backup/
+*.backup
+*.bak
+
+# SSL certificates and private keys (NEVER commit these!)
+*.key
+*.crt
+*.pem
+*.p12
+*.pfx
+ssl/
+certs/
+private/
+*.cert
+*.ca-bundle
+
+# Database credentials and connection files
+database.conf
+db.conf
+mongodb.conf
+*.db.config
+
+# Authentication and API keys
+api_keys.txt
+*.api
+*.secret
+auth_config.*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Flutter build files
+frontend/zero_world/build/
+frontend/zero_world/.dart_tool/
+frontend/zero_world/.flutter-plugins
+frontend/zero_world/.flutter-plugins-dependencies
+frontend/zero_world/.packages
+frontend/zero_world/pubspec.lock
+
+# Docker volumes and data
+mongodb_data/
+postgres_data/
+
+# Test files and temporary content
+auth_test.html
+test_*.html
+**/test_*
+*.test
+temp_*
