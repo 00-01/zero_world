@@ -26,18 +26,52 @@ def startup_db_client():
     print(f"Connected to the {settings.MONGODB_DATABASE} database!")
 
     try:
+        # Test database connection first
+        app.database.command("ismaster")
+        print("Database connection verified successfully!")
+        
+        # Create indexes only if we have proper permissions
         app.database["users"].create_index("email", unique=True)
         app.database["chats"].create_index("participants_hash", unique=True)
         app.database["messages"].create_index([("chat_id", 1), ("created_at", 1)])
         app.database["listings"].create_index([("is_active", 1), ("created_at", -1)])
         app.database["community_posts"].create_index([("created_at", -1)])
         app.database["community_posts"].create_index("tags")
+        print("Database indexes created successfully!")
     except OperationFailure as exc:
-        print(f"Index creation warning: {exc}")
+        print(f"Database operation note: {exc}. Application will continue with existing indexes.")
+    except Exception as exc:
+        print(f"Database connection warning: {exc}. Some features may be limited.")
 
 @app.on_event("shutdown")
 def shutdown_db_client():
     app.mongodb_client.close()
+
+# Health check endpoint
+@app.get("/")
+def read_root():
+    return {
+        "status": "online",
+        "message": "Zero World API is running",
+        "version": "1.0.0"
+    }
+
+@app.get("/health")
+def health_check():
+    try:
+        # Test database connection
+        app.database.command("ping")
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "timestamp": str(app.database.command("serverStatus")["localTime"])
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e)
+        }
 
 app.include_router(auth.router)
 app.include_router(listings.router)
