@@ -1,0 +1,8 @@
+# Simplified Dockerfile - uses pre-built web files
+FROM nginx:latest
+
+# Copy the pre-built web app
+COPY build/web /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
