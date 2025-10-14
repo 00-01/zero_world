@@ -25,8 +25,7 @@ class BusinessService {
   /// Get business metrics
   Future<BusinessMetrics> getMetrics({String period = 'month'}) async {
     try {
-      final uri = Uri.parse('$baseUrl/business/metrics')
-          .replace(queryParameters: {'period': period});
+      final uri = Uri.parse('$baseUrl/business/metrics').replace(queryParameters: {'period': period});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -49,8 +48,7 @@ class BusinessService {
       if (startDate != null) queryParams['start_date'] = startDate.toIso8601String();
       if (endDate != null) queryParams['end_date'] = endDate.toIso8601String();
 
-      final uri = Uri.parse('$baseUrl/business/sales-history')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/business/sales-history').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -251,8 +249,7 @@ class BusinessService {
         if (search != null) 'search': search,
         if (status != null) 'status': status,
       };
-      final uri = Uri.parse('$baseUrl/business/customers')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/business/customers').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -370,8 +367,7 @@ class BusinessService {
         'limit': limit.toString(),
         if (status != null) 'status': status,
       };
-      final uri = Uri.parse('$baseUrl/business/invoices')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/business/invoices').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -511,8 +507,7 @@ class BusinessService {
   /// Get analytics data
   Future<AnalyticsData> getAnalytics({String period = 'week'}) async {
     try {
-      final uri = Uri.parse('$baseUrl/business/analytics')
-          .replace(queryParameters: {'period': period});
+      final uri = Uri.parse('$baseUrl/business/analytics').replace(queryParameters: {'period': period});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -528,8 +523,7 @@ class BusinessService {
   /// Get traffic sources
   Future<Map<String, int>> getTrafficSources({String period = 'week'}) async {
     try {
-      final uri = Uri.parse('$baseUrl/business/analytics/traffic')
-          .replace(queryParameters: {'period': period});
+      final uri = Uri.parse('$baseUrl/business/analytics/traffic').replace(queryParameters: {'period': period});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -545,8 +539,7 @@ class BusinessService {
   /// Get device breakdown
   Future<Map<String, int>> getDeviceBreakdown({String period = 'week'}) async {
     try {
-      final uri = Uri.parse('$baseUrl/business/analytics/devices')
-          .replace(queryParameters: {'period': period});
+      final uri = Uri.parse('$baseUrl/business/analytics/devices').replace(queryParameters: {'period': period});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {

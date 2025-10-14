@@ -28,7 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Timer? _typingTimer;
   String _currentUserId = 'current_user_123'; // TODO: Get from auth
   Message? _replyToMessage;
-  
+
   // WebSocket
   final WebSocketService _wsService = WebSocketManager().service;
   StreamSubscription<Message>? _messageSubscription;
@@ -53,7 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _cleanupWebSocketListeners();
     super.dispose();
   }
-  
+
   /// Setup WebSocket listeners
   void _setupWebSocketListeners() {
     // Listen for new messages
@@ -63,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
           _messages.add(message);
         });
         _scrollToBottom();
-        
+
         // Send read receipt
         _wsService.sendReadReceipt(
           conversationId: widget.conversation.id,
@@ -71,13 +71,13 @@ class _ChatScreenState extends State<ChatScreen> {
         );
       }
     });
-    
+
     // Listen for typing indicators
     _typingSubscription = _wsService.typing.listen((data) {
       if (data['conversation_id'] == widget.conversation.id) {
         final userId = data['user_id'] as String;
         final isTyping = data['is_typing'] as bool;
-        
+
         if (userId != _currentUserId) {
           setState(() {
             final member = widget.conversation.members[userId];
@@ -99,12 +99,12 @@ class _ChatScreenState extends State<ChatScreen> {
         }
       }
     });
-    
+
     // Listen for message status updates
     _statusSubscription = _wsService.status.listen((data) {
       final action = data['action'] as String?;
       final messageId = data['message_id'] as String;
-      
+
       if (action == 'delete') {
         // Handle delete
         setState(() {
@@ -155,26 +155,26 @@ class _ChatScreenState extends State<ChatScreen> {
         }
       }
     });
-    
+
     // Listen for reactions
     _reactionSubscription = _wsService.reactions.listen((data) {
       final messageId = data['message_id'] as String;
       final userId = data['user_id'] as String;
       final emoji = data['emoji'] as String;
       final action = data['action'] as String;
-      
+
       setState(() {
         final index = _messages.indexWhere((m) => m.id == messageId);
         if (index != -1) {
           final message = _messages[index];
           final reactions = Map<String, String>.from(message.reactions ?? {});
-          
+
           if (action == 'add') {
             reactions[userId] = emoji;
           } else {
             reactions.remove(userId);
           }
-          
+
           _messages[index] = message.copyWith(
             reactions: reactions.isEmpty ? null : reactions,
           );
@@ -182,7 +182,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
   }
-  
+
   /// Cleanup WebSocket listeners
   void _cleanupWebSocketListeners() {
     _messageSubscription?.cancel();
@@ -265,7 +265,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (_wsService.isConnected) {
         _wsService.sendMessage(tempMessage);
       }
-      
+
       // Also send via REST API as backup
       // TODO: Replace with actual API call
       await Future.delayed(const Duration(seconds: 1));
@@ -353,24 +353,24 @@ class _ChatScreenState extends State<ChatScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _messages.isEmpty
-                ? _buildEmptyState()
-                : ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _messages.length,
-                    itemBuilder: (context, index) {
-                      final message = _messages[index];
-                      final showDateHeader = _shouldShowDateHeader(index);
-                      final showSenderName = _shouldShowSenderName(index);
+                    ? _buildEmptyState()
+                    : ListView.builder(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.all(16),
+                        itemCount: _messages.length,
+                        itemBuilder: (context, index) {
+                          final message = _messages[index];
+                          final showDateHeader = _shouldShowDateHeader(index);
+                          final showSenderName = _shouldShowSenderName(index);
 
-                      return Column(
-                        children: [
-                          if (showDateHeader) _buildDateHeader(message.createdAt),
-                          _buildMessageBubble(message, showSenderName: showSenderName),
-                        ],
-                      );
-                    },
-                  ),
+                          return Column(
+                            children: [
+                              if (showDateHeader) _buildDateHeader(message.createdAt),
+                              _buildMessageBubble(message, showSenderName: showSenderName),
+                            ],
+                          );
+                        },
+                      ),
           ),
 
           // Message input
@@ -501,8 +501,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   color: isDeleted
                       ? Colors.grey.shade200
                       : isMe
-                      ? Colors.blue
-                      : Colors.grey.shade200,
+                          ? Colors.blue
+                          : Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Column(

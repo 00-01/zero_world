@@ -183,7 +183,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> with SingleTickerPr
 
   Widget _buildTrending() {
     final trendingPosts = _posts.where((p) => p.likeCount > 100).toList();
-    
+
     return ListView.builder(
       itemCount: trendingPosts.length,
       itemBuilder: (context, index) => _buildPostCard(trendingPosts[index]),
@@ -264,9 +264,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> with SingleTickerPr
                       )
                     : null,
               ),
-              child: story.userPhoto == null
-                  ? const Icon(Icons.person, size: 30)
-                  : null,
+              child: story.userPhoto == null ? const Icon(Icons.person, size: 30) : null,
             ),
             const SizedBox(height: 4),
             SizedBox(
@@ -303,12 +301,8 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> with SingleTickerPr
                 );
               },
               child: CircleAvatar(
-                backgroundImage: post.userPhoto != null
-                    ? NetworkImage(post.userPhoto!)
-                    : null,
-                child: post.userPhoto == null
-                    ? const Icon(Icons.person)
-                    : null,
+                backgroundImage: post.userPhoto != null ? NetworkImage(post.userPhoto!) : null,
+                child: post.userPhoto == null ? const Icon(Icons.person) : null,
               ),
             ),
             title: Row(

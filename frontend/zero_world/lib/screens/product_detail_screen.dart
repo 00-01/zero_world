@@ -30,7 +30,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Future<void> _loadReviews() async {
     setState(() => _isLoadingReviews = true);
-    
+
     try {
       // TODO: Replace with actual API call
       await Future.delayed(const Duration(seconds: 1));
@@ -50,7 +50,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     try {
       // TODO: Implement actual add to cart
       await Future.delayed(const Duration(milliseconds: 500));
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -127,9 +127,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildImageGallery() {
-    final images = widget.product.images.isNotEmpty
-        ? widget.product.images
-        : ['https://via.placeholder.com/400'];
+    final images = widget.product.images.isNotEmpty ? widget.product.images : ['https://via.placeholder.com/400'];
 
     return Column(
       children: [
@@ -166,9 +164,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _selectedImageIndex == index
-                        ? Colors.blue
-                        : Colors.grey.shade300,
+                    color: _selectedImageIndex == index ? Colors.blue : Colors.grey.shade300,
                   ),
                 );
               }),
@@ -193,16 +189,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           // Rating
           Row(
             children: [
               Row(
                 children: List.generate(5, (index) {
                   return Icon(
-                    index < widget.product.rating.floor()
-                        ? Icons.star
-                        : Icons.star_border,
+                    index < widget.product.rating.floor() ? Icons.star : Icons.star_border,
                     size: 20,
                     color: Colors.amber,
                   );
@@ -216,7 +210,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          
+
           // Price
           Row(
             children: [
@@ -265,7 +259,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          
+
           // Condition
           Row(
             children: [
@@ -277,7 +271,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
           const SizedBox(height: 8),
-          
+
           // Availability
           Row(
             children: [
@@ -288,9 +282,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                widget.product.isAvailable
-                    ? 'In Stock (${widget.product.quantity} available)'
-                    : 'Out of Stock',
+                widget.product.isAvailable ? 'In Stock (${widget.product.quantity} available)' : 'Out of Stock',
                 style: TextStyle(
                   color: widget.product.isAvailable ? Colors.green : Colors.red,
                   fontWeight: FontWeight.w600,
@@ -301,7 +293,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           const SizedBox(height: 16),
           const Divider(),
           const SizedBox(height: 16),
-          
+
           // Description
           const Text(
             'Description',
@@ -337,12 +329,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundImage: widget.product.sellerPhoto != null
-                ? NetworkImage(widget.product.sellerPhoto!)
-                : null,
-            child: widget.product.sellerPhoto == null
-                ? Text(widget.product.sellerName[0].toUpperCase())
-                : null,
+            backgroundImage: widget.product.sellerPhoto != null ? NetworkImage(widget.product.sellerPhoto!) : null,
+            child: widget.product.sellerPhoto == null ? Text(widget.product.sellerName[0].toUpperCase()) : null,
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -449,14 +437,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
           const SizedBox(height: 12),
-          
-          if (_isLoadingReviews)
-            const Center(child: CircularProgressIndicator())
-          else if (_reviews.isEmpty)
-            const Text('No reviews yet. Be the first to review!')
-          else
-            ..._reviews.take(3).map((review) => _buildReviewCard(review)).toList(),
-          
+          if (_isLoadingReviews) const Center(child: CircularProgressIndicator()) else if (_reviews.isEmpty) const Text('No reviews yet. Be the first to review!') else ..._reviews.take(3).map((review) => _buildReviewCard(review)).toList(),
           const SizedBox(height: 12),
           OutlinedButton.icon(
             onPressed: () {
@@ -488,12 +469,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: review.userPhoto != null
-                      ? NetworkImage(review.userPhoto!)
-                      : null,
-                  child: review.userPhoto == null
-                      ? Text(review.userName[0].toUpperCase())
-                      : null,
+                  backgroundImage: review.userPhoto != null ? NetworkImage(review.userPhoto!) : null,
+                  child: review.userPhoto == null ? Text(review.userName[0].toUpperCase()) : null,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -507,9 +484,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Row(
                         children: List.generate(5, (index) {
                           return Icon(
-                            index < review.rating.floor()
-                                ? Icons.star
-                                : Icons.star_border,
+                            index < review.rating.floor() ? Icons.star : Icons.star_border,
                             size: 14,
                             color: Colors.amber,
                           );
@@ -583,9 +558,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.remove),
-                    onPressed: _quantity > 1
-                        ? () => setState(() => _quantity--)
-                        : null,
+                    onPressed: _quantity > 1 ? () => setState(() => _quantity--) : null,
                   ),
                   Text(
                     _quantity.toString(),
@@ -596,15 +569,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.add),
-                    onPressed: _quantity < widget.product.quantity
-                        ? () => setState(() => _quantity++)
-                        : null,
+                    onPressed: _quantity < widget.product.quantity ? () => setState(() => _quantity++) : null,
                   ),
                 ],
               ),
             ),
             const SizedBox(width: 12),
-            
+
             // Add to cart button
             Expanded(
               child: OutlinedButton.icon(
@@ -617,7 +588,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             const SizedBox(width: 12),
-            
+
             // Buy now button
             Expanded(
               child: ElevatedButton(

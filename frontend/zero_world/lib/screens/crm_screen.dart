@@ -148,12 +148,8 @@ class _CRMScreenState extends State<CRMScreen> with SingleTickerProviderStateMix
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: customer.photo != null
-              ? NetworkImage(customer.photo!)
-              : null,
-          child: customer.photo == null
-              ? Text(customer.name[0].toUpperCase())
-              : null,
+          backgroundImage: customer.photo != null ? NetworkImage(customer.photo!) : null,
+          child: customer.photo == null ? Text(customer.name[0].toUpperCase()) : null,
         ),
         title: Row(
           children: [
@@ -311,9 +307,7 @@ class _CRMScreenState extends State<CRMScreen> with SingleTickerProviderStateMix
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: customer.photo != null
-                          ? NetworkImage(customer.photo!)
-                          : null,
+                      backgroundImage: customer.photo != null ? NetworkImage(customer.photo!) : null,
                       child: customer.photo == null
                           ? Text(
                               customer.name[0].toUpperCase(),

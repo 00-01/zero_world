@@ -64,18 +64,18 @@ class WebSocketService {
   final String baseUrl;
   final Duration reconnectDelay;
   final int maxReconnectAttempts;
-  
+
   // Connection
   WebSocketChannel? _channel;
   WebSocketState _state = WebSocketState.disconnected;
   int _reconnectAttempts = 0;
   Timer? _reconnectTimer;
   Timer? _heartbeatTimer;
-  
+
   // Authentication
   String? _authToken;
   String? _userId;
-  
+
   // Stream controllers
   final StreamController<Message> _messageController = StreamController<Message>.broadcast();
   final StreamController<Map<String, dynamic>> _typingController = StreamController<Map<String, dynamic>>.broadcast();
@@ -85,7 +85,7 @@ class WebSocketService {
   final StreamController<Map<String, dynamic>> _reactionController = StreamController<Map<String, dynamic>>.broadcast();
   final StreamController<Map<String, dynamic>> _readReceiptController = StreamController<Map<String, dynamic>>.broadcast();
   final StreamController<Map<String, dynamic>> _conversationUpdateController = StreamController<Map<String, dynamic>>.broadcast();
-  
+
   // Getters for streams
   Stream<Message> get messages => _messageController.stream;
   Stream<Map<String, dynamic>> get typing => _typingController.stream;
@@ -95,7 +95,7 @@ class WebSocketService {
   Stream<Map<String, dynamic>> get reactions => _reactionController.stream;
   Stream<Map<String, dynamic>> get readReceipts => _readReceiptController.stream;
   Stream<Map<String, dynamic>> get conversationUpdates => _conversationUpdateController.stream;
-  
+
   WebSocketState get currentState => _state;
   bool get isConnected => _state == WebSocketState.connected;
 
@@ -122,7 +122,7 @@ class WebSocketService {
     try {
       final uri = Uri.parse('$baseUrl?token=$authToken&user_id=$userId');
       _channel = WebSocketChannel.connect(uri);
-      
+
       // Listen to messages
       _channel!.stream.listen(
         _handleMessage,
@@ -130,11 +130,11 @@ class WebSocketService {
         onDone: _handleDisconnect,
         cancelOnError: false,
       );
-      
+
       _updateState(WebSocketState.connected);
       _reconnectAttempts = 0;
       _startHeartbeat();
-      
+
       print('WebSocket: Connected successfully');
     } catch (e) {
       print('WebSocket: Connection error: $e');
@@ -323,50 +323,50 @@ class WebSocketService {
         case WebSocketEventType.message:
           _handleNewMessage(event.data);
           break;
-        
+
         case WebSocketEventType.typing:
           _typingController.add(event.data);
           break;
-        
+
         case WebSocketEventType.presence:
           _presenceController.add(event.data);
           break;
-        
+
         case WebSocketEventType.messageStatus:
           _statusController.add(event.data);
           break;
-        
+
         case WebSocketEventType.reaction:
           _reactionController.add(event.data);
           break;
-        
+
         case WebSocketEventType.readReceipt:
           _readReceiptController.add(event.data);
           break;
-        
+
         case WebSocketEventType.conversationUpdate:
           _conversationUpdateController.add(event.data);
           break;
-        
+
         case WebSocketEventType.deleteMessage:
           _statusController.add({
             'action': 'delete',
             ...event.data,
           });
           break;
-        
+
         case WebSocketEventType.editMessage:
           _statusController.add({
             'action': 'edit',
             ...event.data,
           });
           break;
-        
+
         case WebSocketEventType.call:
           // TODO: Handle call events
           print('WebSocket: Call event received: ${event.data}');
           break;
-        
+
         case WebSocketEventType.error:
           print('WebSocket: Error event: ${event.data}');
           break;
@@ -398,7 +398,7 @@ class WebSocketService {
     print('WebSocket: Disconnected');
     _updateState(WebSocketState.disconnected);
     _heartbeatTimer?.cancel();
-    
+
     // Try to reconnect if not manually disconnected
     if (_authToken != null && _userId != null) {
       _scheduleReconnect();
@@ -415,9 +415,9 @@ class WebSocketService {
 
     _reconnectAttempts++;
     _updateState(WebSocketState.reconnecting);
-    
+
     print('WebSocket: Reconnecting in ${reconnectDelay.inSeconds}s (attempt $_reconnectAttempts/$maxReconnectAttempts)');
-    
+
     _reconnectTimer?.cancel();
     _reconnectTimer = Timer(reconnectDelay, () {
       if (_authToken != null && _userId != null) {

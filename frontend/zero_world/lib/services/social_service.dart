@@ -34,8 +34,7 @@ class SocialService {
         'limit': limit.toString(),
         if (userId != null) 'user_id': userId,
       };
-      final uri = Uri.parse('$baseUrl/social/feed')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/social/feed').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -52,8 +51,7 @@ class SocialService {
   /// Get trending posts
   Future<List<Post>> getTrendingPosts({int limit = 10}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/trending')
-          .replace(queryParameters: {'limit': limit.toString()});
+      final uri = Uri.parse('$baseUrl/social/trending').replace(queryParameters: {'limit': limit.toString()});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -83,8 +81,7 @@ class SocialService {
         'page': page.toString(),
         'limit': limit.toString(),
       };
-      final uri = Uri.parse('$baseUrl/social/search')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/social/search').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -225,8 +222,7 @@ class SocialService {
   /// Get comments for a post
   Future<List<Comment>> getComments(String postId, {int page = 1, int limit = 50}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/posts/$postId/comments')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/posts/$postId/comments').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });
@@ -352,8 +348,7 @@ class SocialService {
   /// Get bookmarked posts
   Future<List<Post>> getBookmarks({int page = 1, int limit = 20}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/bookmarks')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/bookmarks').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });
@@ -376,8 +371,7 @@ class SocialService {
   Future<List<Story>> getStories({String? userId}) async {
     try {
       final queryParams = userId != null ? {'user_id': userId} : null;
-      final uri = Uri.parse('$baseUrl/social/stories')
-          .replace(queryParameters: queryParams);
+      final uri = Uri.parse('$baseUrl/social/stories').replace(queryParameters: queryParams);
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -457,8 +451,7 @@ class SocialService {
   /// Get user posts
   Future<List<Post>> getUserPosts(String userId, {int page = 1, int limit = 20}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/users/$userId/posts')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/users/$userId/posts').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });
@@ -510,8 +503,7 @@ class SocialService {
   /// Get followers
   Future<List<UserProfile>> getFollowers(String userId, {int page = 1, int limit = 50}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/users/$userId/followers')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/users/$userId/followers').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });
@@ -531,8 +523,7 @@ class SocialService {
   /// Get following
   Future<List<UserProfile>> getFollowing(String userId, {int page = 1, int limit = 50}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/users/$userId/following')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/users/$userId/following').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });
@@ -679,8 +670,7 @@ class SocialService {
   /// Get trending hashtags
   Future<List<String>> getTrendingHashtags({int limit = 10}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/hashtags/trending')
-          .replace(queryParameters: {'limit': limit.toString()});
+      final uri = Uri.parse('$baseUrl/social/hashtags/trending').replace(queryParameters: {'limit': limit.toString()});
       final response = await http.get(uri, headers: _headers);
 
       if (response.statusCode == 200) {
@@ -697,8 +687,7 @@ class SocialService {
   /// Get posts by hashtag
   Future<List<Post>> getPostsByHashtag(String hashtag, {int page = 1, int limit = 20}) async {
     try {
-      final uri = Uri.parse('$baseUrl/social/hashtags/$hashtag/posts')
-          .replace(queryParameters: {
+      final uri = Uri.parse('$baseUrl/social/hashtags/$hashtag/posts').replace(queryParameters: {
         'page': page.toString(),
         'limit': limit.toString(),
       });

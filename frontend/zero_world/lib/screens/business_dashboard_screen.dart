@@ -15,7 +15,7 @@ class BusinessDashboardScreen extends StatefulWidget {
 
 class _BusinessDashboardScreenState extends State<BusinessDashboardScreen> {
   final BusinessService _businessService = BusinessService();
-  
+
   BusinessMetrics? _metrics;
   bool _isLoading = false;
   String _selectedPeriod = 'month';

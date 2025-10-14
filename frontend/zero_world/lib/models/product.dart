@@ -146,9 +146,7 @@ class Product {
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String? ?? 'USD',
       category: ProductCategory.values.byName(json['category'] as String),
-      condition: json['condition'] != null
-          ? ProductCondition.values.byName(json['condition'] as String)
-          : ProductCondition.newItem,
+      condition: json['condition'] != null ? ProductCondition.values.byName(json['condition'] as String) : ProductCondition.newItem,
       images: json['images'] != null ? List<String>.from(json['images'] as List) : [],
       videos: json['videos'] != null ? List<String>.from(json['videos'] as List) : [],
       specifications: json['specifications'] as Map<String, dynamic>?,

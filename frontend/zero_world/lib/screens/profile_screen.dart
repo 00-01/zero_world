@@ -115,9 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               colors: [Colors.blue.shade400, Colors.purple.shade400],
             ),
           ),
-          child: _profile!.coverPhoto != null
-              ? Image.network(_profile!.coverPhoto!, fit: BoxFit.cover)
-              : null,
+          child: _profile!.coverPhoto != null ? Image.network(_profile!.coverPhoto!, fit: BoxFit.cover) : null,
         ),
 
         // Profile Photo and Info
@@ -138,12 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   ),
                   child: CircleAvatar(
                     radius: 40,
-                    backgroundImage: _profile!.profilePhoto != null
-                        ? NetworkImage(_profile!.profilePhoto!)
-                        : null,
-                    child: _profile!.profilePhoto == null
-                        ? const Icon(Icons.person, size: 40)
-                        : null,
+                    backgroundImage: _profile!.profilePhoto != null ? NetworkImage(_profile!.profilePhoto!) : null,
+                    child: _profile!.profilePhoto == null ? const Icon(Icons.person, size: 40) : null,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -422,7 +416,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       itemBuilder: (context, index) {
         final post = mediaPosts[index];
         final hasVideo = post.videos.isNotEmpty;
-        
+
         return GestureDetector(
           onTap: () {
             // TODO: Open media viewer
@@ -484,10 +478,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   }
 
   String _formatDate(DateTime date) {
-    final months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return '${months[date.month - 1]} ${date.year}';
   }
 

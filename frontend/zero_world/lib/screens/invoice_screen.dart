@@ -327,8 +327,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> with SingleTickerProvider
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                if (invoice.customerEmail != null)
-                  Text(invoice.customerEmail!),
+                if (invoice.customerEmail != null) Text(invoice.customerEmail!),
                 const SizedBox(height: 24),
 
                 // Dates
@@ -413,8 +412,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> with SingleTickerProvider
                 Column(
                   children: [
                     _buildTotalRow('Subtotal', invoice.subtotal),
-                    if (invoice.discount > 0)
-                      _buildTotalRow('Discount', -invoice.discount, isNegative: true),
+                    if (invoice.discount > 0) _buildTotalRow('Discount', -invoice.discount, isNegative: true),
                     _buildTotalRow('Tax', invoice.tax),
                     const Divider(thickness: 2),
                     _buildTotalRow(
@@ -468,8 +466,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> with SingleTickerProvider
                         ),
                         const SizedBox(height: 8),
                         Text('Paid on: ${_formatDate(invoice.paidAt!)}'),
-                        if (invoice.paymentMethod != null)
-                          Text('Method: ${invoice.paymentMethod}'),
+                        if (invoice.paymentMethod != null) Text('Method: ${invoice.paymentMethod}'),
                       ],
                     ),
                   ),
@@ -674,9 +671,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> with SingleTickerProvider
         subtotal: ((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0,
         tax: (((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0) * 0.1,
         discount: index % 4 == 0 ? 50.0 : 0,
-        total: ((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0 + 
-               (((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0) * 0.1 - 
-               (index % 4 == 0 ? 50.0 : 0),
+        total: ((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0 + (((index % 5) + 1) * (100.0 + (index * 10)) + ((index % 3) + 1) * 150.0) * 0.1 - (index % 4 == 0 ? 50.0 : 0),
         status: status,
         notes: 'Thank you for your business!',
         paymentMethod: status == 'paid' ? 'Credit Card' : null,

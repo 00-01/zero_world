@@ -16,7 +16,7 @@ class MarketplaceScreen extends StatefulWidget {
 class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTickerProviderStateMixin {
   final CommerceService _commerceService = CommerceService();
   final TextEditingController _searchController = TextEditingController();
-  
+
   late TabController _tabController;
   List<Product> _products = [];
   List<Product> _filteredProducts = [];
@@ -40,7 +40,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
 
   Future<void> _loadProducts() async {
     setState(() => _isLoading = true);
-    
+
     try {
       // TODO: Replace with actual API call
       await Future.delayed(const Duration(seconds: 1));
@@ -63,8 +63,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
         _filteredProducts = _products;
       } else {
         _filteredProducts = _products.where((product) {
-          return product.title.toLowerCase().contains(query.toLowerCase()) ||
-                 product.description.toLowerCase().contains(query.toLowerCase());
+          return product.title.toLowerCase().contains(query.toLowerCase()) || product.description.toLowerCase().contains(query.toLowerCase());
         }).toList();
       }
     });
@@ -99,10 +98,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
         children: [
           // Search bar
           _buildSearchBar(),
-          
+
           // Category filter
           _buildCategoryFilter(),
-          
+
           // Products content
           Expanded(
             child: TabBarView(
@@ -231,7 +230,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
 
   Widget _buildFeaturedTab() {
     final featured = _products.where((p) => p.isFeatured).toList();
-    
+
     if (featured.isEmpty) {
       return const Center(child: Text('No featured products'));
     }
@@ -253,7 +252,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
 
   Widget _buildDealsTab() {
     final deals = _products.where((p) => p.hasDiscount).toList();
-    
+
     if (deals.isEmpty) {
       return const Center(child: Text('No deals available'));
     }
@@ -339,7 +338,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> with SingleTicker
                 ],
               ),
             ),
-            
+
             // Product info
             Padding(
               padding: const EdgeInsets.all(8),

@@ -15,7 +15,7 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final SocialService _socialService = SocialService();
   final TextEditingController _contentController = TextEditingController();
-  
+
   PostType _selectedType = PostType.text;
   PostVisibility _selectedVisibility = PostVisibility.public;
   String? _location;
@@ -378,7 +378,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   Future<void> _createPost() async {
     final content = _contentController.text.trim();
-    
+
     if (content.isEmpty && _selectedImages.isEmpty && _selectedVideos.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Post cannot be empty')),
@@ -391,7 +391,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     try {
       // In production: call _socialService.createPost()
       await Future.delayed(const Duration(seconds: 1)); // Simulate API call
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Post created successfully!')),
