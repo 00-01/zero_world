@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../config/api_config.dart';
 import '../models/chat.dart';
 import '../models/community.dart';
 import '../models/listing.dart';
@@ -20,13 +21,17 @@ class ApiException implements Exception {
 }
 
 class ApiService {
-  ApiService({http.Client? client})
+  ApiService({http.Client? client, String? baseUrl})
       : httpClient = client ?? http.Client(),
-        baseUrl = const String.fromEnvironment(
-          'API_BASE_URL',
-          defaultValue: 'https://www.zn-01.com/api',
-        );
+        baseUrl = baseUrl ?? ApiConfig.baseUrl {
+    // Print configuration on first initialization (debug mode only)
+    if (kDebugMode && !_configPrinted) {
+      ApiConfig.printConfig();
+      _configPrinted = true;
+    }
+  }
 
+  static bool _configPrinted = false;
   final http.Client httpClient;
   final String baseUrl;
 
