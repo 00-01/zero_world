@@ -10,10 +10,10 @@ class AppThemeManager extends ChangeNotifier {
   static const String _fontSizeKey = 'font_size_scale';
 
   // Theme modes
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode _themeMode = ThemeMode.dark; // Default to dark mode
 
-  // Customization options
-  Color _accentColor = Colors.blue;
+  // Customization options with vibrant default color
+  Color _accentColor = const Color(0xFF2196F3); // Vibrant blue as default
   LayoutDensity _layoutDensity = LayoutDensity.comfortable;
   double _fontSizeScale = 1.0;
 
@@ -23,16 +23,18 @@ class AppThemeManager extends ChangeNotifier {
   LayoutDensity get layoutDensity => _layoutDensity;
   double get fontSizeScale => _fontSizeScale;
 
-  // Predefined color schemes
+  // Predefined vibrant color schemes
   static const List<AppColorScheme> colorSchemes = [
-    AppColorScheme('Blue', Colors.blue),
-    AppColorScheme('Green', Colors.green),
-    AppColorScheme('Purple', Colors.purple),
-    AppColorScheme('Orange', Colors.orange),
-    AppColorScheme('Pink', Colors.pink),
-    AppColorScheme('Teal', Colors.teal),
-    AppColorScheme('Red', Colors.red),
-    AppColorScheme('Indigo', Colors.indigo),
+    AppColorScheme('Blue', Color(0xFF2196F3)),        // Vibrant blue
+    AppColorScheme('Green', Color(0xFF4CAF50)),       // Vibrant green
+    AppColorScheme('Purple', Color(0xFF9C27B0)),      // Vibrant purple
+    AppColorScheme('Orange', Color(0xFFFF9800)),      // Vibrant orange
+    AppColorScheme('Pink', Color(0xFFE91E63)),        // Vibrant pink
+    AppColorScheme('Teal', Color(0xFF00BCD4)),        // Vibrant teal
+    AppColorScheme('Red', Color(0xFFF44336)),         // Vibrant red
+    AppColorScheme('Indigo', Color(0xFF3F51B5)),      // Vibrant indigo
+    AppColorScheme('Cyan', Color(0xFF00E5FF)),        // Vibrant cyan
+    AppColorScheme('Lime', Color(0xFFCDDC39)),        // Vibrant lime
   ];
 
   AppThemeManager() {
@@ -140,32 +142,58 @@ class AppThemeManager extends ChangeNotifier {
     );
   }
 
-  // Build dark theme
+  // Build dark theme with darker backgrounds and vibrant colors
   ThemeData getDarkTheme() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorSchemeSeed: _accentColor,
+      
+      // Darker background colors
+      scaffoldBackgroundColor: const Color(0xFF0A0A0A), // Very dark background
+      
+      // Custom color scheme with vibrant colors
+      colorScheme: ColorScheme.dark(
+        primary: _accentColor,
+        secondary: _accentColor,
+        surface: const Color(0xFF1A1A1A), // Dark surface for cards/containers
+        background: const Color(0xFF0A0A0A), // Very dark background
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: Colors.white,
+        onBackground: Colors.white,
+      ),
+      
       textTheme: _getScaledTextTheme(Brightness.dark),
       visualDensity: _layoutDensity.visualDensity,
-      appBarTheme: AppBarTheme(
+      
+      appBarTheme: const AppBarTheme(
         centerTitle: false,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFF0A0A0A),
+        foregroundColor: Colors.white,
       ),
+      
       cardTheme: CardThemeData(
         elevation: _layoutDensity == LayoutDensity.compact ? 1 : 2,
+        color: const Color(0xFF1A1A1A), // Dark card color
         margin: EdgeInsets.symmetric(
           horizontal: _layoutDensity == LayoutDensity.compact ? 8 : 16,
           vertical: _layoutDensity == LayoutDensity.compact ? 4 : 8,
         ),
       ),
+      
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: _layoutDensity == LayoutDensity.compact ? 4 : 6,
+        backgroundColor: _accentColor,
+        foregroundColor: Colors.white,
       ),
+      
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         elevation: 8,
+        backgroundColor: const Color(0xFF1A1A1A),
         selectedItemColor: _accentColor,
+        unselectedItemColor: Colors.grey[600],
         showUnselectedLabels: _layoutDensity != LayoutDensity.compact,
       ),
     );

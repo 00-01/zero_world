@@ -354,7 +354,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
                         ? theme.primaryColor
                         : theme.brightness == Brightness.light
                             ? Colors.grey[200]
-                            : Colors.grey[800],
+                            : const Color(0xFF1E1E1E), // Darker grey for AI messages in dark mode
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: message.isProcessing
@@ -362,7 +362,9 @@ class _MainChatScreenState extends State<MainChatScreen> {
                       : Text(
                           message.content,
                           style: TextStyle(
-                            color: isUser ? Colors.white : theme.textTheme.bodyLarge?.color,
+                            color: theme.brightness == Brightness.light 
+                                ? (isUser ? Colors.white : Colors.black87)
+                                : const Color(0xFFFFFFFF), // Pure white text in dark mode
                             fontSize: 15,
                             height: 1.4,
                           ),
