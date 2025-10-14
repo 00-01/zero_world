@@ -350,21 +350,22 @@ class _MainChatScreenState extends State<MainChatScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isUser
-                        ? theme.primaryColor
-                        : theme.brightness == Brightness.light
-                            ? Colors.grey[200]
-                            : const Color(0xFF1E1E1E), // Darker grey for AI messages in dark mode
+                    color: const Color(0xFFFFFFFF), // White chat bubbles for both user and AI
                     borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: message.isProcessing
                       ? _buildProcessingIndicator()
                       : Text(
                           message.content,
-                          style: TextStyle(
-                            color: theme.brightness == Brightness.light 
-                                ? (isUser ? Colors.white : Colors.black87)
-                                : const Color(0xFFFFFFFF), // Pure white text in dark mode
+                          style: const TextStyle(
+                            color: Color(0xFF000000), // Black text on white background
                             fontSize: 15,
                             height: 1.4,
                           ),
@@ -628,18 +629,34 @@ class _MainChatScreenState extends State<MainChatScreen> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: theme.brightness == Brightness.light 
+                    ? Colors.grey[100]
+                    : const Color(0xFF1A1A1A), // Dark input field
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: _focusNode.hasFocus ? theme.primaryColor : Colors.grey[300]!,
+                  color: _focusNode.hasFocus 
+                      ? theme.primaryColor 
+                      : (theme.brightness == Brightness.light 
+                          ? Colors.grey[300]! 
+                          : Colors.grey[800]!),
                   width: 2,
                 ),
               ),
               child: TextField(
                 controller: _textController,
                 focusNode: _focusNode,
+                style: TextStyle(
+                  color: theme.brightness == Brightness.light 
+                      ? Colors.black87 
+                      : const Color(0xFFFFFFFF), // White text in input
+                ),
                 decoration: InputDecoration(
                   hintText: _voiceState.isRecording ? 'Listening...' : 'Ask Z anything...',
+                  hintStyle: TextStyle(
+                    color: theme.brightness == Brightness.light 
+                        ? Colors.grey[600]
+                        : Colors.grey[500],
+                  ),
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
