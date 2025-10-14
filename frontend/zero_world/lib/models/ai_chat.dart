@@ -1,5 +1,5 @@
 /// AI Agent Chat Models
-/// 
+///
 /// Models for conversational AI interactions with agent "Z"
 /// Supports text/voice input, intent recognition, and contextual responses
 
@@ -25,7 +25,7 @@ enum IntentType {
   goToPage,
   goBack,
   openScreen,
-  
+
   // Action intents
   search,
   buy,
@@ -36,20 +36,20 @@ enum IntentType {
   send,
   call,
   message,
-  
+
   // Information requests
   getInfo,
   showStatus,
   checkBalance,
   viewHistory,
   getRecommendations,
-  
+
   // Account management
   login,
   logout,
   updateProfile,
   changeSettings,
-  
+
   // Service-specific
   orderFood,
   bookRide,
@@ -57,7 +57,7 @@ enum IntentType {
   makeReservation,
   postContent,
   shareContent,
-  
+
   // General
   greeting,
   help,
@@ -114,9 +114,7 @@ class ChatMessage {
       content: json['content'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
       metadata: json['metadata'] as Map<String, dynamic>?,
-      actionCards: (json['actionCards'] as List<dynamic>?)
-          ?.map((card) => ActionCard.fromJson(card as Map<String, dynamic>))
-          .toList(),
+      actionCards: (json['actionCards'] as List<dynamic>?)?.map((card) => ActionCard.fromJson(card as Map<String, dynamic>)).toList(),
       isProcessing: json['isProcessing'] as bool? ?? false,
     );
   }
@@ -188,9 +186,7 @@ class ActionCard {
       subtitle: json['subtitle'] as String?,
       imageUrl: json['imageUrl'] as String?,
       data: json['data'] as Map<String, dynamic>,
-      actions: (json['actions'] as List<dynamic>)
-          .map((action) => CardAction.fromJson(action as Map<String, dynamic>))
-          .toList(),
+      actions: (json['actions'] as List<dynamic>).map((action) => CardAction.fromJson(action as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -262,9 +258,7 @@ class ChatSession {
     return ChatSession(
       id: json['id'] as String,
       userId: json['userId'] as String,
-      messages: (json['messages'] as List<dynamic>)
-          .map((msg) => ChatMessage.fromJson(msg as Map<String, dynamic>))
-          .toList(),
+      messages: (json['messages'] as List<dynamic>).map((msg) => ChatMessage.fromJson(msg as Map<String, dynamic>)).toList(),
       context: json['context'] as Map<String, dynamic>,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
@@ -329,9 +323,7 @@ class AgentResponse {
         orElse: () => IntentType.unknown,
       ),
       responseText: json['responseText'] as String,
-      actionCards: (json['actionCards'] as List<dynamic>?)
-          ?.map((card) => ActionCard.fromJson(card as Map<String, dynamic>))
-          .toList(),
+      actionCards: (json['actionCards'] as List<dynamic>?)?.map((card) => ActionCard.fromJson(card as Map<String, dynamic>)).toList(),
       navigation: json['navigation'] as Map<String, dynamic>?,
       confidence: (json['confidence'] as num).toDouble(),
       extractedData: json['extractedData'] as Map<String, dynamic>?,

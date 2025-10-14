@@ -1,5 +1,5 @@
 /// Enhanced AI Service for Pure Chat-Based App
-/// 
+///
 /// Handles ALL app functionality through conversation
 /// Generates embedded UI components inside chat messages
 
@@ -11,7 +11,7 @@ import '../models/ai_chat.dart';
 class EmbeddedUIResponse {
   final String type; // 'products', 'rides', 'restaurants', 'social', 'wallet', etc.
   final Map<String, dynamic> data;
-  
+
   EmbeddedUIResponse({
     required this.type,
     required this.data,
@@ -59,7 +59,7 @@ class AIService {
     ));
 
     final response = await _processMessage(content, session.context);
-    
+
     _addMessageToSession(ChatMessage(
       id: response.messageId,
       sender: MessageSender.agent,
@@ -189,28 +189,28 @@ class AIService {
 
   Map<String, dynamic> _extractEntities(String content, IntentType intent) {
     final entities = <String, dynamic>{};
-    
+
     switch (intent) {
       case IntentType.orderFood:
         final foodMatch = RegExp(r'\b(pizza|burger|sushi|pasta|chicken|rice|chinese|italian)\b', caseSensitive: false).firstMatch(content);
         if (foodMatch != null) entities['foodType'] = foodMatch.group(0);
         break;
-        
+
       case IntentType.bookRide:
         final locationMatch = RegExp(r'(to|from)\s+([a-zA-Z\s]+)', caseSensitive: false).firstMatch(content);
         if (locationMatch != null) entities['location'] = locationMatch.group(2)?.trim();
         break;
-        
+
       case IntentType.buy:
       case IntentType.search:
         final searchMatch = RegExp(r'(?:buy|shop|search|find|look for)\s+(.+)', caseSensitive: false).firstMatch(content);
         if (searchMatch != null) entities['query'] = searchMatch.group(1)?.trim();
         break;
-        
+
       default:
         break;
     }
-    
+
     return entities;
   }
 
@@ -248,7 +248,7 @@ class AIService {
             ],
           },
         );
-        
+
       case IntentType.bookRide:
         return EmbeddedUIResponse(
           type: 'rides',
@@ -260,7 +260,7 @@ class AIService {
             ],
           },
         );
-        
+
       case IntentType.buy:
       case IntentType.search:
         return EmbeddedUIResponse(
@@ -274,7 +274,7 @@ class AIService {
             ],
           },
         );
-        
+
       case IntentType.postContent:
       case IntentType.getInfo:
         return EmbeddedUIResponse(
@@ -304,7 +304,7 @@ class AIService {
             ],
           },
         );
-        
+
       case IntentType.checkBalance:
         return EmbeddedUIResponse(
           type: 'wallet',
@@ -317,7 +317,7 @@ class AIService {
             ],
           },
         );
-        
+
       case IntentType.help:
         return EmbeddedUIResponse(
           type: 'quick_actions',
@@ -332,7 +332,7 @@ class AIService {
             ],
           },
         );
-        
+
       default:
         return null;
     }
@@ -342,55 +342,55 @@ class AIService {
     switch (intent) {
       case IntentType.greeting:
         return "Hey! I'm Z, your AI assistant. I can help you with:\n\n🍕 Food delivery\n🚗 Rides & transport\n🛍️ Shopping\n🏠 Accommodation\n👥 Social & news\n💰 Wallet & payments\n\nJust tell me what you need!";
-        
+
       case IntentType.help:
         return "Here are some things I can do for you. Tap any option or just ask me directly:";
-        
+
       case IntentType.orderFood:
         return "I found some great restaurants near you. Which one would you like to order from?";
-        
+
       case IntentType.bookRide:
         final location = data['location'];
         if (location != null) {
           return "I'll help you get to $location. Here are your ride options:";
         }
         return "Here are available rides near you:";
-        
+
       case IntentType.buy:
       case IntentType.search:
         final query = data['query'] ?? 'products';
         return "I found these $query for you:";
-        
+
       case IntentType.postContent:
         return "Here's what's happening on your feed:";
-        
+
       case IntentType.checkBalance:
         return "Here's your wallet overview:";
-        
+
       case IntentType.getInfo:
         return "Here are the latest news and updates:";
-        
+
       case IntentType.sell:
         return "I can help you list something for sale. What would you like to sell?";
-        
+
       case IntentType.makeReservation:
         return "I can help you find accommodation. Where are you planning to stay?";
-        
+
       case IntentType.findDoctor:
         return "I'll help you find medical care. What type of doctor do you need?";
-        
+
       case IntentType.message:
         return "Who would you like to message?";
-        
+
       case IntentType.viewHistory:
         return "Here's your recent activity:";
-        
+
       case IntentType.getRecommendations:
         return "Based on your preferences, here are my recommendations:";
-        
+
       case IntentType.unknown:
         return "I'm not sure I understand. Try asking me to:\n• Order food\n• Book a ride\n• Shop for products\n• Check your wallet\n• Show social feed\n• Find news";
-        
+
       default:
         return "I'm here to help! What would you like to do?";
     }

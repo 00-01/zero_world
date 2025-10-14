@@ -1,5 +1,5 @@
 /// Pure Chat-Based Main Screen
-/// 
+///
 /// ALL app functionality happens here through conversation with Z
 /// No separate screens - everything is embedded in chat
 
@@ -23,7 +23,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
-  
+
   List<ChatMessage> _messages = [];
   List<QuickSuggestion> _suggestions = [];
   bool _isProcessing = false;
@@ -33,10 +33,10 @@ class _MainChatScreenState extends State<MainChatScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     _aiService.getOrCreateSession('user_001');
     _suggestions = _aiService.getQuickSuggestions();
-    
+
     Future.delayed(const Duration(milliseconds: 500), _showInitialGreeting);
   }
 
@@ -70,7 +70,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
     setState(() {
       _isProcessing = true;
       _showHistory = true;
-      
+
       _messages.add(ChatMessage(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         sender: MessageSender.user,
@@ -96,7 +96,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
 
       setState(() {
         _messages.removeWhere((msg) => msg.id == 'processing');
-        
+
         _messages.add(ChatMessage(
           id: response.messageId,
           sender: MessageSender.agent,
@@ -157,9 +157,9 @@ class _MainChatScreenState extends State<MainChatScreen> {
     setState(() {
       _voiceState = VoiceInputState(isRecording: true);
     });
-    
+
     HapticFeedback.mediumImpact();
-    
+
     // Mock voice recording
     Timer(const Duration(seconds: 3), () {
       _stopVoiceRecording();
@@ -197,8 +197,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             Expanded(
               child: _showHistory ? _buildChatHistory(theme) : _buildEmptyState(theme),
             ),
-            if (!_showHistory && _suggestions.isNotEmpty)
-              _buildQuickSuggestions(theme),
+            if (!_showHistory && _suggestions.isNotEmpty) _buildQuickSuggestions(theme),
             _buildInputArea(theme),
           ],
         ),
@@ -351,7 +350,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isUser 
+                    color: isUser
                         ? theme.primaryColor
                         : theme.brightness == Brightness.light
                             ? Colors.grey[200]
@@ -369,7 +368,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
                           ),
                         ),
                 ),
-                
+
                 // Render embedded UI components
                 if (embeddedUI != null && !isUser) ...[
                   const SizedBox(height: 12),
@@ -400,10 +399,10 @@ class _MainChatScreenState extends State<MainChatScreen> {
 
   Widget _buildEmbeddedUI(dynamic embeddedUI, ThemeData theme) {
     if (embeddedUI is! Map) return const SizedBox.shrink();
-    
+
     final type = embeddedUI['type'] as String?;
     final data = embeddedUI['data'] as Map<String, dynamic>?;
-    
+
     if (data == null) return const SizedBox.shrink();
 
     switch (type) {
@@ -415,7 +414,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit("I want to order from ${restaurant['name']}");
           },
         );
-        
+
       case 'rides':
         final rides = (data['rides'] as List?)?.cast<Map<String, dynamic>>() ?? [];
         return EmbeddedRideOptions(
@@ -424,7 +423,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit("Book ${ride['type']} ride for \$${ride['price']}");
           },
         );
-        
+
       case 'products':
         final products = (data['products'] as List?)?.cast<Map<String, dynamic>>() ?? [];
         return EmbeddedProductGallery(
@@ -433,7 +432,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit("Tell me more about ${product['name']}");
           },
         );
-        
+
       case 'social':
         final posts = (data['posts'] as List?)?.cast<Map<String, dynamic>>() ?? [];
         return EmbeddedSocialFeed(
@@ -442,7 +441,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit("I want to $action this post");
           },
         );
-        
+
       case 'wallet':
         final balance = (data['balance'] as num?)?.toDouble() ?? 0.0;
         final transactions = (data['transactions'] as List?)?.cast<Map<String, dynamic>>() ?? [];
@@ -450,7 +449,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
           balance: balance,
           recentTransactions: transactions,
         );
-        
+
       case 'news':
         final articles = (data['articles'] as List?)?.cast<Map<String, dynamic>>() ?? [];
         return EmbeddedNewsFeed(
@@ -459,7 +458,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit("Tell me more about: ${article['title']}");
           },
         );
-        
+
       case 'quick_actions':
         final actions = (data['actions'] as List?)?.cast<Map<String, dynamic>>() ?? [];
         return EmbeddedQuickActions(
@@ -468,7 +467,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             _handleSubmit(action['label'] ?? '');
           },
         );
-        
+
       default:
         return const SizedBox.shrink();
     }
@@ -562,9 +561,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
-                color: theme.brightness == Brightness.light
-                    ? Colors.grey[100]
-                    : Colors.grey[800],
+                color: theme.brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
                   color: Colors.grey[300]!,
@@ -613,9 +610,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: _voiceState.isRecording 
-                  ? Colors.red[400] 
-                  : theme.primaryColor.withOpacity(0.1),
+              color: _voiceState.isRecording ? Colors.red[400] : theme.primaryColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -628,16 +623,13 @@ class _MainChatScreenState extends State<MainChatScreen> {
             ),
           ),
           const SizedBox(width: 12),
-
           Expanded(
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: _focusNode.hasFocus 
-                      ? theme.primaryColor 
-                      : Colors.grey[300]!,
+                  color: _focusNode.hasFocus ? theme.primaryColor : Colors.grey[300]!,
                   width: 2,
                 ),
               ),
@@ -645,9 +637,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
                 controller: _textController,
                 focusNode: _focusNode,
                 decoration: InputDecoration(
-                  hintText: _voiceState.isRecording 
-                      ? 'Listening...' 
-                      : 'Ask Z anything...',
+                  hintText: _voiceState.isRecording ? 'Listening...' : 'Ask Z anything...',
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -661,7 +651,6 @@ class _MainChatScreenState extends State<MainChatScreen> {
             ),
           ),
           const SizedBox(width: 12),
-
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -687,9 +676,7 @@ class _MainChatScreenState extends State<MainChatScreen> {
                       ),
                     )
                   : const Icon(Icons.send_rounded, color: Colors.white),
-              onPressed: _isProcessing || _textController.text.trim().isEmpty
-                  ? null
-                  : () => _handleSubmit(_textController.text),
+              onPressed: _isProcessing || _textController.text.trim().isEmpty ? null : () => _handleSubmit(_textController.text),
               tooltip: 'Send',
             ),
           ),

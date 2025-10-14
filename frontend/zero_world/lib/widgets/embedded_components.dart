@@ -1,5 +1,5 @@
 /// Embedded UI Components for Chat
-/// 
+///
 /// All UI components that render inside chat messages
 /// No separate screens - everything happens in the conversation
 
@@ -51,9 +51,7 @@ class EmbeddedProductGallery extends StatelessWidget {
                   height: 140,
                   width: double.infinity,
                   color: Colors.grey[200],
-                  child: product['image'] != null
-                      ? Image.network(product['image'], fit: BoxFit.cover)
-                      : Icon(Icons.shopping_bag, size: 48, color: Colors.grey[400]),
+                  child: product['image'] != null ? Image.network(product['image'], fit: BoxFit.cover) : Icon(Icons.shopping_bag, size: 48, color: Colors.grey[400]),
                 ),
               ),
               Padding(
@@ -188,9 +186,7 @@ class EmbeddedRestaurantList extends StatelessWidget {
                   width: 80,
                   height: 80,
                   color: Colors.grey[200],
-                  child: restaurant['image'] != null
-                      ? Image.network(restaurant['image'], fit: BoxFit.cover)
-                      : Icon(Icons.restaurant, size: 40, color: Colors.grey[400]),
+                  child: restaurant['image'] != null ? Image.network(restaurant['image'], fit: BoxFit.cover) : Icon(Icons.restaurant, size: 40, color: Colors.grey[400]),
                 ),
               ),
               const SizedBox(width: 12),
@@ -258,12 +254,8 @@ class EmbeddedSocialFeed extends StatelessWidget {
           // Header
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: post['userAvatar'] != null
-                  ? NetworkImage(post['userAvatar'])
-                  : null,
-              child: post['userAvatar'] == null
-                  ? const Icon(Icons.person)
-                  : null,
+              backgroundImage: post['userAvatar'] != null ? NetworkImage(post['userAvatar']) : null,
+              child: post['userAvatar'] == null ? const Icon(Icons.person) : null,
             ),
             title: Text(post['userName'] ?? 'User', style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(post['timeAgo'] ?? 'Just now'),
@@ -332,7 +324,7 @@ class EmbeddedForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controllers = <String, TextEditingController>{};
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -355,9 +347,7 @@ class EmbeddedForm extends StatelessWidget {
                     labelText: field['label'],
                     border: const OutlineInputBorder(),
                   ),
-                  keyboardType: field['type'] == 'number'
-                      ? TextInputType.number
-                      : TextInputType.text,
+                  keyboardType: field['type'] == 'number' ? TextInputType.number : TextInputType.text,
                 ),
               );
             }).toList(),
@@ -366,8 +356,7 @@ class EmbeddedForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  final values = controllers.map((key, controller) =>
-                      MapEntry(key, controller.text));
+                  final values = controllers.map((key, controller) => MapEntry(key, controller.text));
                   onSubmit?.call(values);
                 },
                 child: const Text('Submit'),
@@ -491,27 +480,27 @@ class EmbeddedWalletDisplay extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
             const SizedBox(height: 8),
-            ...recentTransactions.map((tx) => ListTile(
-              leading: CircleAvatar(
-                backgroundColor: tx['type'] == 'credit'
-                    ? Colors.green[100]
-                    : Colors.red[100],
-                child: Icon(
-                  tx['type'] == 'credit' ? Icons.arrow_downward : Icons.arrow_upward,
-                  color: tx['type'] == 'credit' ? Colors.green[700] : Colors.red[700],
-                  size: 20,
-                ),
-              ),
-              title: Text(tx['description'] ?? ''),
-              subtitle: Text(tx['date'] ?? ''),
-              trailing: Text(
-                '${tx['type'] == 'credit' ? '+' : '-'}\$${tx['amount']}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: tx['type'] == 'credit' ? Colors.green[700] : Colors.red[700],
-                ),
-              ),
-            )).toList(),
+            ...recentTransactions
+                .map((tx) => ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: tx['type'] == 'credit' ? Colors.green[100] : Colors.red[100],
+                        child: Icon(
+                          tx['type'] == 'credit' ? Icons.arrow_downward : Icons.arrow_upward,
+                          color: tx['type'] == 'credit' ? Colors.green[700] : Colors.red[700],
+                          size: 20,
+                        ),
+                      ),
+                      title: Text(tx['description'] ?? ''),
+                      subtitle: Text(tx['date'] ?? ''),
+                      trailing: Text(
+                        '${tx['type'] == 'credit' ? '+' : '-'}\$${tx['amount']}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: tx['type'] == 'credit' ? Colors.green[700] : Colors.red[700],
+                        ),
+                      ),
+                    ))
+                .toList(),
           ],
         ),
       ),
@@ -624,13 +613,20 @@ class EmbeddedQuickActions extends StatelessWidget {
 
   IconData _getIcon(String? iconName) {
     switch (iconName) {
-      case 'car': return Icons.directions_car;
-      case 'food': return Icons.restaurant;
-      case 'shop': return Icons.shopping_bag;
-      case 'home': return Icons.home;
-      case 'people': return Icons.people;
-      case 'news': return Icons.article;
-      default: return Icons.circle;
+      case 'car':
+        return Icons.directions_car;
+      case 'food':
+        return Icons.restaurant;
+      case 'shop':
+        return Icons.shopping_bag;
+      case 'home':
+        return Icons.home;
+      case 'people':
+        return Icons.people;
+      case 'news':
+        return Icons.article;
+      default:
+        return Icons.circle;
     }
   }
 }
