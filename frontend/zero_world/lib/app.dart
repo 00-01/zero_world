@@ -17,12 +17,7 @@ typedef AuthStateBuilder = AuthState Function(ApiService apiService);
 typedef ListingsStateBuilder = ListingsState Function(ApiService apiService);
 
 class ZeroWorldApp extends StatelessWidget {
-  const ZeroWorldApp({
-    super.key,
-    this.apiService,
-    this.authStateBuilder,
-    this.listingsStateBuilder,
-  });
+  const ZeroWorldApp({super.key, this.apiService, this.authStateBuilder, this.listingsStateBuilder});
 
   final ApiService? apiService;
   final AuthStateBuilder? authStateBuilder;
@@ -56,9 +51,7 @@ class ZeroWorldApp extends StatelessWidget {
             return builder(service);
           },
         ),
-        ChangeNotifierProvider<AppThemeManager>(
-          create: (_) => AppThemeManager(),
-        ),
+        ChangeNotifierProvider<AppThemeManager>(create: (_) => AppThemeManager()),
       ],
       child: Consumer<AppThemeManager>(
         builder: (context, themeManager, child) {
