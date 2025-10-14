@@ -4,7 +4,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
 import '../models/message.dart';
 
 /// WebSocket connection states
@@ -148,7 +147,7 @@ class WebSocketService {
     print('WebSocket: Disconnecting');
     _reconnectTimer?.cancel();
     _heartbeatTimer?.cancel();
-    _channel?.sink.close(status.goingAway);
+    _channel?.sink.close();
     _channel = null;
     _updateState(WebSocketState.disconnected);
   }

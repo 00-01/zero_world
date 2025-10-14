@@ -1,7 +1,7 @@
-/// Main Chat Screen - Google-Style AI Interface
+/// Pure Chat-Based Main Screen
 /// 
-/// Central hub where users interact with agent "Z" through text or voice
-/// Clean, minimalist design inspired by Google Search
+/// ALL app functionality happens here through conversation with Z
+/// No separate screens - everything is embedded in chat
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +9,7 @@ import 'dart:async';
 
 import '../models/ai_chat.dart';
 import '../services/ai_service.dart';
-import '../widgets/message_bubble.dart';
-import '../widgets/quick_suggestion_chip.dart';
+import '../widgets/embedded_components.dart';
 
 class MainChatScreen extends StatefulWidget {
   const MainChatScreen({super.key});
@@ -19,7 +18,7 @@ class MainChatScreen extends StatefulWidget {
   State<MainChatScreen> createState() => _MainChatScreenState();
 }
 
-class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStateMixin {
+class _MainChatScreenState extends State<MainChatScreen> {
   final AIService _aiService = AIService();
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -31,24 +30,13 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
   bool _showHistory = false;
   VoiceInputState _voiceState = VoiceInputState();
 
-  // Animations
-  late AnimationController _fadeController;
-
   @override
   void initState() {
     super.initState();
     
-    // Initialize session
     _aiService.getOrCreateSession('user_001');
     _suggestions = _aiService.getQuickSuggestions();
     
-    // Setup animations
-    _fadeController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    // Show initial greeting after a delay
     Future.delayed(const Duration(milliseconds: 500), _showInitialGreeting);
   }
 
@@ -57,7 +45,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
     _textController.dispose();
     _scrollController.dispose();
     _focusNode.dispose();
-    _fadeController.dispose();
     super.dispose();
   }
 
@@ -68,25 +55,22 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
           id: 'greeting',
           sender: MessageSender.agent,
           type: MessageType.text,
-          content: "Hey! I'm Z, your AI assistant. What can I help you with today?",
+          content: "Hey! I'm Z, your AI assistant. I can help you with everything - food, rides, shopping, social, news, and more. What would you like to do?",
           timestamp: DateTime.now(),
         ));
       });
-      _fadeController.forward();
     }
   }
 
   Future<void> _handleSubmit(String text) async {
     if (text.trim().isEmpty) return;
 
-    // Clear input immediately
     _textController.clear();
 
     setState(() {
       _isProcessing = true;
       _showHistory = true;
       
-      // Add user message
       _messages.add(ChatMessage(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         sender: MessageSender.user,
@@ -95,7 +79,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
         timestamp: DateTime.now(),
       ));
 
-      // Add processing placeholder
       _messages.add(ChatMessage(
         id: 'processing',
         sender: MessageSender.agent,
@@ -109,33 +92,25 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
     _scrollToBottom();
 
     try {
-      // Get AI response
       final response = await _aiService.sendMessage(text);
 
       setState(() {
-        // Remove processing placeholder
         _messages.removeWhere((msg) => msg.id == 'processing');
         
-        // Add actual response
         _messages.add(ChatMessage(
           id: response.messageId,
           sender: MessageSender.agent,
           type: MessageType.text,
           content: response.responseText,
           timestamp: DateTime.now(),
-          actionCards: response.actionCards,
           metadata: {
             'intent': response.intent.name,
             'confidence': response.confidence,
+            'embeddedUI': response.extractedData?['embeddedUI'],
           },
         ));
 
         _isProcessing = false;
-
-        // Handle navigation if specified
-        if (response.navigation != null) {
-          _handleNavigation(response.navigation!);
-        }
       });
 
       _scrollToBottom();
@@ -156,16 +131,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
 
   void _handleSuggestionTap(QuickSuggestion suggestion) {
     _handleSubmit(suggestion.text);
-  }
-
-  void _handleNavigation(Map<String, dynamic> navigation) {
-    // Navigate to specified screen
-    final screen = navigation['screen'] as String?;
-    if (screen != null) {
-      // For now, just show a message
-      // In production, use Navigator to push actual routes
-      debugPrint('Navigate to: $screen with data: ${navigation['data']}');
-    }
   }
 
   void _scrollToBottom() {
@@ -193,10 +158,9 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
       _voiceState = VoiceInputState(isRecording: true);
     });
     
-    // Mock voice recording - in production, use speech_to_text package
     HapticFeedback.mediumImpact();
     
-    // Simulate recording for 3 seconds
+    // Mock voice recording
     Timer(const Duration(seconds: 3), () {
       _stopVoiceRecording();
       _handleSubmit("Order pizza"); // Mock transcription
@@ -223,26 +187,18 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isLightMode = theme.brightness == Brightness.light;
 
     return Scaffold(
-      backgroundColor: isLightMode ? Colors.white : Colors.grey[900],
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
-            // Header with Z logo and menu
             _buildHeader(theme),
-
-            // Main content area
             Expanded(
               child: _showHistory ? _buildChatHistory(theme) : _buildEmptyState(theme),
             ),
-
-            // Quick suggestions (when no history)
             if (!_showHistory && _suggestions.isNotEmpty)
               _buildQuickSuggestions(theme),
-
-            // Input area
             _buildInputArea(theme),
           ],
         ),
@@ -256,7 +212,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Z Logo
           Row(
             children: [
               Container(
@@ -289,8 +244,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
                 ),
             ],
           ),
-
-          // Actions
           Row(
             children: [
               if (_showHistory)
@@ -301,9 +254,7 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
                 ),
               IconButton(
                 icon: const Icon(Icons.menu_rounded),
-                onPressed: () {
-                  // Show menu
-                },
+                onPressed: () {},
               ),
             ],
           ),
@@ -317,7 +268,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Large Z logo
           Container(
             width: 120,
             height: 120,
@@ -348,8 +298,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
             ),
           ),
           const SizedBox(height: 32),
-          
-          // Welcome text
           Text(
             'What can I help you with?',
             style: theme.textTheme.headlineSmall?.copyWith(
@@ -359,7 +307,7 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
           ),
           const SizedBox(height: 8),
           Text(
-            'Ask me anything or try a quick action below',
+            'Everything you need in one conversation',
             style: theme.textTheme.bodyLarge?.copyWith(
               color: Colors.grey[600],
             ),
@@ -377,15 +325,227 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
       itemCount: _messages.length,
       itemBuilder: (context, index) {
         final message = _messages[index];
-        return MessageBubble(
-          message: message,
-          onActionTap: (action) {
-            // Handle action card tap
-            debugPrint('Action tapped: ${action.label}');
-          },
-        );
+        return _buildMessageBubble(message, theme);
       },
     );
+  }
+
+  Widget _buildMessageBubble(ChatMessage message, ThemeData theme) {
+    final isUser = message.sender == MessageSender.user;
+    final embeddedUI = message.metadata?['embeddedUI'];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          if (!isUser) ...[
+            _buildAvatar(false),
+            const SizedBox(width: 12),
+          ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: isUser 
+                        ? theme.primaryColor
+                        : theme.brightness == Brightness.light
+                            ? Colors.grey[200]
+                            : Colors.grey[800],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: message.isProcessing
+                      ? _buildProcessingIndicator()
+                      : Text(
+                          message.content,
+                          style: TextStyle(
+                            color: isUser ? Colors.white : theme.textTheme.bodyLarge?.color,
+                            fontSize: 15,
+                            height: 1.4,
+                          ),
+                        ),
+                ),
+                
+                // Render embedded UI components
+                if (embeddedUI != null && !isUser) ...[
+                  const SizedBox(height: 12),
+                  _buildEmbeddedUI(embeddedUI, theme),
+                ],
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 12, right: 12),
+                  child: Text(
+                    _formatTime(message.timestamp),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (isUser) ...[
+            const SizedBox(width: 12),
+            _buildAvatar(true),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmbeddedUI(dynamic embeddedUI, ThemeData theme) {
+    if (embeddedUI is! Map) return const SizedBox.shrink();
+    
+    final type = embeddedUI['type'] as String?;
+    final data = embeddedUI['data'] as Map<String, dynamic>?;
+    
+    if (data == null) return const SizedBox.shrink();
+
+    switch (type) {
+      case 'restaurants':
+        final restaurants = (data['restaurants'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedRestaurantList(
+          restaurants: restaurants,
+          onRestaurantSelect: (restaurant) {
+            _handleSubmit("I want to order from ${restaurant['name']}");
+          },
+        );
+        
+      case 'rides':
+        final rides = (data['rides'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedRideOptions(
+          rides: rides,
+          onRideSelect: (ride) {
+            _handleSubmit("Book ${ride['type']} ride for \$${ride['price']}");
+          },
+        );
+        
+      case 'products':
+        final products = (data['products'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedProductGallery(
+          products: products,
+          onProductTap: (product) {
+            _handleSubmit("Tell me more about ${product['name']}");
+          },
+        );
+        
+      case 'social':
+        final posts = (data['posts'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedSocialFeed(
+          posts: posts,
+          onPostAction: (post, action) {
+            _handleSubmit("I want to $action this post");
+          },
+        );
+        
+      case 'wallet':
+        final balance = (data['balance'] as num?)?.toDouble() ?? 0.0;
+        final transactions = (data['transactions'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedWalletDisplay(
+          balance: balance,
+          recentTransactions: transactions,
+        );
+        
+      case 'news':
+        final articles = (data['articles'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedNewsFeed(
+          articles: articles,
+          onArticleTap: (article) {
+            _handleSubmit("Tell me more about: ${article['title']}");
+          },
+        );
+        
+      case 'quick_actions':
+        final actions = (data['actions'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+        return EmbeddedQuickActions(
+          actions: actions,
+          onActionTap: (action) {
+            _handleSubmit(action['label'] ?? '');
+          },
+        );
+        
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildAvatar(bool isUser) {
+    if (isUser) {
+      return Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          shape: BoxShape.circle,
+        ),
+        child: Icon(Icons.person, color: Colors.grey[700], size: 20),
+      );
+    }
+
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.purple[400]!, Colors.blue[400]!],
+        ),
+        shape: BoxShape.circle,
+      ),
+      child: const Center(
+        child: Text(
+          'Z',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProcessingIndicator() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: 16,
+          height: 16,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[600]!),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          'Thinking...',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _formatTime(DateTime dateTime) {
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inMinutes < 1) {
+      return 'Just now';
+    } else if (difference.inHours < 1) {
+      return '${difference.inMinutes}m ago';
+    } else if (difference.inDays < 1) {
+      return '${difference.inHours}h ago';
+    } else {
+      return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+    }
   }
 
   Widget _buildQuickSuggestions(ThemeData theme) {
@@ -396,9 +556,40 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
         runSpacing: 8,
         alignment: WrapAlignment.center,
         children: _suggestions.map((suggestion) {
-          return QuickSuggestionChip(
-            suggestion: suggestion,
+          return InkWell(
             onTap: () => _handleSuggestionTap(suggestion),
+            borderRadius: BorderRadius.circular(24),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                color: theme.brightness == Brightness.light
+                    ? Colors.grey[100]
+                    : Colors.grey[800],
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: Colors.grey[300]!,
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (suggestion.icon != null) ...[
+                    Text(
+                      suggestion.icon!,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    suggestion.text,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         }).toList(),
       ),
@@ -420,7 +611,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
       ),
       child: Row(
         children: [
-          // Voice button
           Container(
             decoration: BoxDecoration(
               color: _voiceState.isRecording 
@@ -439,7 +629,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
           ),
           const SizedBox(width: 12),
 
-          // Text input
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -473,7 +662,6 @@ class _MainChatScreenState extends State<MainChatScreen> with TickerProviderStat
           ),
           const SizedBox(width: 12),
 
-          // Send button
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

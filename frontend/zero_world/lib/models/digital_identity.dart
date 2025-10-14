@@ -1,8 +1,6 @@
 /// Digital Identity Models
 /// Complete account system for personal and business users
 
-import 'package:flutter/foundation.dart';
-
 /// Account Types
 enum AccountType { personal, business, creator, enterprise }
 

@@ -1,8 +1,6 @@
 /// Business Management Models
 /// Complete business platform data structures
 
-import 'product.dart';
-
 /// Business Dashboard Metrics
 class BusinessMetrics {
   final double totalRevenue;
