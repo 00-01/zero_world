@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta
+      content="IE=Edge"
+      http-equiv="X-UA-Compatible" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com blob:;" />
+    <meta
+      name="description"
+      content="Zero World - Your Cross-Platform Super App" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta
+      name="mobile-web-app-capable"
+      content="yes" />
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black" />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="Zero World" />
+    <link
+      rel="apple-touch-icon"
+      href="icons/Icon-192.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon.png" />
+    <title>Zero World</title>
+    <link
+      rel="manifest"
+      href="manifest.json" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+      #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 30px;
+        animation: pulse 2s ease-in-out infinite;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+      .app-name {
+        font-size: 32px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-top: 5px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      .loading-text {
+        color: white;
+        margin-top: 20px;
+        font-size: 14px;
+        opacity: 0.9;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+      #error-container {
+        display: none;
+        text-align: center;
+        color: white;
+        padding: 20px;
+      }
+      .error-message {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .retry-button {
+        background: white;
+        color: #667eea;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: transform 0.2s;
+      }
+      .retry-button:hover {
+        transform: scale(1.05);
+      }
+
+      /* Responsive styles for cross-platform */
+      @media (min-width: 768px) {
+        .logo {
+          width: 150px;
+          height: 150px;
+        }
+        .app-name {
+          font-size: 48px;
+        }
+        .loading-text {
+          font-size: 16px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .logo {
+          width: 180px;
+          height: 180px;
+        }
+        .app-name {
+          font-size: 56px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading">
+      <img
+        src="assets/images/zn_logo.png"
+        alt="Zero World Logo"
+        class="logo" />
+      <div class="app-name">Zero World</div>
+      <div class="loader"></div>
+      <div class="loading-text">Loading your super app...</div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="error-container">
+      <div class="error-message">
+        <img
+          src="assets/images/zn_logo.png"
+          alt="Zero World"
+          style="
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+          " />
+        <h2>Oops! Something went wrong</h2>
+        <p>We're having trouble loading Zero World.</p>
+        <button
+          class="retry-button"
+          onclick="location.reload()">
+          Retry
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Hide loading screen when Flutter is ready
+      window.addEventListener("flutter-first-frame", function () {
+        var loading = document.getElementById("loading");
+        if (loading) {
+          loading.style.display = "none";
+        }
+      });
+
+      // Show error if loading takes too long
+      setTimeout(function () {
+        var loading = document.getElementById("loading");
+        var errorContainer = document.getElementById("error-container");
+        if (loading && loading.style.display !== "none") {
+          loading.style.display = "none";
+          if (errorContainer) {
+            errorContainer.style.display = "block";
+          }
+        }
+      }, 30000);
+    </script>
+
+    <script
+      src="flutter_bootstrap.js"
+      async></script>
+  </body>
+</html>

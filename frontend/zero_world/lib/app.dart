@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/super_app_home.dart';
-import 'screens/essential_services_screens.dart';
-import 'screens/customization_screen.dart';
-import 'screens/additional_services_screens.dart';
-import 'screens/more_services_screens.dart';
-import 'screens/messages_screen.dart';
-import 'screens/chat_screen.dart';
+import 'screens/main_chat_screen.dart';
 import 'services/api_service.dart';
+import 'services/ai_service.dart';
 import 'state/auth_state.dart';
 import 'state/listings_state.dart';
 import 'state/theme_manager.dart';
@@ -37,6 +32,12 @@ class ZeroWorldApp extends StatelessWidget {
             }
           },
         ),
+        Provider<AIService>(
+          create: (_) => AIService(),
+          dispose: (_, service) {
+            service.dispose();
+          },
+        ),
         ChangeNotifierProvider<AuthState>(
           create: (context) {
             final service = context.read<ApiService>();
@@ -56,26 +57,12 @@ class ZeroWorldApp extends StatelessWidget {
       child: Consumer<AppThemeManager>(
         builder: (context, themeManager, child) {
           return MaterialApp(
-            title: 'Zero World - Super App',
+            title: 'Zero World - AI Assistant',
             theme: themeManager.getLightTheme(),
             darkTheme: themeManager.getDarkTheme(),
             themeMode: themeManager.themeMode,
-            home: const SuperAppHome(),
+            home: const MainChatScreen(),
             debugShowCheckedModeBanner: false,
-            // Route definitions for all super app features
-            routes: {
-              '/food': (context) => const FoodDeliveryScreen(),
-              '/transport': (context) => const TransportationScreen(),
-              '/health': (context) => const HealthcareScreen(),
-              '/finance': (context) => const FinanceScreen(),
-              '/customize': (context) => const CustomizationScreen(),
-              '/education': (context) => const EducationScreen(),
-              '/travel': (context) => const TravelScreen(),
-              '/home-services': (context) => const HomeServicesScreen(),
-              '/beauty': (context) => const BeautyWellnessScreen(),
-              '/entertainment': (context) => const EntertainmentScreen(),
-              '/messages': (context) => const MessagesScreen(),
-            },
           );
         },
       ),
