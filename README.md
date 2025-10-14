@@ -142,13 +142,18 @@ zero_world/
 │   ├── nginx.conf               # Server configuration
 │   └── Dockerfile
 ├── mongodb/                      # MongoDB data persistence
-├── scripts/                      # Utility scripts
-│   ├── deploy.sh                # Quick deployment
-│   └── cleanup.sh               # Cache cleanup
+├── scripts/                      # Automation scripts
+│   ├── build/                   # Build scripts
+│   ├── test/                    # Testing scripts
+│   ├── deploy/                  # Deployment scripts
+│   └── maintenance/             # Cleanup & maintenance
 ├── docs/                         # Documentation
-│   ├── DEPLOYMENT_STATUS.md     # Current deployment info
-│   ├── SUPER_APP_EXPANSION.md   # Full expansion plan
-│   └── SUPER_APP_TRANSFORMATION.md  # Implementation summary
+│   ├── guides/                  # Setup & configuration guides
+│   ├── testing/                 # Testing documentation
+│   ├── deployment/              # Deployment guides
+│   ├── mobile/                  # Mobile app deployment
+│   ├── legal/                   # Privacy & Terms
+│   └── archive/                 # Historical docs
 └── docker-compose.yml            # Multi-container orchestration
 ```
 
@@ -202,10 +207,10 @@ zero_world/
 ### Build Mobile Releases
 ```bash
 # Build both Android and iOS release versions
-./scripts/build_mobile_release.sh
+./scripts/build/build_mobile_release.sh
 ```
 
-**For detailed instructions, see:** [MOBILE_APP_DEPLOYMENT.md](MOBILE_APP_DEPLOYMENT.md)
+**For detailed instructions, see:** [docs/mobile/MOBILE_APP_DEPLOYMENT.md](docs/mobile/MOBILE_APP_DEPLOYMENT.md)
 
 ### App Store Requirements
 - **Google Play Store**: $25 one-time fee, app signing key, privacy policy
@@ -230,8 +235,7 @@ flutter build ipa --release
 
 ### Clean cache and rebuild
 ```bash
-./scripts/cleanup.sh
-./scripts/deploy.sh
+./scripts/maintenance/final_cleanup.sh  # Deep cleanup
 ```
 
 ### View logs
@@ -251,8 +255,12 @@ docker-compose restart
 The application uses self-signed SSL certificates by default. For production:
 
 1. **Self-signed** (current): Works immediately with browser warning
-2. **Cloudflare**: Recommended for production (see `docs/ssl_option_1_cloudflare.md`)
-3. **Let's Encrypt**: Free trusted certificates (see setup scripts)
+2. **Cloudflare**: Recommended for production
+3. **Let's Encrypt**: Free trusted certificates (see [docs/deployment/](docs/deployment/))
+
+For detailed HTTPS setup, see:
+- [docs/deployment/HTTPS_QUICKSTART.md](docs/deployment/HTTPS_QUICKSTART.md)
+- [docs/deployment/GET_CERTIFIED.md](docs/deployment/GET_CERTIFIED.md)
 
 ## 🛠️ Development
 
@@ -293,10 +301,20 @@ Once running, visit:
 
 ## 🔧 Available Scripts
 
-Located in `scripts/` directory:
-- `setup_self_signed_ssl.sh`: Set up self-signed SSL certificates
-- `setup_manual_ssl.sh`: Set up Let's Encrypt certificates
-- `check_site_access.sh`: Test site accessibility
+**Testing:**
+- `scripts/test/test_android.sh` - Test Android app
+- `scripts/test/test_android_emulator.sh` - Test with emulator
+- `scripts/test/test_all_platforms.sh` - Cross-platform testing
+
+**Deployment:**
+- `scripts/deploy/setup_letsencrypt.sh` - Setup Let's Encrypt SSL
+- `scripts/deploy/certify_app.sh` - Certificate management
+
+**Maintenance:**
+- `scripts/maintenance/final_cleanup.sh` - Deep cleanup
+- `scripts/maintenance/cleanup_all.sh` - Full cleanup
+
+See [scripts/README.md](scripts/README.md) for complete list.
 
 ## 🚀 Deployment
 
@@ -317,11 +335,14 @@ The application is containerized and ready for production deployment:
 
 ## 📖 Documentation
 
-See `docs/` directory for detailed documentation:
-- Setup guides
-- SSL configuration options
-- API documentation
-- Troubleshooting guides
+See [docs/README.md](docs/README.md) for complete documentation index.
+
+**Quick Links:**
+- **Getting Started:** [QUICKSTART.md](QUICKSTART.md)
+- **Testing Guide:** [docs/testing/TESTING_GUIDE.md](docs/testing/TESTING_GUIDE.md)
+- **Cross-Platform Setup:** [docs/guides/CROSS_PLATFORM_SETUP.md](docs/guides/CROSS_PLATFORM_SETUP.md)
+- **Mobile Deployment:** [docs/mobile/MOBILE_APP_DEPLOYMENT.md](docs/mobile/MOBILE_APP_DEPLOYMENT.md)
+- **Architecture:** [docs/deployment/ARCHITECTURE.md](docs/deployment/ARCHITECTURE.md)
 
 ## 🤝 Contributing
 

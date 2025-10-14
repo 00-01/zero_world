@@ -35,7 +35,7 @@ flutter run
 ### Test All Available Platforms
 ```bash
 cd /home/z/zero_world
-./scripts/test_all_platforms.sh
+./scripts/test/test_all_platforms.sh
 ```
 
 This will:
@@ -289,10 +289,7 @@ flutter run -d linux --release --enable-profiling
 
 ```bash
 # Test everything available
-./scripts/test_all_platforms.sh
-
-# Build and deploy all
-./scripts/deploy_all.sh 1.0.0
+./scripts/test/test_all_platforms.sh
 
 # Just run on current system
 cd frontend/zero_world && flutter run
@@ -351,14 +348,19 @@ docker-compose logs -f backend
 
 ## Next Steps
 
-1. **✅ Test locally**: Run `./scripts/test_all_platforms.sh`
+1. **✅ Test locally**: Run `./scripts/test/test_all_platforms.sh`
 2. **✅ Deploy Web**: Already at https://zn-01.com
-3. **📱 Test Android**: Install APK on device
-4. **🏪 Submit to stores**: Google Play, App Store
+3. **📱 Test Android**: Install APK on device or use emulator
+4. **🏪 Submit to stores**: See [docs/mobile/](docs/mobile/) for guides
 5. **📊 Monitor**: Analytics, crash reports, user feedback
+
+**See also:**
+- [docs/testing/TESTING_GUIDE.md](docs/testing/TESTING_GUIDE.md) - Complete testing guide
+- [docs/mobile/MOBILE_APP_DEPLOYMENT.md](docs/mobile/MOBILE_APP_DEPLOYMENT.md) - App store submission
+- [docs/guides/CROSS_PLATFORM_SETUP.md](docs/guides/CROSS_PLATFORM_SETUP.md) - Platform configuration
 
 ---
 
 **Status**: ✅ Ready to test on Web, Android, and Linux  
 **Production**: ✅ Web deployed at https://zn-01.com  
-**Next**: Run `./scripts/test_all_platforms.sh`
+**Next**: Run `./scripts/test/test_all_platforms.sh`
