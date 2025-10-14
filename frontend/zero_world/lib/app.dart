@@ -6,6 +6,8 @@ import 'screens/essential_services_screens.dart';
 import 'screens/customization_screen.dart';
 import 'screens/additional_services_screens.dart';
 import 'screens/more_services_screens.dart';
+import 'screens/messages_screen.dart';
+import 'screens/chat_screen.dart';
 import 'services/api_service.dart';
 import 'state/auth_state.dart';
 import 'state/listings_state.dart';
@@ -79,6 +81,7 @@ class ZeroWorldApp extends StatelessWidget {
               '/home-services': (context) => const HomeServicesScreen(),
               '/beauty': (context) => const BeautyWellnessScreen(),
               '/entertainment': (context) => const EntertainmentScreen(),
+              '/messages': (context) => const MessagesScreen(),
             },
           );
         },

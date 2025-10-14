@@ -13,11 +13,10 @@ class MessagesScreen extends StatefulWidget {
   State<MessagesScreen> createState() => _MessagesScreenState();
 }
 
-class _MessagesScreenState extends State<MessagesScreen>
-    with SingleTickerProviderStateMixin {
+class _MessagesScreenState extends State<MessagesScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
-  
+
   List<Conversation> _conversations = [];
   List<Conversation> _filteredConversations = [];
   bool _isLoading = true;
@@ -39,14 +38,14 @@ class _MessagesScreenState extends State<MessagesScreen>
 
   Future<void> _loadConversations() async {
     setState(() => _isLoading = true);
-    
+
     // TODO: Replace with actual API call
     await Future.delayed(const Duration(seconds: 1));
-    
+
     // Mock data
     _conversations = _generateMockConversations();
     _filteredConversations = _conversations;
-    
+
     setState(() => _isLoading = false);
   }
 
@@ -58,8 +57,7 @@ class _MessagesScreenState extends State<MessagesScreen>
         _filteredConversations = _conversations.where((conv) {
           final name = conv.getDisplayName(_currentUserId).toLowerCase();
           final lastMsg = conv.lastMessage?.content.toLowerCase() ?? '';
-          return name.contains(query.toLowerCase()) ||
-                 lastMsg.contains(query.toLowerCase());
+          return name.contains(query.toLowerCase()) || lastMsg.contains(query.toLowerCase());
         }).toList();
       }
     });
@@ -94,10 +92,7 @@ class _MessagesScreenState extends State<MessagesScreen>
                         : null,
                     filled: true,
                     fillColor: Colors.grey.shade100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
                   ),
                 ),
               ),
@@ -118,33 +113,15 @@ class _MessagesScreenState extends State<MessagesScreen>
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add_comment),
-            onPressed: _showNewMessageDialog,
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: _showOptionsMenu,
-          ),
+          IconButton(icon: const Icon(Icons.add_comment), onPressed: _showNewMessageDialog),
+          IconButton(icon: const Icon(Icons.more_vert), onPressed: _showOptionsMenu),
         ],
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildConversationsList(),
-          _buildConversationsList(unreadOnly: true),
-          _buildConversationsList(groupsOnly: true),
-          _buildConversationsList(archivedOnly: true),
-        ],
-      ),
+      body: TabBarView(controller: _tabController, children: [_buildConversationsList(), _buildConversationsList(unreadOnly: true), _buildConversationsList(groupsOnly: true), _buildConversationsList(archivedOnly: true)]),
     );
   }
 
-  Widget _buildConversationsList({
-    bool unreadOnly = false,
-    bool groupsOnly = false,
-    bool archivedOnly = false,
-  }) {
+  Widget _buildConversationsList({bool unreadOnly = false, bool groupsOnly = false, bool archivedOnly = false}) {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -156,9 +133,7 @@ class _MessagesScreenState extends State<MessagesScreen>
       conversations = conversations.where((c) => c.unreadCount > 0).toList();
     }
     if (groupsOnly) {
-      conversations = conversations
-          .where((c) => c.type == ConversationType.group || c.type == ConversationType.channel)
-          .toList();
+      conversations = conversations.where((c) => c.type == ConversationType.group || c.type == ConversationType.channel).toList();
     }
     if (archivedOnly) {
       conversations = conversations.where((c) => c.isArchived).toList();
@@ -169,32 +144,20 @@ class _MessagesScreenState extends State<MessagesScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.chat_bubble_outline,
-              size: 64,
-              color: Colors.grey.shade300,
-            ),
+            Icon(Icons.chat_bubble_outline, size: 64, color: Colors.grey.shade300),
             const SizedBox(height: 16),
             Text(
               unreadOnly
                   ? 'No unread messages'
                   : groupsOnly
-                      ? 'No groups yet'
-                      : archivedOnly
-                          ? 'No archived conversations'
-                          : 'No conversations yet',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey.shade600,
-              ),
+                  ? 'No groups yet'
+                  : archivedOnly
+                  ? 'No archived conversations'
+                  : 'No conversations yet',
+              style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 8),
-            if (!archivedOnly)
-              ElevatedButton.icon(
-                onPressed: _showNewMessageDialog,
-                icon: const Icon(Icons.add),
-                label: Text(groupsOnly ? 'Create Group' : 'Start Conversation'),
-              ),
+            if (!archivedOnly) ElevatedButton.icon(onPressed: _showNewMessageDialog, icon: const Icon(Icons.add), label: Text(groupsOnly ? 'Create Group' : 'Start Conversation')),
           ],
         ),
       );
@@ -213,17 +176,12 @@ class _MessagesScreenState extends State<MessagesScreen>
               padding: const EdgeInsets.all(16),
               child: Text(
                 'Pinned',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey.shade600),
               ),
             ),
             ...pinnedConvs.map((conv) => _buildConversationTile(conv)),
           ],
-          if (pinnedConvs.isNotEmpty && unpinnedConvs.isNotEmpty)
-            Divider(height: 1, color: Colors.grey.shade200),
+          if (pinnedConvs.isNotEmpty && unpinnedConvs.isNotEmpty) Divider(height: 1, color: Colors.grey.shade200),
           ...unpinnedConvs.map((conv) => _buildConversationTile(conv)),
         ],
       ),
@@ -266,15 +224,8 @@ class _MessagesScreenState extends State<MessagesScreen>
           children: [
             CircleAvatar(
               radius: 28,
-              backgroundImage: displayPhoto != null
-                  ? NetworkImage(displayPhoto)
-                  : null,
-              child: displayPhoto == null
-                  ? Text(
-                      displayName[0].toUpperCase(),
-                      style: const TextStyle(fontSize: 20),
-                    )
-                  : null,
+              backgroundImage: displayPhoto != null ? NetworkImage(displayPhoto) : null,
+              child: displayPhoto == null ? Text(displayName[0].toUpperCase(), style: const TextStyle(fontSize: 20)) : null,
             ),
             if (isOnline && conversation.type == ConversationType.direct)
               Positioned(
@@ -296,15 +247,8 @@ class _MessagesScreenState extends State<MessagesScreen>
                 top: 0,
                 child: Container(
                   padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.push_pin,
-                    size: 12,
-                    color: Colors.white,
-                  ),
+                  decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                  child: const Icon(Icons.push_pin, size: 12, color: Colors.white),
                 ),
               ),
           ],
@@ -314,15 +258,12 @@ class _MessagesScreenState extends State<MessagesScreen>
             Expanded(
               child: Text(
                 displayName,
-                style: TextStyle(
-                  fontWeight: unreadCount > 0 ? FontWeight.bold : FontWeight.normal,
-                ),
+                style: TextStyle(fontWeight: unreadCount > 0 ? FontWeight.bold : FontWeight.normal),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (conversation.isMuted)
-              const Icon(Icons.volume_off, size: 16, color: Colors.grey),
+            if (conversation.isMuted) const Icon(Icons.volume_off, size: 16, color: Colors.grey),
           ],
         ),
         subtitle: Column(
@@ -331,31 +272,18 @@ class _MessagesScreenState extends State<MessagesScreen>
             if (typingText.isNotEmpty)
               Text(
                 typingText,
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontStyle: FontStyle.italic,
-                ),
+                style: const TextStyle(color: Colors.blue, fontStyle: FontStyle.italic),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               )
             else if (lastMsg != null)
               Row(
                 children: [
-                  if (lastMsg.senderId == _currentUserId) ...[
-                    Icon(
-                      _getMessageStatusIcon(lastMsg.status),
-                      size: 16,
-                      color: _getMessageStatusColor(lastMsg.status),
-                    ),
-                    const SizedBox(width: 4),
-                  ],
+                  if (lastMsg.senderId == _currentUserId) ...[Icon(_getMessageStatusIcon(lastMsg.status), size: 16, color: _getMessageStatusColor(lastMsg.status)), const SizedBox(width: 4)],
                   Expanded(
                     child: Text(
                       _getMessagePreview(lastMsg),
-                      style: TextStyle(
-                        color: unreadCount > 0 ? Colors.black87 : Colors.grey.shade600,
-                        fontWeight: unreadCount > 0 ? FontWeight.w600 : FontWeight.normal,
-                      ),
+                      style: TextStyle(color: unreadCount > 0 ? Colors.black87 : Colors.grey.shade600, fontWeight: unreadCount > 0 ? FontWeight.w600 : FontWeight.normal),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -370,27 +298,16 @@ class _MessagesScreenState extends State<MessagesScreen>
           children: [
             Text(
               _formatTime(conversation.lastActivity),
-              style: TextStyle(
-                fontSize: 12,
-                color: unreadCount > 0 ? Colors.blue : Colors.grey.shade600,
-                fontWeight: unreadCount > 0 ? FontWeight.bold : FontWeight.normal,
-              ),
+              style: TextStyle(fontSize: 12, color: unreadCount > 0 ? Colors.blue : Colors.grey.shade600, fontWeight: unreadCount > 0 ? FontWeight.bold : FontWeight.normal),
             ),
             const SizedBox(height: 4),
             if (unreadCount > 0)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(12)),
                 child: Text(
                   unreadCount > 99 ? '99+' : unreadCount.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
           ],
@@ -427,7 +344,7 @@ class _MessagesScreenState extends State<MessagesScreen>
 
   String _getMessagePreview(Message message) {
     if (message.isDeleted) return 'Message deleted';
-    
+
     switch (message.type) {
       case MessageType.text:
         return message.content;
@@ -471,12 +388,7 @@ class _MessagesScreenState extends State<MessagesScreen>
   }
 
   void _openChat(Conversation conversation) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChatScreen(conversation: conversation),
-      ),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(conversation: conversation)));
   }
 
   Future<bool> _confirmDelete(Conversation conversation) async {
@@ -484,14 +396,9 @@ class _MessagesScreenState extends State<MessagesScreen>
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Delete Conversation'),
-            content: const Text(
-              'Are you sure you want to delete this conversation? This action cannot be undone.',
-            ),
+            content: const Text('Are you sure you want to delete this conversation? This action cannot be undone.'),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
-              ),
+              TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
               TextButton(
                 onPressed: () => Navigator.pop(context, true),
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
@@ -526,10 +433,7 @@ class _MessagesScreenState extends State<MessagesScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'New Message',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            const Text('New Message', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.blue),
@@ -599,28 +503,10 @@ class _MessagesScreenState extends State<MessagesScreen>
         type: ConversationType.direct,
         participantIds: [_currentUserId, 'user1'],
         members: {
-          _currentUserId: ConversationMember(
-            userId: _currentUserId,
-            name: 'You',
-            joinedAt: DateTime.now().subtract(const Duration(days: 30)),
-          ),
-          'user1': ConversationMember(
-            userId: 'user1',
-            name: 'John Doe',
-            photo: 'https://i.pravatar.cc/150?img=1',
-            joinedAt: DateTime.now().subtract(const Duration(days: 30)),
-            isOnline: true,
-          ),
+          _currentUserId: ConversationMember(userId: _currentUserId, name: 'You', joinedAt: DateTime.now().subtract(const Duration(days: 30))),
+          'user1': ConversationMember(userId: 'user1', name: 'John Doe', photo: 'https://i.pravatar.cc/150?img=1', joinedAt: DateTime.now().subtract(const Duration(days: 30)), isOnline: true),
         },
-        lastMessage: Message(
-          id: 'msg1',
-          conversationId: '1',
-          senderId: 'user1',
-          senderName: 'John Doe',
-          type: MessageType.text,
-          content: 'Hey! How are you?',
-          createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
-        ),
+        lastMessage: Message(id: 'msg1', conversationId: '1', senderId: 'user1', senderName: 'John Doe', type: MessageType.text, content: 'Hey! How are you?', createdAt: DateTime.now().subtract(const Duration(minutes: 5))),
         lastActivity: DateTime.now().subtract(const Duration(minutes: 5)),
         unreadCount: 2,
         createdAt: DateTime.now().subtract(const Duration(days: 30)),
@@ -632,15 +518,7 @@ class _MessagesScreenState extends State<MessagesScreen>
         photo: 'https://i.pravatar.cc/150?img=20',
         participantIds: [_currentUserId, 'user2', 'user3', 'user4'],
         members: {},
-        lastMessage: Message(
-          id: 'msg2',
-          conversationId: '2',
-          senderId: 'user2',
-          senderName: 'Jane Smith',
-          type: MessageType.text,
-          content: 'Meeting at 3 PM today',
-          createdAt: DateTime.now().subtract(const Duration(hours: 2)),
-        ),
+        lastMessage: Message(id: 'msg2', conversationId: '2', senderId: 'user2', senderName: 'Jane Smith', type: MessageType.text, content: 'Meeting at 3 PM today', createdAt: DateTime.now().subtract(const Duration(hours: 2))),
         lastActivity: DateTime.now().subtract(const Duration(hours: 2)),
         unreadCount: 0,
         isPinned: true,
@@ -651,28 +529,10 @@ class _MessagesScreenState extends State<MessagesScreen>
         type: ConversationType.direct,
         participantIds: [_currentUserId, 'user5'],
         members: {
-          _currentUserId: ConversationMember(
-            userId: _currentUserId,
-            name: 'You',
-            joinedAt: DateTime.now().subtract(const Duration(days: 7)),
-          ),
-          'user5': ConversationMember(
-            userId: 'user5',
-            name: 'Alice Johnson',
-            photo: 'https://i.pravatar.cc/150?img=5',
-            joinedAt: DateTime.now().subtract(const Duration(days: 7)),
-          ),
+          _currentUserId: ConversationMember(userId: _currentUserId, name: 'You', joinedAt: DateTime.now().subtract(const Duration(days: 7))),
+          'user5': ConversationMember(userId: 'user5', name: 'Alice Johnson', photo: 'https://i.pravatar.cc/150?img=5', joinedAt: DateTime.now().subtract(const Duration(days: 7))),
         },
-        lastMessage: Message(
-          id: 'msg3',
-          conversationId: '3',
-          senderId: _currentUserId,
-          senderName: 'You',
-          type: MessageType.image,
-          content: 'Photo',
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-          status: MessageStatus.read,
-        ),
+        lastMessage: Message(id: 'msg3', conversationId: '3', senderId: _currentUserId, senderName: 'You', type: MessageType.image, content: 'Photo', createdAt: DateTime.now().subtract(const Duration(days: 1)), status: MessageStatus.read),
         lastActivity: DateTime.now().subtract(const Duration(days: 1)),
         unreadCount: 0,
         createdAt: DateTime.now().subtract(const Duration(days: 7)),

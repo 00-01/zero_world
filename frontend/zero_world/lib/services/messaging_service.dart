@@ -9,35 +9,16 @@ class MessagingService {
   final String baseUrl;
   final String? authToken;
 
-  MessagingService({
-    required this.baseUrl,
-    this.authToken,
-  });
+  MessagingService({required this.baseUrl, this.authToken});
 
-  Map<String, String> get _headers => {
-        'Content-Type': 'application/json',
-        if (authToken != null) 'Authorization': 'Bearer $authToken',
-      };
+  Map<String, String> get _headers => {'Content-Type': 'application/json', if (authToken != null) 'Authorization': 'Bearer $authToken'};
 
   // ==================== CONVERSATIONS ====================
 
   /// Get all conversations for current user
-  Future<List<Conversation>> getConversations({
-    bool includeArchived = false,
-    int limit = 50,
-    int offset = 0,
-  }) async {
+  Future<List<Conversation>> getConversations({bool includeArchived = false, int limit = 50, int offset = 0}) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations').replace(
-          queryParameters: {
-            'include_archived': includeArchived.toString(),
-            'limit': limit.toString(),
-            'offset': offset.toString(),
-          },
-        ),
-        headers: _headers,
-      );
+      final response = await http.get(Uri.parse('$baseUrl/api/v1/messaging/conversations').replace(queryParameters: {'include_archived': includeArchived.toString(), 'limit': limit.toString(), 'offset': offset.toString()}), headers: _headers);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -53,10 +34,7 @@ class MessagingService {
   /// Get a specific conversation by ID
   Future<Conversation> getConversation(String conversationId) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'),
-        headers: _headers,
-      );
+      final response = await http.get(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'), headers: _headers);
 
       if (response.statusCode == 200) {
         return Conversation.fromJson(json.decode(response.body));
@@ -71,11 +49,7 @@ class MessagingService {
   /// Create a new direct conversation
   Future<Conversation> createDirectConversation(String otherUserId) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/direct'),
-        headers: _headers,
-        body: json.encode({'user_id': otherUserId}),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/direct'), headers: _headers, body: json.encode({'user_id': otherUserId}));
 
       if (response.statusCode == 201) {
         return Conversation.fromJson(json.decode(response.body));
@@ -88,23 +62,9 @@ class MessagingService {
   }
 
   /// Create a new group conversation
-  Future<Conversation> createGroupConversation({
-    required String name,
-    required List<String> participantIds,
-    String? description,
-    String? photoUrl,
-  }) async {
+  Future<Conversation> createGroupConversation({required String name, required List<String> participantIds, String? description, String? photoUrl}) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/group'),
-        headers: _headers,
-        body: json.encode({
-          'name': name,
-          'participant_ids': participantIds,
-          'description': description,
-          'photo_url': photoUrl,
-        }),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/group'), headers: _headers, body: json.encode({'name': name, 'participant_ids': participantIds, 'description': description, 'photo_url': photoUrl}));
 
       if (response.statusCode == 201) {
         return Conversation.fromJson(json.decode(response.body));
@@ -117,15 +77,7 @@ class MessagingService {
   }
 
   /// Update conversation settings
-  Future<Conversation> updateConversation(
-    String conversationId, {
-    String? name,
-    String? description,
-    String? photoUrl,
-    bool? isMuted,
-    bool? isPinned,
-    bool? isArchived,
-  }) async {
+  Future<Conversation> updateConversation(String conversationId, {String? name, String? description, String? photoUrl, bool? isMuted, bool? isPinned, bool? isArchived}) async {
     try {
       final updates = <String, dynamic>{};
       if (name != null) updates['name'] = name;
@@ -135,11 +87,7 @@ class MessagingService {
       if (isPinned != null) updates['is_pinned'] = isPinned;
       if (isArchived != null) updates['is_archived'] = isArchived;
 
-      final response = await http.patch(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'),
-        headers: _headers,
-        body: json.encode(updates),
-      );
+      final response = await http.patch(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'), headers: _headers, body: json.encode(updates));
 
       if (response.statusCode == 200) {
         return Conversation.fromJson(json.decode(response.body));
@@ -154,10 +102,7 @@ class MessagingService {
   /// Delete conversation (for current user only)
   Future<void> deleteConversation(String conversationId) async {
     try {
-      final response = await http.delete(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'),
-        headers: _headers,
-      );
+      final response = await http.delete(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId'), headers: _headers);
 
       if (response.statusCode != 200 && response.statusCode != 204) {
         throw Exception('Failed to delete conversation: ${response.statusCode}');
@@ -176,16 +121,9 @@ class MessagingService {
     String? beforeMessageId, // For pagination
   }) async {
     try {
-      final queryParams = <String, String>{
-        'limit': limit.toString(),
-        if (beforeMessageId != null) 'before': beforeMessageId,
-      };
+      final queryParams = <String, String>{'limit': limit.toString(), if (beforeMessageId != null) 'before': beforeMessageId};
 
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages')
-            .replace(queryParameters: queryParams),
-        headers: _headers,
-      );
+      final response = await http.get(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages').replace(queryParameters: queryParams), headers: _headers);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -199,82 +137,24 @@ class MessagingService {
   }
 
   /// Send a text message
-  Future<Message> sendTextMessage(
-    String conversationId,
-    String content, {
-    String? replyToId,
-  }) async {
-    return _sendMessage(
-      conversationId: conversationId,
-      type: MessageType.text,
-      content: content,
-      replyToId: replyToId,
-    );
+  Future<Message> sendTextMessage(String conversationId, String content, {String? replyToId}) async {
+    return _sendMessage(conversationId: conversationId, type: MessageType.text, content: content, replyToId: replyToId);
   }
 
   /// Send a media message (image, video, audio, file)
-  Future<Message> sendMediaMessage(
-    String conversationId,
-    MessageType type,
-    String mediaUrl, {
-    String? content,
-    String? thumbnailUrl,
-    String? replyToId,
-  }) async {
-    return _sendMessage(
-      conversationId: conversationId,
-      type: type,
-      content: content ?? '',
-      mediaUrl: mediaUrl,
-      thumbnailUrl: thumbnailUrl,
-      replyToId: replyToId,
-    );
+  Future<Message> sendMediaMessage(String conversationId, MessageType type, String mediaUrl, {String? content, String? thumbnailUrl, String? replyToId}) async {
+    return _sendMessage(conversationId: conversationId, type: type, content: content ?? '', mediaUrl: mediaUrl, thumbnailUrl: thumbnailUrl, replyToId: replyToId);
   }
 
   /// Send location message
-  Future<Message> sendLocationMessage(
-    String conversationId,
-    double latitude,
-    double longitude, {
-    String? address,
-    String? replyToId,
-  }) async {
-    return _sendMessage(
-      conversationId: conversationId,
-      type: MessageType.location,
-      content: address ?? 'Location',
-      metadata: {
-        'latitude': latitude,
-        'longitude': longitude,
-        'address': address,
-      },
-      replyToId: replyToId,
-    );
+  Future<Message> sendLocationMessage(String conversationId, double latitude, double longitude, {String? address, String? replyToId}) async {
+    return _sendMessage(conversationId: conversationId, type: MessageType.location, content: address ?? 'Location', metadata: {'latitude': latitude, 'longitude': longitude, 'address': address}, replyToId: replyToId);
   }
 
   /// Private method to send any type of message
-  Future<Message> _sendMessage({
-    required String conversationId,
-    required MessageType type,
-    required String content,
-    String? mediaUrl,
-    String? thumbnailUrl,
-    Map<String, dynamic>? metadata,
-    String? replyToId,
-  }) async {
+  Future<Message> _sendMessage({required String conversationId, required MessageType type, required String content, String? mediaUrl, String? thumbnailUrl, Map<String, dynamic>? metadata, String? replyToId}) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages'),
-        headers: _headers,
-        body: json.encode({
-          'type': type.name,
-          'content': content,
-          'media_url': mediaUrl,
-          'thumbnail_url': thumbnailUrl,
-          'metadata': metadata,
-          'reply_to_id': replyToId,
-        }),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages'), headers: _headers, body: json.encode({'type': type.name, 'content': content, 'media_url': mediaUrl, 'thumbnail_url': thumbnailUrl, 'metadata': metadata, 'reply_to_id': replyToId}));
 
       if (response.statusCode == 201) {
         return Message.fromJson(json.decode(response.body));
@@ -287,19 +167,9 @@ class MessagingService {
   }
 
   /// Edit a message
-  Future<Message> editMessage(
-    String conversationId,
-    String messageId,
-    String newContent,
-  ) async {
+  Future<Message> editMessage(String conversationId, String messageId, String newContent) async {
     try {
-      final response = await http.patch(
-        Uri.parse(
-          '$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId',
-        ),
-        headers: _headers,
-        body: json.encode({'content': newContent}),
-      );
+      final response = await http.patch(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId'), headers: _headers, body: json.encode({'content': newContent}));
 
       if (response.statusCode == 200) {
         return Message.fromJson(json.decode(response.body));
@@ -314,12 +184,7 @@ class MessagingService {
   /// Delete a message
   Future<void> deleteMessage(String conversationId, String messageId) async {
     try {
-      final response = await http.delete(
-        Uri.parse(
-          '$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId',
-        ),
-        headers: _headers,
-      );
+      final response = await http.delete(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId'), headers: _headers);
 
       if (response.statusCode != 200 && response.statusCode != 204) {
         throw Exception('Failed to delete message: ${response.statusCode}');
@@ -330,19 +195,9 @@ class MessagingService {
   }
 
   /// Add reaction to a message
-  Future<Message> addReaction(
-    String conversationId,
-    String messageId,
-    String emoji,
-  ) async {
+  Future<Message> addReaction(String conversationId, String messageId, String emoji) async {
     try {
-      final response = await http.post(
-        Uri.parse(
-          '$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId/reactions',
-        ),
-        headers: _headers,
-        body: json.encode({'emoji': emoji}),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId/reactions'), headers: _headers, body: json.encode({'emoji': emoji}));
 
       if (response.statusCode == 200) {
         return Message.fromJson(json.decode(response.body));
@@ -355,17 +210,9 @@ class MessagingService {
   }
 
   /// Remove reaction from a message
-  Future<Message> removeReaction(
-    String conversationId,
-    String messageId,
-  ) async {
+  Future<Message> removeReaction(String conversationId, String messageId) async {
     try {
-      final response = await http.delete(
-        Uri.parse(
-          '$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId/reactions',
-        ),
-        headers: _headers,
-      );
+      final response = await http.delete(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/messages/$messageId/reactions'), headers: _headers);
 
       if (response.statusCode == 200) {
         return Message.fromJson(json.decode(response.body));
@@ -380,11 +227,7 @@ class MessagingService {
   /// Mark messages as read
   Future<void> markAsRead(String conversationId, List<String> messageIds) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/read'),
-        headers: _headers,
-        body: json.encode({'message_ids': messageIds}),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/read'), headers: _headers, body: json.encode({'message_ids': messageIds}));
 
       if (response.statusCode != 200 && response.statusCode != 204) {
         throw Exception('Failed to mark as read: ${response.statusCode}');
@@ -399,11 +242,7 @@ class MessagingService {
   /// Send typing indicator
   Future<void> sendTypingIndicator(String conversationId, bool isTyping) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/typing'),
-        headers: _headers,
-        body: json.encode({'is_typing': isTyping}),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/typing'), headers: _headers, body: json.encode({'is_typing': isTyping}));
 
       if (response.statusCode != 200 && response.statusCode != 204) {
         // Don't throw, just log - typing indicators are not critical
@@ -417,16 +256,9 @@ class MessagingService {
   // ==================== GROUP MANAGEMENT ====================
 
   /// Add members to a group
-  Future<Conversation> addMembers(
-    String conversationId,
-    List<String> userIds,
-  ) async {
+  Future<Conversation> addMembers(String conversationId, List<String> userIds) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members'),
-        headers: _headers,
-        body: json.encode({'user_ids': userIds}),
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members'), headers: _headers, body: json.encode({'user_ids': userIds}));
 
       if (response.statusCode == 200) {
         return Conversation.fromJson(json.decode(response.body));
@@ -439,15 +271,9 @@ class MessagingService {
   }
 
   /// Remove a member from a group
-  Future<Conversation> removeMember(
-    String conversationId,
-    String userId,
-  ) async {
+  Future<Conversation> removeMember(String conversationId, String userId) async {
     try {
-      final response = await http.delete(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members/$userId'),
-        headers: _headers,
-      );
+      final response = await http.delete(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members/$userId'), headers: _headers);
 
       if (response.statusCode == 200) {
         return Conversation.fromJson(json.decode(response.body));
@@ -462,10 +288,7 @@ class MessagingService {
   /// Leave a group
   Future<void> leaveGroup(String conversationId) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/leave'),
-        headers: _headers,
-      );
+      final response = await http.post(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/leave'), headers: _headers);
 
       if (response.statusCode != 200 && response.statusCode != 204) {
         throw Exception('Failed to leave group: ${response.statusCode}');
@@ -482,11 +305,7 @@ class MessagingService {
     String role, // 'admin', 'moderator', 'member'
   ) async {
     try {
-      final response = await http.patch(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members/$userId'),
-        headers: _headers,
-        body: json.encode({'role': role}),
-      );
+      final response = await http.patch(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/members/$userId'), headers: _headers, body: json.encode({'role': role}));
 
       if (response.statusCode == 200) {
         return Conversation.fromJson(json.decode(response.body));
@@ -501,16 +320,9 @@ class MessagingService {
   // ==================== SEARCH ====================
 
   /// Search messages in a conversation
-  Future<List<Message>> searchMessages(
-    String conversationId,
-    String query,
-  ) async {
+  Future<List<Message>> searchMessages(String conversationId, String query) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/search')
-            .replace(queryParameters: {'q': query}),
-        headers: _headers,
-      );
+      final response = await http.get(Uri.parse('$baseUrl/api/v1/messaging/conversations/$conversationId/search').replace(queryParameters: {'q': query}), headers: _headers);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -526,11 +338,7 @@ class MessagingService {
   /// Search all conversations
   Future<List<Conversation>> searchConversations(String query) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/v1/messaging/search')
-            .replace(queryParameters: {'q': query}),
-        headers: _headers,
-      );
+      final response = await http.get(Uri.parse('$baseUrl/api/v1/messaging/search').replace(queryParameters: {'q': query}), headers: _headers);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -548,18 +356,13 @@ class MessagingService {
   /// Upload media file for messaging
   Future<String> uploadMedia(String filePath, String mimeType) async {
     try {
-      final request = http.MultipartRequest(
-        'POST',
-        Uri.parse('$baseUrl/api/v1/messaging/upload'),
-      );
+      final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/api/v1/messaging/upload'));
 
       if (authToken != null) {
         request.headers['Authorization'] = 'Bearer $authToken';
       }
 
-      request.files.add(
-        await http.MultipartFile.fromPath('file', filePath),
-      );
+      request.files.add(await http.MultipartFile.fromPath('file', filePath));
       request.fields['mime_type'] = mimeType;
 
       final streamedResponse = await request.send();
