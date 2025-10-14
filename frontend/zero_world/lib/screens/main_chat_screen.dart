@@ -629,16 +629,10 @@ class _MainChatScreenState extends State<MainChatScreen> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: theme.brightness == Brightness.light 
-                    ? Colors.grey[100]
-                    : const Color(0xFF1A1A1A), // Dark input field
+                color: theme.brightness == Brightness.light ? Colors.grey[100] : const Color(0xFF1A1A1A), // Dark input field
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: _focusNode.hasFocus 
-                      ? theme.primaryColor 
-                      : (theme.brightness == Brightness.light 
-                          ? Colors.grey[300]! 
-                          : Colors.grey[800]!),
+                  color: _focusNode.hasFocus ? theme.primaryColor : (theme.brightness == Brightness.light ? Colors.grey[300]! : Colors.grey[800]!),
                   width: 2,
                 ),
               ),
@@ -646,16 +640,12 @@ class _MainChatScreenState extends State<MainChatScreen> {
                 controller: _textController,
                 focusNode: _focusNode,
                 style: TextStyle(
-                  color: theme.brightness == Brightness.light 
-                      ? Colors.black87 
-                      : const Color(0xFFFFFFFF), // White text in input
+                  color: theme.brightness == Brightness.light ? Colors.black87 : const Color(0xFFFFFFFF), // White text in input
                 ),
                 decoration: InputDecoration(
                   hintText: _voiceState.isRecording ? 'Listening...' : 'Ask Z anything...',
                   hintStyle: TextStyle(
-                    color: theme.brightness == Brightness.light 
-                        ? Colors.grey[600]
-                        : Colors.grey[500],
+                    color: theme.brightness == Brightness.light ? Colors.grey[600] : Colors.grey[500],
                   ),
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(
