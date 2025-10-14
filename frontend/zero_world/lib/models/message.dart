@@ -13,7 +13,9 @@ class Message {
       chatId: json['chat_id'] as String? ?? '',
       senderId: json['sender_id'] as String? ?? '',
       content: json['content'] as String? ?? '',
-      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
+      createdAt:
+          DateTime.tryParse(json['created_at']?.toString() ?? '') ??
+          DateTime.now(),
     );
   }
 

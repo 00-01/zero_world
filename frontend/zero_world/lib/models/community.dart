@@ -16,9 +16,15 @@ class CommunityPost {
       authorId: json['author_id'] as String? ?? '',
       title: json['title'] as String? ?? '',
       content: json['content'] as String? ?? '',
-      tags: (json['tags'] as List<dynamic>? ?? []).map((e) => e.toString()).toList(),
-      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
-      updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at']!.toString()) : null,
+      tags: (json['tags'] as List<dynamic>? ?? [])
+          .map((e) => e.toString())
+          .toList(),
+      createdAt:
+          DateTime.tryParse(json['created_at']?.toString() ?? '') ??
+          DateTime.now(),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.tryParse(json['updated_at']!.toString())
+          : null,
       likeCount: (json['like_count'] as num?)?.toInt() ?? 0,
     );
   }
@@ -48,7 +54,9 @@ class CommunityComment {
       postId: json['post_id'] as String? ?? '',
       authorId: json['author_id'] as String? ?? '',
       content: json['content'] as String? ?? '',
-      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
+      createdAt:
+          DateTime.tryParse(json['created_at']?.toString() ?? '') ??
+          DateTime.now(),
     );
   }
 

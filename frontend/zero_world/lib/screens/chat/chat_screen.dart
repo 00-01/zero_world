@@ -6,11 +6,7 @@ import '../../services/api_service.dart';
 import '../../state/auth_state.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({
-    super.key,
-    required this.chatId,
-    this.title,
-  });
+  const ChatScreen({super.key, required this.chatId, this.title});
 
   final String chatId;
   final String? title;
@@ -133,10 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text(widget.title ?? 'Chat'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadMessages,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadMessages),
         ],
       ),
       body: Column(
@@ -146,25 +139,26 @@ class _ChatScreenState extends State<ChatScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _messages.isEmpty
-                    ? const Center(
-                        child: Text('No messages yet. Start the conversation!'),
-                      )
-                    : ListView.builder(
-                        controller: _scrollController,
-                        padding: const EdgeInsets.all(16),
-                        itemCount: _messages.length,
-                        itemBuilder: (context, index) {
-                          final message = _messages[index];
-                          final isMyMessage = authState.currentUser?.id == message.senderId;
-                          final isSystemMessage = message.senderId == 'system';
+                ? const Center(
+                    child: Text('No messages yet. Start the conversation!'),
+                  )
+                : ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      final isMyMessage =
+                          authState.currentUser?.id == message.senderId;
+                      final isSystemMessage = message.senderId == 'system';
 
-                          if (isSystemMessage) {
-                            return _buildSystemMessage(message);
-                          }
+                      if (isSystemMessage) {
+                        return _buildSystemMessage(message);
+                      }
 
-                          return _buildMessage(message, isMyMessage);
-                        },
-                      ),
+                      return _buildMessage(message, isMyMessage);
+                    },
+                  ),
           ),
 
           // Message input
@@ -174,7 +168,9 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Theme.of(context).colorScheme.surface,
               border: Border(
                 top: BorderSide(
-                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withValues(alpha: 0.2),
                 ),
               ),
             ),
@@ -230,8 +226,8 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Text(
             message.content,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSecondaryContainer,
-                ),
+              color: Theme.of(context).colorScheme.onSecondaryContainer,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -243,23 +239,28 @@ class _ChatScreenState extends State<ChatScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMyMessage
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
           if (!isMyMessage) ...[
-            const CircleAvatar(
-              radius: 16,
-              child: Icon(Icons.person, size: 16),
-            ),
+            const CircleAvatar(radius: 16, child: Icon(Icons.person, size: 16)),
             const SizedBox(width: 8),
           ],
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isMyMessage ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
+                color: isMyMessage
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(18).copyWith(
-                  bottomLeft: isMyMessage ? const Radius.circular(18) : const Radius.circular(4),
-                  bottomRight: isMyMessage ? const Radius.circular(4) : const Radius.circular(18),
+                  bottomLeft: isMyMessage
+                      ? const Radius.circular(18)
+                      : const Radius.circular(4),
+                  bottomRight: isMyMessage
+                      ? const Radius.circular(4)
+                      : const Radius.circular(18),
                 ),
               ),
               child: Column(
@@ -268,15 +269,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   Text(
                     message.content,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: isMyMessage ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
-                        ),
+                      color: isMyMessage
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     _formatTime(message.createdAt),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isMyMessage ? Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.7) : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                        ),
+                      color: isMyMessage
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.onPrimary.withValues(alpha: 0.7)
+                          : Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
                   ),
                 ],
               ),
@@ -284,10 +293,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           if (isMyMessage) ...[
             const SizedBox(width: 8),
-            const CircleAvatar(
-              radius: 16,
-              child: Icon(Icons.person, size: 16),
-            ),
+            const CircleAvatar(radius: 16, child: Icon(Icons.person, size: 16)),
           ],
         ],
       ),

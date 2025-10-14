@@ -124,9 +124,9 @@ class _DeliveryHomeScreenState extends State<DeliveryHomeScreen> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Categories
           const Text(
             'Categories',
@@ -146,16 +146,18 @@ class _DeliveryHomeScreenState extends State<DeliveryHomeScreen> {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Restaurants
           const Text(
             'Available Restaurants',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          ...mockRestaurants.map((restaurant) => _buildRestaurantCard(restaurant)),
+          ...mockRestaurants.map(
+            (restaurant) => _buildRestaurantCard(restaurant),
+          ),
         ],
       ),
     );
@@ -263,7 +265,9 @@ class _DeliveryHomeScreenState extends State<DeliveryHomeScreen> {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: restaurant.isOpen ? Colors.green : Colors.red,
+                            color: restaurant.isOpen
+                                ? Colors.green
+                                : Colors.red,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -349,16 +353,20 @@ class _DeliveryHomeScreenState extends State<DeliveryHomeScreen> {
               style: TextStyle(color: Colors.grey.shade600),
             ),
             const SizedBox(height: 8),
-            ...order.items.map((item) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('${item.quantity}x ${item.name}'),
-                      Text('\$${(item.price * item.quantity).toStringAsFixed(2)}'),
-                    ],
-                  ),
-                )),
+            ...order.items.map(
+              (item) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${item.quantity}x ${item.name}'),
+                    Text(
+                      '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                    ),
+                  ],
+                ),
+              ),
+            ),
             const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -381,7 +389,10 @@ class _DeliveryHomeScreenState extends State<DeliveryHomeScreen> {
                   const SizedBox(width: 4),
                   Text(
                     'Estimated delivery: ${order.estimatedDelivery}',
-                    style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -528,7 +539,11 @@ class _RestaurantMenuSheetState extends State<RestaurantMenuSheet> {
                               const SizedBox(width: 4),
                               Text('${widget.restaurant.rating}'),
                               const SizedBox(width: 16),
-                              Icon(Icons.access_time, color: Colors.grey, size: 16),
+                              Icon(
+                                Icons.access_time,
+                                color: Colors.grey,
+                                size: 16,
+                              ),
                               const SizedBox(width: 4),
                               Text(widget.restaurant.deliveryTime),
                             ],
@@ -538,32 +553,50 @@ class _RestaurantMenuSheetState extends State<RestaurantMenuSheet> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Menu items
                 const Text(
                   'Menu',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
-                
-                _buildMenuItem('Margherita Pizza', 'Fresh tomatoes, mozzarella, basil', 12.99),
-                _buildMenuItem('Pepperoni Pizza', 'Pepperoni, mozzarella, tomato sauce', 14.99),
-                _buildMenuItem('Caesar Salad', 'Romaine lettuce, parmesan, croutons', 8.99),
-                _buildMenuItem('Garlic Bread', 'Fresh bread with garlic butter', 5.99),
+
+                _buildMenuItem(
+                  'Margherita Pizza',
+                  'Fresh tomatoes, mozzarella, basil',
+                  12.99,
+                ),
+                _buildMenuItem(
+                  'Pepperoni Pizza',
+                  'Pepperoni, mozzarella, tomato sauce',
+                  14.99,
+                ),
+                _buildMenuItem(
+                  'Caesar Salad',
+                  'Romaine lettuce, parmesan, croutons',
+                  8.99,
+                ),
+                _buildMenuItem(
+                  'Garlic Bread',
+                  'Fresh bread with garlic butter',
+                  5.99,
+                ),
                 _buildMenuItem('Coca Cola', 'Chilled soft drink', 2.50),
               ],
             ),
           ),
-          
+
           // Cart summary
           if (cart.isNotEmpty)
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.orange,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(12),
+                ),
               ),
               child: SafeArea(
                 child: Row(
@@ -626,10 +659,7 @@ class _RestaurantMenuSheetState extends State<RestaurantMenuSheet> {
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -661,7 +691,7 @@ class _RestaurantMenuSheetState extends State<RestaurantMenuSheet> {
     setState(() {
       cart.add(OrderItem(name: name, quantity: 1, price: price));
     });
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('$name added to cart'),

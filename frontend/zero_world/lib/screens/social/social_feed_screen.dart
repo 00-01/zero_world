@@ -4,7 +4,8 @@ class EnhancedSocialFeedScreen extends StatefulWidget {
   const EnhancedSocialFeedScreen({super.key});
 
   @override
-  State<EnhancedSocialFeedScreen> createState() => _EnhancedSocialFeedScreenState();
+  State<EnhancedSocialFeedScreen> createState() =>
+      _EnhancedSocialFeedScreenState();
 }
 
 class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
@@ -13,7 +14,8 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
       id: '1',
       authorName: 'Alice Johnson',
       authorAvatar: 'AJ',
-      content: 'Just had an amazing dinner at the new Italian restaurant downtown! 🍝 The pasta was incredible and the service was top-notch. Highly recommend!',
+      content:
+          'Just had an amazing dinner at the new Italian restaurant downtown! 🍝 The pasta was incredible and the service was top-notch. Highly recommend!',
       images: [],
       timestamp: DateTime.now().subtract(const Duration(hours: 2)),
       likes: 15,
@@ -35,7 +37,8 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
       id: '3',
       authorName: 'Carol Davis',
       authorAvatar: 'CD',
-      content: 'Excited to announce that I just got promoted to Senior Developer! 🎉 Thank you to everyone who supported me on this journey.',
+      content:
+          'Excited to announce that I just got promoted to Senior Developer! 🎉 Thank you to everyone who supported me on this journey.',
       images: [],
       timestamp: DateTime.now().subtract(const Duration(days: 1)),
       likes: 42,
@@ -137,14 +140,34 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
       itemCount: 8,
       itemBuilder: (context, index) {
         final notifications = [
-          {'type': 'like', 'user': 'John Doe', 'action': 'liked your post', 'time': '2 min ago'},
-          {'type': 'comment', 'user': 'Jane Smith', 'action': 'commented on your post', 'time': '5 min ago'},
-          {'type': 'follow', 'user': 'Mike Johnson', 'action': 'started following you', 'time': '10 min ago'},
-          {'type': 'mention', 'user': 'Sarah Wilson', 'action': 'mentioned you in a post', 'time': '1 hour ago'},
+          {
+            'type': 'like',
+            'user': 'John Doe',
+            'action': 'liked your post',
+            'time': '2 min ago',
+          },
+          {
+            'type': 'comment',
+            'user': 'Jane Smith',
+            'action': 'commented on your post',
+            'time': '5 min ago',
+          },
+          {
+            'type': 'follow',
+            'user': 'Mike Johnson',
+            'action': 'started following you',
+            'time': '10 min ago',
+          },
+          {
+            'type': 'mention',
+            'user': 'Sarah Wilson',
+            'action': 'mentioned you in a post',
+            'time': '1 hour ago',
+          },
         ];
-        
+
         final notification = notifications[index % notifications.length];
-        
+
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
@@ -181,23 +204,36 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
       itemCount: 10,
       itemBuilder: (context, index) {
         final friends = [
-          'Alice Johnson', 'Bob Smith', 'Carol Davis', 'David Wilson',
-          'Emma Brown', 'Frank Miller', 'Grace Lee', 'Henry Taylor',
-          'Ivy Chen', 'Jack Robinson'
+          'Alice Johnson',
+          'Bob Smith',
+          'Carol Davis',
+          'David Wilson',
+          'Emma Brown',
+          'Frank Miller',
+          'Grace Lee',
+          'Henry Taylor',
+          'Ivy Chen',
+          'Jack Robinson',
         ];
-        
+
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.primaries[index % Colors.primaries.length],
+              backgroundColor:
+                  Colors.primaries[index % Colors.primaries.length],
               child: Text(
                 friends[index].split(' ').map((n) => n[0]).join(),
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             title: Text(friends[index]),
-            subtitle: Text('${index % 3 == 0 ? 'Online' : 'Last seen ${index + 1}h ago'}'),
+            subtitle: Text(
+              '${index % 3 == 0 ? 'Online' : 'Last seen ${index + 1}h ago'}',
+            ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -232,7 +268,10 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
                   backgroundColor: Colors.blue,
                   child: Text(
                     post.authorAvatar,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -264,12 +303,12 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 12),
-            
+
             // Post content
             Text(post.content),
-            
+
             // Post images
             if (post.images.isNotEmpty) ...[
               const SizedBox(height: 12),
@@ -294,9 +333,9 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
                 ),
               ),
             ],
-            
+
             const SizedBox(height: 16),
-            
+
             // Post actions
             Row(
               children: [
@@ -319,7 +358,11 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
                   onTap: () => _commentOnPost(post),
                   child: Row(
                     children: [
-                      Icon(Icons.comment_outlined, color: Colors.grey, size: 20),
+                      Icon(
+                        Icons.comment_outlined,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
                       const SizedBox(width: 4),
                       Text('${post.comments}'),
                     ],
@@ -377,7 +420,7 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
   String _getTimeAgo(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
-    
+
     if (difference.inMinutes < 1) {
       return 'Just now';
     } else if (difference.inHours < 1) {
@@ -391,9 +434,9 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
 
   Future<void> _refreshFeed() async {
     await Future.delayed(const Duration(seconds: 1));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Feed refreshed!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Feed refreshed!')));
   }
 
   void _createPost() {
@@ -472,27 +515,27 @@ class _EnhancedSocialFeedScreenState extends State<EnhancedSocialFeedScreen> {
   }
 
   void _sharePost(SocialPost post) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Post shared!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Post shared!')));
   }
 
   void _handlePostAction(String action, SocialPost post) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$action action completed')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('$action action completed')));
   }
 
   void _messageUser(String user) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Opening chat with $user')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Opening chat with $user')));
   }
 
   void _callUser(String user) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Calling $user')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Calling $user')));
   }
 }
 

@@ -72,13 +72,9 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
                     children: [
                       const Icon(Icons.calendar_today, color: Colors.blue),
                       const SizedBox(width: 12),
-                      const Expanded(
-                        child: Text('Check-in: Select date'),
-                      ),
+                      const Expanded(child: Text('Check-in: Select date')),
                       const SizedBox(width: 16),
-                      const Expanded(
-                        child: Text('Check-out: Select date'),
-                      ),
+                      const Expanded(child: Text('Check-out: Select date')),
                     ],
                   ),
                 ],
@@ -122,7 +118,11 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
       mainAxisSpacing: 12,
       children: [
         _buildServiceCard('Plumbing', Icons.plumbing, Colors.blue),
-        _buildServiceCard('Electrical', Icons.electrical_services, Colors.yellow.shade700),
+        _buildServiceCard(
+          'Electrical',
+          Icons.electrical_services,
+          Colors.yellow.shade700,
+        ),
         _buildServiceCard('Cleaning', Icons.cleaning_services, Colors.green),
         _buildServiceCard('AC Repair', Icons.ac_unit, Colors.cyan),
         _buildServiceCard('Painting', Icons.format_paint, Colors.indigo),
@@ -156,14 +156,20 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: index % 3 == 0 ? Colors.green : Colors.orange,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         index % 3 == 0 ? 'Confirmed' : 'Pending',
-                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -200,9 +206,9 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
       {'name': 'City View Resort', 'rating': 4.5, 'price': 95},
       {'name': 'Luxury Suites', 'rating': 4.9, 'price': 200},
     ];
-    
+
     final hotel = hotels[index];
-    
+
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: Column(
@@ -212,7 +218,9 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
             height: 120,
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(8),
+              ),
             ),
             child: const Center(
               child: Icon(Icons.hotel, size: 50, color: Colors.grey),
@@ -301,9 +309,9 @@ class _BookingHomeScreenState extends State<BookingHomeScreen> {
   }
 
   void _bookHotel(String hotelName) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$hotelName booking coming soon!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('$hotelName booking coming soon!')));
   }
 
   void _bookService(String serviceName) {

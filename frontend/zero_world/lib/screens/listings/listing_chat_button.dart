@@ -7,10 +7,7 @@ import '../../state/auth_state.dart';
 import '../chat/chat_screen.dart';
 
 class ListingChatButton extends StatefulWidget {
-  const ListingChatButton({
-    super.key,
-    required this.listing,
-  });
+  const ListingChatButton({super.key, required this.listing});
 
   final Listing listing;
 
@@ -74,7 +71,8 @@ class _ListingChatButtonState extends State<ListingChatButton> {
     final authState = context.watch<AuthState>();
 
     // Don't show button for own listings
-    if (authState.isAuthenticated && authState.currentUser?.id == widget.listing.ownerId) {
+    if (authState.isAuthenticated &&
+        authState.currentUser?.id == widget.listing.ownerId) {
       return const SizedBox.shrink();
     }
 
@@ -93,10 +91,7 @@ class _ListingChatButtonState extends State<ListingChatButton> {
 }
 
 class ListingDetailSheet extends StatelessWidget {
-  const ListingDetailSheet({
-    super.key,
-    required this.listing,
-  });
+  const ListingDetailSheet({super.key, required this.listing});
 
   final Listing listing;
 
@@ -127,7 +122,9 @@ class ListingDetailSheet extends StatelessWidget {
                 height: 4,
                 margin: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -142,9 +139,8 @@ class ListingDetailSheet extends StatelessWidget {
                       // Title
                       Text(
                         listing.title,
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
 
                       const SizedBox(height: 16),
@@ -161,8 +157,11 @@ class ListingDetailSheet extends StatelessWidget {
                         ),
                         child: Text(
                           '\$${listing.price.toStringAsFixed(2)}',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
@@ -196,9 +195,8 @@ class ListingDetailSheet extends StatelessWidget {
                       if (listing.description.isNotEmpty) ...[
                         Text(
                           'Description',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -220,8 +218,11 @@ class ListingDetailSheet extends StatelessWidget {
                       Center(
                         child: Text(
                           'Posted on ${_formatDate(listing.createdAt)}',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
                               ),
                         ),
                       ),
@@ -245,11 +246,7 @@ class ListingDetailSheet extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -258,14 +255,11 @@ class ListingDetailSheet extends StatelessWidget {
               Text(
                 label,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              Text(
-                value,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              Text(value, style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
         ),

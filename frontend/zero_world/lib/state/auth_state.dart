@@ -74,10 +74,7 @@ class AuthState extends ChangeNotifier {
     }
   }
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> login({required String email, required String password}) async {
     _setBusy(true);
     _clearError();
     try {

@@ -4,7 +4,8 @@
 
 class SearchResult {
   final String id;
-  final String type; // user, post, group, page, event, listing, service, news, business
+  final String
+  type; // user, post, group, page, event, listing, service, news, business
   final String title;
   final String description;
   final String thumbnail;

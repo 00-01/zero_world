@@ -81,7 +81,9 @@ class _ListingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceFormatter = NumberFormat.simpleCurrency();
     final hasImages = listing.imageUrls.isNotEmpty;
-    final createdLabel = DateFormat.yMMMd().add_jm().format(listing.createdAt.toLocal());
+    final createdLabel = DateFormat.yMMMd().add_jm().format(
+      listing.createdAt.toLocal(),
+    );
 
     return ListTile(
       leading: hasImages
@@ -100,7 +102,11 @@ class _ListingTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(listing.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+          Text(
+            listing.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
           const SizedBox(height: 4),
           Text(createdLabel, style: Theme.of(context).textTheme.bodySmall),
         ],
@@ -154,10 +160,7 @@ class _ListingsError extends StatelessWidget {
           children: [
             const Icon(Icons.error_outline, size: 40),
             const SizedBox(height: 12),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-            ),
+            Text(message, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             FilledButton(
               onPressed: listingsState.refresh,

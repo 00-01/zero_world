@@ -5,8 +5,6 @@ class CommunityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Community posts will be available soon.'),
-    );
+    return const Center(child: Text('Community posts will be available soon.'));
   }
 }

@@ -58,9 +58,7 @@ class _SimpleLoginTestState extends State<SimpleLoginTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Simple Login Test'),
-      ),
+      appBar: AppBar(title: const Text('Simple Login Test')),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -89,7 +87,9 @@ class _SimpleLoginTestState extends State<SimpleLoginTest> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _isLoading ? null : _testLogin,
-              child: _isLoading ? const CircularProgressIndicator() : const Text('Test Login'),
+              child: _isLoading
+                  ? const CircularProgressIndicator()
+                  : const Text('Test Login'),
             ),
             const SizedBox(height: 24),
             Text(
@@ -104,7 +104,8 @@ class _SimpleLoginTestState extends State<SimpleLoginTest> {
                 _emailController.text = 'live@example.com';
                 _passwordController.text = 'testpass123';
                 setState(() {
-                  _message = 'Test credentials loaded (we created this account earlier)';
+                  _message =
+                      'Test credentials loaded (we created this account earlier)';
                 });
               },
               child: const Text('Load Test Account'),

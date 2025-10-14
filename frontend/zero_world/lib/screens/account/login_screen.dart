@@ -10,7 +10,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -63,7 +64,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(_isLogin ? 'Welcome back!' : 'Account created successfully!'),
+            content: Text(
+              _isLogin ? 'Welcome back!' : 'Account created successfully!',
+            ),
             backgroundColor: Colors.green,
           ),
         );
@@ -98,10 +101,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          _buildLoginForm(authState),
-          _buildRegisterForm(authState),
-        ],
+        children: [_buildLoginForm(authState), _buildRegisterForm(authState)],
       ),
     );
   }
@@ -146,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
             Column(
               children: [
                 Icon(
-                  showNameField ? Icons.person_add_outlined : Icons.lock_outline,
+                  showNameField
+                      ? Icons.person_add_outlined
+                      : Icons.lock_outline,
                   size: 64,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -160,8 +162,8 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -223,8 +225,11 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                 prefixIcon: const Icon(Icons.lock),
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
-                  icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
                 ),
               ),
               obscureText: _obscurePassword,
@@ -260,10 +265,14 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.error.withValues(alpha: 0.3),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.error.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Row(
@@ -296,7 +305,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                 _tabController.animateTo(_isLogin ? 1 : 0);
               },
               child: Text(
-                _isLogin ? "Don't have an account? Register here" : "Already have an account? Login here",
+                _isLogin
+                    ? "Don't have an account? Register here"
+                    : "Already have an account? Login here",
               ),
             ),
           ],

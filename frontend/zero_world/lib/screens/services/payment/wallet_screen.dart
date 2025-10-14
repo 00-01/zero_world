@@ -44,10 +44,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 children: [
                   const Text(
                     'Available Balance',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -62,9 +59,21 @@ class _WalletScreenState extends State<WalletScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildBalanceAction('Add Money', Icons.add, () => _addMoney()),
-                      _buildBalanceAction('Send', Icons.send, () => _sendMoney()),
-                      _buildBalanceAction('Request', Icons.call_received, () => _requestMoney()),
+                      _buildBalanceAction(
+                        'Add Money',
+                        Icons.add,
+                        () => _addMoney(),
+                      ),
+                      _buildBalanceAction(
+                        'Send',
+                        Icons.send,
+                        () => _sendMoney(),
+                      ),
+                      _buildBalanceAction(
+                        'Request',
+                        Icons.call_received,
+                        () => _requestMoney(),
+                      ),
                     ],
                   ),
                 ],
@@ -82,11 +91,27 @@ class _WalletScreenState extends State<WalletScreen> {
                 mainAxisSpacing: 12,
                 children: [
                   _buildQuickAction('Pay Bills', Icons.receipt, Colors.blue),
-                  _buildQuickAction('Mobile Recharge', Icons.phone_android, Colors.green),
+                  _buildQuickAction(
+                    'Mobile Recharge',
+                    Icons.phone_android,
+                    Colors.green,
+                  ),
                   _buildQuickAction('Split Bill', Icons.group, Colors.orange),
-                  _buildQuickAction('Scan & Pay', Icons.qr_code_scanner, Colors.purple),
-                  _buildQuickAction('Bank Transfer', Icons.account_balance, Colors.red),
-                  _buildQuickAction('Investments', Icons.trending_up, Colors.indigo),
+                  _buildQuickAction(
+                    'Scan & Pay',
+                    Icons.qr_code_scanner,
+                    Colors.purple,
+                  ),
+                  _buildQuickAction(
+                    'Bank Transfer',
+                    Icons.account_balance,
+                    Colors.red,
+                  ),
+                  _buildQuickAction(
+                    'Investments',
+                    Icons.trending_up,
+                    Colors.indigo,
+                  ),
                 ],
               ),
             ),
@@ -142,10 +167,7 @@ class _WalletScreenState extends State<WalletScreen> {
             const SizedBox(height: 4),
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ],
         ),
@@ -182,11 +204,36 @@ class _WalletScreenState extends State<WalletScreen> {
 
   Widget _buildTransactionItem(int index) {
     final transactions = [
-      {'type': 'Food Delivery', 'amount': -25.99, 'icon': Icons.restaurant, 'time': '2 hours ago'},
-      {'type': 'Money Received', 'amount': 100.00, 'icon': Icons.call_received, 'time': '1 day ago'},
-      {'type': 'Mobile Recharge', 'amount': -20.00, 'icon': Icons.phone_android, 'time': '2 days ago'},
-      {'type': 'Bill Payment', 'amount': -85.50, 'icon': Icons.receipt, 'time': '3 days ago'},
-      {'type': 'Cashback', 'amount': 5.00, 'icon': Icons.card_giftcard, 'time': '5 days ago'},
+      {
+        'type': 'Food Delivery',
+        'amount': -25.99,
+        'icon': Icons.restaurant,
+        'time': '2 hours ago',
+      },
+      {
+        'type': 'Money Received',
+        'amount': 100.00,
+        'icon': Icons.call_received,
+        'time': '1 day ago',
+      },
+      {
+        'type': 'Mobile Recharge',
+        'amount': -20.00,
+        'icon': Icons.phone_android,
+        'time': '2 days ago',
+      },
+      {
+        'type': 'Bill Payment',
+        'amount': -85.50,
+        'icon': Icons.receipt,
+        'time': '3 days ago',
+      },
+      {
+        'type': 'Cashback',
+        'amount': 5.00,
+        'icon': Icons.card_giftcard,
+        'time': '5 days ago',
+      },
     ];
 
     final transaction = transactions[index];
@@ -196,7 +243,9 @@ class _WalletScreenState extends State<WalletScreen> {
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isIncome ? Colors.green.shade100 : Colors.red.shade100,
+          backgroundColor: isIncome
+              ? Colors.green.shade100
+              : Colors.red.shade100,
           child: Icon(
             transaction['icon'] as IconData,
             color: isIncome ? Colors.green : Colors.red,
@@ -254,7 +303,9 @@ class _WalletScreenState extends State<WalletScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Money added successfully!')),
+                        const SnackBar(
+                          content: Text('Money added successfully!'),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -311,9 +362,9 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   void _performQuickAction(String action) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$action feature coming soon!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('$action feature coming soon!')));
   }
 
   void _viewAllTransactions() {

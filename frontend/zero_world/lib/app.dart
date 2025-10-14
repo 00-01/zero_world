@@ -61,7 +61,10 @@ class ZeroWorldApp extends StatelessWidget {
             displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold),
             displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
             displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-            headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            headlineMedium: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
             titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             bodyLarge: TextStyle(fontSize: 16),
             bodyMedium: TextStyle(fontSize: 14),
@@ -83,5 +86,6 @@ class ZeroWorldApp extends StatelessWidget {
 
   static AuthState _defaultAuthBuilder(ApiService api) => AuthState(api);
 
-  static ListingsState _defaultListingsBuilder(ApiService api) => ListingsState(api);
+  static ListingsState _defaultListingsBuilder(ApiService api) =>
+      ListingsState(api);
 }

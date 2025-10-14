@@ -134,7 +134,8 @@ class ElectronicsListing {
 class RealEstateMarketplace {
   final String id;
   final String type; // sale, rent, commercial, land, roommate
-  final String propertyType; // house, apartment, condo, studio, office, warehouse
+  final String
+  propertyType; // house, apartment, condo, studio, office, warehouse
   final double price;
   final String location;
   final int bedrooms;

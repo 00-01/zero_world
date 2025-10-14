@@ -29,9 +29,17 @@ class Chat {
   factory Chat.fromJson(Map<String, dynamic> json) {
     return Chat(
       id: json['_id'] as String,
-      participants: (json['participants'] as List<dynamic>? ?? []).map((e) => e.toString()).toList(),
-      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
-      listingContext: json['listing_context'] != null ? ListingContext.fromJson(json['listing_context'] as Map<String, dynamic>) : null,
+      participants: (json['participants'] as List<dynamic>? ?? [])
+          .map((e) => e.toString())
+          .toList(),
+      createdAt:
+          DateTime.tryParse(json['created_at']?.toString() ?? '') ??
+          DateTime.now(),
+      listingContext: json['listing_context'] != null
+          ? ListingContext.fromJson(
+              json['listing_context'] as Map<String, dynamic>,
+            )
+          : null,
     );
   }
 

@@ -296,10 +296,7 @@ class MessageReaction {
   final String userId;
   final String emoji;
 
-  const MessageReaction({
-    required this.userId,
-    required this.emoji,
-  });
+  const MessageReaction({required this.userId, required this.emoji});
 }
 
 // VIDEO/VOICE CALLS
@@ -353,7 +350,8 @@ class LiveStream {
 // NOTIFICATIONS
 class SocialNotification {
   final String id;
-  final String type; // like, comment, share, follow, mention, group-invite, event-invite
+  final String
+  type; // like, comment, share, follow, mention, group-invite, event-invite
   final String actorId;
   final String actorName;
   final String actorAvatar;

@@ -5,8 +5,6 @@ class ChatTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Your conversations will show up here.'),
-    );
+    return const Center(child: Text('Your conversations will show up here.'));
   }
 }

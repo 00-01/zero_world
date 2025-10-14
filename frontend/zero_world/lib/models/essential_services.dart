@@ -101,7 +101,8 @@ class HealthAppointment {
 class EducationService {
   final String id;
   final String name;
-  final String category; // school, university, online-course, tutoring, certification
+  final String
+  category; // school, university, online-course, tutoring, certification
   final String description;
   final double price;
   final double rating;
@@ -190,7 +191,8 @@ class GovernmentService {
   final String id;
   final String name;
   final String department;
-  final String category; // id-card, passport, license, permits, certificates, taxes
+  final String
+  category; // id-card, passport, license, permits, certificates, taxes
   final String description;
   final List<String> requirements;
   final int processingDays;
@@ -530,7 +532,8 @@ class Pet {
 class NewsArticle {
   final String id;
   final String title;
-  final String category; // local, national, world, business, tech, sports, entertainment
+  final String
+  category; // local, national, world, business, tech, sports, entertainment
   final String content;
   final String source;
   final DateTime publishedDate;
@@ -704,7 +707,8 @@ class RecyclingService {
 class CommunityPost {
   final String id;
   final String authorId;
-  final String category; // lost-found, recommendations, complaints, announcements
+  final String
+  category; // lost-found, recommendations, complaints, announcements
   final String content;
   final String location;
   final DateTime timestamp;

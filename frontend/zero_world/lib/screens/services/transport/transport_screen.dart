@@ -29,11 +29,7 @@ class _TransportScreenState extends State<TransportScreen> {
           ),
         ),
         body: TabBarView(
-          children: [
-            _buildRideTab(),
-            _buildDeliveryTab(),
-            _buildHistoryTab(),
-          ],
+          children: [_buildRideTab(), _buildDeliveryTab(), _buildHistoryTab()],
         ),
       ),
     );
@@ -89,10 +85,34 @@ class _TransportScreenState extends State<TransportScreen> {
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
             children: [
-              _buildRideOption('Economy', 'Affordable rides', '\$8-12', Icons.directions_car, Colors.blue),
-              _buildRideOption('Premium', 'Comfortable rides', '\$12-18', Icons.car_rental, Colors.purple),
-              _buildRideOption('XL', 'Large vehicles', '\$15-22', Icons.airport_shuttle, Colors.orange),
-              _buildRideOption('Bike', 'Quick & eco', '\$3-6', Icons.motorcycle, Colors.green),
+              _buildRideOption(
+                'Economy',
+                'Affordable rides',
+                '\$8-12',
+                Icons.directions_car,
+                Colors.blue,
+              ),
+              _buildRideOption(
+                'Premium',
+                'Comfortable rides',
+                '\$12-18',
+                Icons.car_rental,
+                Colors.purple,
+              ),
+              _buildRideOption(
+                'XL',
+                'Large vehicles',
+                '\$15-22',
+                Icons.airport_shuttle,
+                Colors.orange,
+              ),
+              _buildRideOption(
+                'Bike',
+                'Quick & eco',
+                '\$3-6',
+                Icons.motorcycle,
+                Colors.green,
+              ),
             ],
           ),
         ],
@@ -165,10 +185,30 @@ class _TransportScreenState extends State<TransportScreen> {
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
             children: [
-              _buildDeliveryOption('Documents', 'Papers, contracts', '\$5-8', Icons.description),
-              _buildDeliveryOption('Small Package', 'Up to 5kg', '\$8-15', Icons.inventory_2),
-              _buildDeliveryOption('Large Package', 'Up to 20kg', '\$15-25', Icons.all_inbox),
-              _buildDeliveryOption('Express', 'Same day delivery', '\$20-35', Icons.flash_on),
+              _buildDeliveryOption(
+                'Documents',
+                'Papers, contracts',
+                '\$5-8',
+                Icons.description,
+              ),
+              _buildDeliveryOption(
+                'Small Package',
+                'Up to 5kg',
+                '\$8-15',
+                Icons.inventory_2,
+              ),
+              _buildDeliveryOption(
+                'Large Package',
+                'Up to 20kg',
+                '\$15-25',
+                Icons.all_inbox,
+              ),
+              _buildDeliveryOption(
+                'Express',
+                'Same day delivery',
+                '\$20-35',
+                Icons.flash_on,
+              ),
             ],
           ),
         ],
@@ -191,8 +231,12 @@ class _TransportScreenState extends State<TransportScreen> {
                 color: Colors.white,
               ),
             ),
-            title: Text(index % 2 == 0 ? 'Ride to Downtown' : 'Package Delivery'),
-            subtitle: Text('${DateTime.now().subtract(Duration(days: index + 1)).toString().split(' ')[0]} • \$${(10 + index * 3).toStringAsFixed(2)}'),
+            title: Text(
+              index % 2 == 0 ? 'Ride to Downtown' : 'Package Delivery',
+            ),
+            subtitle: Text(
+              '${DateTime.now().subtract(Duration(days: index + 1)).toString().split(' ')[0]} • \$${(10 + index * 3).toStringAsFixed(2)}',
+            ),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           ),
         );
@@ -200,7 +244,13 @@ class _TransportScreenState extends State<TransportScreen> {
     );
   }
 
-  Widget _buildRideOption(String name, String description, String price, IconData icon, Color color) {
+  Widget _buildRideOption(
+    String name,
+    String description,
+    String price,
+    IconData icon,
+    Color color,
+  ) {
     return Card(
       child: InkWell(
         onTap: () => _bookRide(name),
@@ -212,10 +262,7 @@ class _TransportScreenState extends State<TransportScreen> {
             children: [
               Icon(icon, size: 40, color: color),
               const SizedBox(height: 8),
-              Text(
-                name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+              Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
               Text(
                 description,
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
@@ -233,7 +280,12 @@ class _TransportScreenState extends State<TransportScreen> {
     );
   }
 
-  Widget _buildDeliveryOption(String name, String description, String price, IconData icon) {
+  Widget _buildDeliveryOption(
+    String name,
+    String description,
+    String price,
+    IconData icon,
+  ) {
     return Card(
       child: InkWell(
         onTap: () => _bookDelivery(name),
@@ -245,10 +297,7 @@ class _TransportScreenState extends State<TransportScreen> {
             children: [
               Icon(icon, size: 40, color: Colors.orange),
               const SizedBox(height: 8),
-              Text(
-                name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+              Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
               Text(
                 description,
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
@@ -257,7 +306,10 @@ class _TransportScreenState extends State<TransportScreen> {
               const SizedBox(height: 8),
               Text(
                 price,
-                style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),

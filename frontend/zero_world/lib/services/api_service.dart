@@ -22,8 +22,8 @@ class ApiException implements Exception {
 
 class ApiService {
   ApiService({http.Client? client, String? baseUrl})
-      : httpClient = client ?? http.Client(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl {
+    : httpClient = client ?? http.Client(),
+      baseUrl = baseUrl ?? ApiConfig.baseUrl {
     // Print configuration on first initialization (debug mode only)
     if (kDebugMode && !_configPrinted) {
       ApiConfig.printConfig();
@@ -41,13 +41,13 @@ class ApiService {
   }
 
   Map<String, String> _jsonHeaders({String? token}) => {
-        'Content-Type': 'application/json',
-        if (token != null) 'Authorization': 'Bearer $token',
-      };
+    'Content-Type': 'application/json',
+    if (token != null) 'Authorization': 'Bearer $token',
+  };
 
   Map<String, String> _authHeaders(String token) => {
-        'Authorization': 'Bearer $token',
-      };
+    'Authorization': 'Bearer $token',
+  };
 
   Future<void> _throwIfError(http.Response response) async {
     if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -55,7 +55,8 @@ class ApiService {
     }
     String message = 'Request failed (${response.statusCode})';
     try {
-      final Map<String, dynamic> body = jsonDecode(response.body) as Map<String, dynamic>;
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
       message = body['detail']?.toString() ?? message;
     } catch (_) {
       message = response.body.isNotEmpty ? response.body : message;
@@ -71,14 +72,11 @@ class ApiService {
     final response = await httpClient.post(
       _uri('/auth/register'),
       headers: _jsonHeaders(),
-      body: jsonEncode({
-        'name': name,
-        'email': email,
-        'password': password,
-      }),
+      body: jsonEncode({'name': name, 'email': email, 'password': password}),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return User.fromJson(data);
   }
 
@@ -88,16 +86,12 @@ class ApiService {
   }) async {
     final response = await httpClient.post(
       _uri('/auth/login'),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: {
-        'username': email,
-        'password': password,
-      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {'username': email, 'password': password},
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return data['access_token']?.toString() ?? '';
   }
 
@@ -107,7 +101,8 @@ class ApiService {
       headers: _authHeaders(token),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return User.fromJson(data);
   }
 
@@ -117,7 +112,9 @@ class ApiService {
     );
     await _throwIfError(response);
     final List<dynamic> data = jsonDecode(response.body) as List<dynamic>;
-    return data.map((e) => Listing.fromJson(e as Map<String, dynamic>)).toList();
+    return data
+        .map((e) => Listing.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<Listing> createListing({
@@ -142,7 +139,8 @@ class ApiService {
       }),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return Listing.fromJson(data);
   }
 
@@ -153,7 +151,9 @@ class ApiService {
     );
     await _throwIfError(response);
     final List<dynamic> data = jsonDecode(response.body) as List<dynamic>;
-    return data.map((chat) => Chat.fromJson(chat as Map<String, dynamic>)).toList();
+    return data
+        .map((chat) => Chat.fromJson(chat as Map<String, dynamic>))
+        .toList();
   }
 
   Future<Chat> startChat({
@@ -166,7 +166,8 @@ class ApiService {
       body: jsonEncode({'participant_id': participantId}),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return Chat.fromJson(data);
   }
 
@@ -180,7 +181,9 @@ class ApiService {
     );
     await _throwIfError(response);
     final List<dynamic> data = jsonDecode(response.body) as List<dynamic>;
-    return data.map((message) => Message.fromJson(message as Map<String, dynamic>)).toList();
+    return data
+        .map((message) => Message.fromJson(message as Map<String, dynamic>))
+        .toList();
   }
 
   Future<Message> sendMessage({
@@ -194,17 +197,23 @@ class ApiService {
       body: jsonEncode({'content': content}),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return Message.fromJson(data);
   }
 
   Future<List<CommunityPost>> fetchCommunityPosts({String? tag}) async {
     final response = await httpClient.get(
-      _uri('/community/posts', tag != null && tag.isNotEmpty ? {'tag': tag} : null),
+      _uri(
+        '/community/posts',
+        tag != null && tag.isNotEmpty ? {'tag': tag} : null,
+      ),
     );
     await _throwIfError(response);
     final List<dynamic> data = jsonDecode(response.body) as List<dynamic>;
-    return data.map((post) => CommunityPost.fromJson(post as Map<String, dynamic>)).toList();
+    return data
+        .map((post) => CommunityPost.fromJson(post as Map<String, dynamic>))
+        .toList();
   }
 
   Future<CommunityPost> createCommunityPost({
@@ -216,14 +225,11 @@ class ApiService {
     final response = await httpClient.post(
       _uri('/community/posts'),
       headers: _jsonHeaders(token: token),
-      body: jsonEncode({
-        'title': title,
-        'content': content,
-        'tags': tags,
-      }),
+      body: jsonEncode({'title': title, 'content': content, 'tags': tags}),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return CommunityPost.fromJson(data);
   }
 
@@ -233,7 +239,12 @@ class ApiService {
     );
     await _throwIfError(response);
     final List<dynamic> data = jsonDecode(response.body) as List<dynamic>;
-    return data.map((comment) => CommunityComment.fromJson(comment as Map<String, dynamic>)).toList();
+    return data
+        .map(
+          (comment) =>
+              CommunityComment.fromJson(comment as Map<String, dynamic>),
+        )
+        .toList();
   }
 
   Future<CommunityComment> addComment({
@@ -247,7 +258,8 @@ class ApiService {
       body: jsonEncode({'content': content}),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return CommunityComment.fromJson(data);
   }
 
@@ -260,7 +272,8 @@ class ApiService {
       headers: _jsonHeaders(token: token),
     );
     await _throwIfError(response);
-    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final Map<String, dynamic> data =
+        jsonDecode(response.body) as Map<String, dynamic>;
     return Chat.fromJson(data);
   }
 
