@@ -4,12 +4,7 @@
 import 'package:flutter/foundation.dart';
 
 /// Account Types
-enum AccountType {
-  personal,
-  business,
-  creator,
-  enterprise,
-}
+enum AccountType { personal, business, creator, enterprise }
 
 /// Verification Status
 enum VerificationStatus {
@@ -53,28 +48,7 @@ class DigitalIdentity {
   final bool allowMessages;
   final bool allowCalls;
 
-  DigitalIdentity({
-    required this.id,
-    required this.username,
-    required this.accountType,
-    required this.createdAt,
-    required this.lastActive,
-    required this.displayName,
-    this.bio,
-    this.profilePhoto,
-    this.coverPhoto,
-    this.location,
-    this.website,
-    this.verificationStatus = VerificationStatus.unverified,
-    this.verificationBadges = const [],
-    this.followersCount = 0,
-    this.followingCount = 0,
-    this.postsCount = 0,
-    this.reputationScore = 0.0,
-    this.isPublic = true,
-    this.allowMessages = true,
-    this.allowCalls = false,
-  });
+  DigitalIdentity({required this.id, required this.username, required this.accountType, required this.createdAt, required this.lastActive, required this.displayName, this.bio, this.profilePhoto, this.coverPhoto, this.location, this.website, this.verificationStatus = VerificationStatus.unverified, this.verificationBadges = const [], this.followersCount = 0, this.followingCount = 0, this.postsCount = 0, this.reputationScore = 0.0, this.isPublic = true, this.allowMessages = true, this.allowCalls = false});
 
   factory DigitalIdentity.fromJson(Map<String, dynamic> json) {
     return DigitalIdentity(
@@ -89,9 +63,7 @@ class DigitalIdentity {
       coverPhoto: json['cover_photo'],
       location: json['location'],
       website: json['website'],
-      verificationStatus: VerificationStatus.values.byName(
-        json['verification_status'] ?? 'unverified',
-      ),
+      verificationStatus: VerificationStatus.values.byName(json['verification_status'] ?? 'unverified'),
       verificationBadges: List<String>.from(json['verification_badges'] ?? []),
       followersCount: json['followers_count'] ?? 0,
       followingCount: json['following_count'] ?? 0,
@@ -188,9 +160,7 @@ class PersonalAccount extends DigitalIdentity {
       coverPhoto: json['cover_photo'],
       location: json['location'],
       website: json['website'],
-      verificationStatus: VerificationStatus.values.byName(
-        json['verification_status'] ?? 'unverified',
-      ),
+      verificationStatus: VerificationStatus.values.byName(json['verification_status'] ?? 'unverified'),
       verificationBadges: List<String>.from(json['verification_badges'] ?? []),
       followersCount: json['followers_count'] ?? 0,
       followingCount: json['following_count'] ?? 0,
@@ -201,9 +171,7 @@ class PersonalAccount extends DigitalIdentity {
       allowCalls: json['allow_calls'] ?? false,
       firstName: json['first_name'],
       lastName: json['last_name'],
-      dateOfBirth: json['date_of_birth'] != null
-          ? DateTime.parse(json['date_of_birth'])
-          : null,
+      dateOfBirth: json['date_of_birth'] != null ? DateTime.parse(json['date_of_birth']) : null,
       email: json['email'],
       phone: json['phone'],
       interests: List<String>.from(json['interests'] ?? []),
@@ -216,17 +184,7 @@ class PersonalAccount extends DigitalIdentity {
   @override
   Map<String, dynamic> toJson() {
     final json = super.toJson();
-    json.addAll({
-      'first_name': firstName,
-      'last_name': lastName,
-      'date_of_birth': dateOfBirth?.toIso8601String(),
-      'email': email,
-      'phone': phone,
-      'interests': interests,
-      'skills': skills,
-      'is_creator': isCreator,
-      'creator_category': creatorCategory,
-    });
+    json.addAll({'first_name': firstName, 'last_name': lastName, 'date_of_birth': dateOfBirth?.toIso8601String(), 'email': email, 'phone': phone, 'interests': interests, 'skills': skills, 'is_creator': isCreator, 'creator_category': creatorCategory});
     return json;
   }
 }
@@ -316,9 +274,7 @@ class BusinessAccount extends DigitalIdentity {
       coverPhoto: json['cover_photo'],
       location: json['location'],
       website: json['website'],
-      verificationStatus: VerificationStatus.values.byName(
-        json['verification_status'] ?? 'unverified',
-      ),
+      verificationStatus: VerificationStatus.values.byName(json['verification_status'] ?? 'unverified'),
       verificationBadges: List<String>.from(json['verification_badges'] ?? []),
       followersCount: json['followers_count'] ?? 0,
       followingCount: json['following_count'] ?? 0,
@@ -336,9 +292,7 @@ class BusinessAccount extends DigitalIdentity {
       email: json['email'],
       phone: json['phone'],
       address: json['address'],
-      hoursOfOperation: json['hours_of_operation'] != null
-          ? Map<String, String>.from(json['hours_of_operation'])
-          : null,
+      hoursOfOperation: json['hours_of_operation'] != null ? Map<String, String>.from(json['hours_of_operation']) : null,
       rating: (json['rating'] ?? 0.0).toDouble(),
       reviewsCount: json['reviews_count'] ?? 0,
       productsCount: json['products_count'] ?? 0,
@@ -402,18 +356,7 @@ class DigitalWallet {
   final double totalSent;
   final int transactionCount;
 
-  DigitalWallet({
-    required this.id,
-    required this.accountId,
-    this.balance = 0.0,
-    this.currency = 'USD',
-    this.cryptoBalances = const {},
-    this.paymentMethods = const [],
-    this.recentTransactions = const [],
-    this.totalReceived = 0.0,
-    this.totalSent = 0.0,
-    this.transactionCount = 0,
-  });
+  DigitalWallet({required this.id, required this.accountId, this.balance = 0.0, this.currency = 'USD', this.cryptoBalances = const {}, this.paymentMethods = const [], this.recentTransactions = const [], this.totalReceived = 0.0, this.totalSent = 0.0, this.transactionCount = 0});
 
   factory DigitalWallet.fromJson(Map<String, dynamic> json) {
     return DigitalWallet(
@@ -421,19 +364,9 @@ class DigitalWallet {
       accountId: json['account_id'],
       balance: (json['balance'] ?? 0.0).toDouble(),
       currency: json['currency'] ?? 'USD',
-      cryptoBalances: json['crypto_balances'] != null
-          ? Map<String, double>.from(json['crypto_balances'])
-          : {},
-      paymentMethods: json['payment_methods'] != null
-          ? (json['payment_methods'] as List)
-              .map((m) => PaymentMethod.fromJson(m))
-              .toList()
-          : [],
-      recentTransactions: json['recent_transactions'] != null
-          ? (json['recent_transactions'] as List)
-              .map((t) => Transaction.fromJson(t))
-              .toList()
-          : [],
+      cryptoBalances: json['crypto_balances'] != null ? Map<String, double>.from(json['crypto_balances']) : {},
+      paymentMethods: json['payment_methods'] != null ? (json['payment_methods'] as List).map((m) => PaymentMethod.fromJson(m)).toList() : [],
+      recentTransactions: json['recent_transactions'] != null ? (json['recent_transactions'] as List).map((t) => Transaction.fromJson(t)).toList() : [],
       totalReceived: (json['total_received'] ?? 0.0).toDouble(),
       totalSent: (json['total_sent'] ?? 0.0).toDouble(),
       transactionCount: json['transaction_count'] ?? 0,
@@ -441,19 +374,7 @@ class DigitalWallet {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'account_id': accountId,
-      'balance': balance,
-      'currency': currency,
-      'crypto_balances': cryptoBalances,
-      'payment_methods': paymentMethods.map((m) => m.toJson()).toList(),
-      'recent_transactions':
-          recentTransactions.map((t) => t.toJson()).toList(),
-      'total_received': totalReceived,
-      'total_sent': totalSent,
-      'transaction_count': transactionCount,
-    };
+    return {'id': id, 'account_id': accountId, 'balance': balance, 'currency': currency, 'crypto_balances': cryptoBalances, 'payment_methods': paymentMethods.map((m) => m.toJson()).toList(), 'recent_transactions': recentTransactions.map((t) => t.toJson()).toList(), 'total_received': totalReceived, 'total_sent': totalSent, 'transaction_count': transactionCount};
   }
 }
 
@@ -465,32 +386,14 @@ class PaymentMethod {
   final bool isDefault;
   final DateTime addedAt;
 
-  PaymentMethod({
-    required this.id,
-    required this.type,
-    required this.name,
-    this.isDefault = false,
-    required this.addedAt,
-  });
+  PaymentMethod({required this.id, required this.type, required this.name, this.isDefault = false, required this.addedAt});
 
   factory PaymentMethod.fromJson(Map<String, dynamic> json) {
-    return PaymentMethod(
-      id: json['id'],
-      type: json['type'],
-      name: json['name'],
-      isDefault: json['is_default'] ?? false,
-      addedAt: DateTime.parse(json['added_at']),
-    );
+    return PaymentMethod(id: json['id'], type: json['type'], name: json['name'], isDefault: json['is_default'] ?? false, addedAt: DateTime.parse(json['added_at']));
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'type': type,
-      'name': name,
-      'is_default': isDefault,
-      'added_at': addedAt.toIso8601String(),
-    };
+    return {'id': id, 'type': type, 'name': name, 'is_default': isDefault, 'added_at': addedAt.toIso8601String()};
   }
 }
 
@@ -506,44 +409,14 @@ class Transaction {
   final DateTime timestamp;
   final String status; // pending, completed, failed
 
-  Transaction({
-    required this.id,
-    required this.type,
-    required this.amount,
-    required this.currency,
-    this.fromAccountId,
-    this.toAccountId,
-    this.description,
-    required this.timestamp,
-    this.status = 'completed',
-  });
+  Transaction({required this.id, required this.type, required this.amount, required this.currency, this.fromAccountId, this.toAccountId, this.description, required this.timestamp, this.status = 'completed'});
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
-    return Transaction(
-      id: json['id'],
-      type: json['type'],
-      amount: (json['amount']).toDouble(),
-      currency: json['currency'] ?? 'USD',
-      fromAccountId: json['from_account_id'],
-      toAccountId: json['to_account_id'],
-      description: json['description'],
-      timestamp: DateTime.parse(json['timestamp']),
-      status: json['status'] ?? 'completed',
-    );
+    return Transaction(id: json['id'], type: json['type'], amount: (json['amount']).toDouble(), currency: json['currency'] ?? 'USD', fromAccountId: json['from_account_id'], toAccountId: json['to_account_id'], description: json['description'], timestamp: DateTime.parse(json['timestamp']), status: json['status'] ?? 'completed');
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'type': type,
-      'amount': amount,
-      'currency': currency,
-      'from_account_id': fromAccountId,
-      'to_account_id': toAccountId,
-      'description': description,
-      'timestamp': timestamp.toIso8601String(),
-      'status': status,
-    };
+    return {'id': id, 'type': type, 'amount': amount, 'currency': currency, 'from_account_id': fromAccountId, 'to_account_id': toAccountId, 'description': description, 'timestamp': timestamp.toIso8601String(), 'status': status};
   }
 }
 
@@ -562,53 +435,14 @@ class SocialPost {
   final bool isLiked;
   final bool isBookmarked;
 
-  SocialPost({
-    required this.id,
-    required this.authorId,
-    required this.authorName,
-    this.authorPhoto,
-    required this.content,
-    this.mediaUrls = const [],
-    required this.createdAt,
-    this.likesCount = 0,
-    this.commentsCount = 0,
-    this.sharesCount = 0,
-    this.isLiked = false,
-    this.isBookmarked = false,
-  });
+  SocialPost({required this.id, required this.authorId, required this.authorName, this.authorPhoto, required this.content, this.mediaUrls = const [], required this.createdAt, this.likesCount = 0, this.commentsCount = 0, this.sharesCount = 0, this.isLiked = false, this.isBookmarked = false});
 
   factory SocialPost.fromJson(Map<String, dynamic> json) {
-    return SocialPost(
-      id: json['id'],
-      authorId: json['author_id'],
-      authorName: json['author_name'],
-      authorPhoto: json['author_photo'],
-      content: json['content'],
-      mediaUrls: List<String>.from(json['media_urls'] ?? []),
-      createdAt: DateTime.parse(json['created_at']),
-      likesCount: json['likes_count'] ?? 0,
-      commentsCount: json['comments_count'] ?? 0,
-      sharesCount: json['shares_count'] ?? 0,
-      isLiked: json['is_liked'] ?? false,
-      isBookmarked: json['is_bookmarked'] ?? false,
-    );
+    return SocialPost(id: json['id'], authorId: json['author_id'], authorName: json['author_name'], authorPhoto: json['author_photo'], content: json['content'], mediaUrls: List<String>.from(json['media_urls'] ?? []), createdAt: DateTime.parse(json['created_at']), likesCount: json['likes_count'] ?? 0, commentsCount: json['comments_count'] ?? 0, sharesCount: json['shares_count'] ?? 0, isLiked: json['is_liked'] ?? false, isBookmarked: json['is_bookmarked'] ?? false);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'author_id': authorId,
-      'author_name': authorName,
-      'author_photo': authorPhoto,
-      'content': content,
-      'media_urls': mediaUrls,
-      'created_at': createdAt.toIso8601String(),
-      'likes_count': likesCount,
-      'comments_count': commentsCount,
-      'shares_count': sharesCount,
-      'is_liked': isLiked,
-      'is_bookmarked': isBookmarked,
-    };
+    return {'id': id, 'author_id': authorId, 'author_name': authorName, 'author_photo': authorPhoto, 'content': content, 'media_urls': mediaUrls, 'created_at': createdAt.toIso8601String(), 'likes_count': likesCount, 'comments_count': commentsCount, 'shares_count': sharesCount, 'is_liked': isLiked, 'is_bookmarked': isBookmarked};
   }
 }
 
@@ -631,24 +465,7 @@ class ProductListing {
   final int reviewsCount;
   final DateTime createdAt;
 
-  ProductListing({
-    required this.id,
-    required this.sellerId,
-    required this.sellerName,
-    this.sellerPhoto,
-    required this.title,
-    required this.description,
-    required this.price,
-    this.currency = 'USD',
-    this.images = const [],
-    required this.category,
-    this.tags = const [],
-    this.stockQuantity = 0,
-    this.isAvailable = true,
-    this.rating = 0.0,
-    this.reviewsCount = 0,
-    required this.createdAt,
-  });
+  ProductListing({required this.id, required this.sellerId, required this.sellerName, this.sellerPhoto, required this.title, required this.description, required this.price, this.currency = 'USD', this.images = const [], required this.category, this.tags = const [], this.stockQuantity = 0, this.isAvailable = true, this.rating = 0.0, this.reviewsCount = 0, required this.createdAt});
 
   factory ProductListing.fromJson(Map<String, dynamic> json) {
     return ProductListing(
@@ -672,24 +489,7 @@ class ProductListing {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'seller_id': sellerId,
-      'seller_name': sellerName,
-      'seller_photo': sellerPhoto,
-      'title': title,
-      'description': description,
-      'price': price,
-      'currency': currency,
-      'images': images,
-      'category': category,
-      'tags': tags,
-      'stock_quantity': stockQuantity,
-      'is_available': isAvailable,
-      'rating': rating,
-      'reviews_count': reviewsCount,
-      'created_at': createdAt.toIso8601String(),
-    };
+    return {'id': id, 'seller_id': sellerId, 'seller_name': sellerName, 'seller_photo': sellerPhoto, 'title': title, 'description': description, 'price': price, 'currency': currency, 'images': images, 'category': category, 'tags': tags, 'stock_quantity': stockQuantity, 'is_available': isAvailable, 'rating': rating, 'reviews_count': reviewsCount, 'created_at': createdAt.toIso8601String()};
   }
 }
 
@@ -703,37 +503,13 @@ class ActivityItem {
   final DateTime timestamp;
   final String? actionUrl; // Deep link to the activity
 
-  ActivityItem({
-    required this.id,
-    required this.type,
-    required this.title,
-    this.description,
-    this.imageUrl,
-    required this.timestamp,
-    this.actionUrl,
-  });
+  ActivityItem({required this.id, required this.type, required this.title, this.description, this.imageUrl, required this.timestamp, this.actionUrl});
 
   factory ActivityItem.fromJson(Map<String, dynamic> json) {
-    return ActivityItem(
-      id: json['id'],
-      type: json['type'],
-      title: json['title'],
-      description: json['description'],
-      imageUrl: json['image_url'],
-      timestamp: DateTime.parse(json['timestamp']),
-      actionUrl: json['action_url'],
-    );
+    return ActivityItem(id: json['id'], type: json['type'], title: json['title'], description: json['description'], imageUrl: json['image_url'], timestamp: DateTime.parse(json['timestamp']), actionUrl: json['action_url']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'type': type,
-      'title': title,
-      'description': description,
-      'image_url': imageUrl,
-      'timestamp': timestamp.toIso8601String(),
-      'action_url': actionUrl,
-    };
+    return {'id': id, 'type': type, 'title': title, 'description': description, 'image_url': imageUrl, 'timestamp': timestamp.toIso8601String(), 'action_url': actionUrl};
   }
 }

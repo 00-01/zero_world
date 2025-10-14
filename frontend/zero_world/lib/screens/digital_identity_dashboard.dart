@@ -7,18 +7,13 @@ import '../models/digital_identity.dart';
 class DigitalIdentityDashboard extends StatefulWidget {
   final DigitalIdentity account;
 
-  const DigitalIdentityDashboard({
-    Key? key,
-    required this.account,
-  }) : super(key: key);
+  const DigitalIdentityDashboard({Key? key, required this.account}) : super(key: key);
 
   @override
-  State<DigitalIdentityDashboard> createState() =>
-      _DigitalIdentityDashboardState();
+  State<DigitalIdentityDashboard> createState() => _DigitalIdentityDashboardState();
 }
 
-class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
-    with SingleTickerProviderStateMixin {
+class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
 
@@ -43,53 +38,28 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
           SliverAppBar(
             expandedHeight: 250,
             pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: _buildCoverPhoto(),
-            ),
+            flexibleSpace: FlexibleSpaceBar(background: _buildCoverPhoto()),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () => _navigateToSettings(),
-              ),
-              IconButton(
-                icon: const Icon(Icons.qr_code),
-                onPressed: () => _showQRCode(),
-              ),
+              IconButton(icon: const Icon(Icons.settings), onPressed: () => _navigateToSettings()),
+              IconButton(icon: const Icon(Icons.qr_code), onPressed: () => _showQRCode()),
             ],
           ),
 
           // Profile Header
-          SliverToBoxAdapter(
-            child: _buildProfileHeader(),
-          ),
+          SliverToBoxAdapter(child: _buildProfileHeader()),
 
           // Stats Row
-          SliverToBoxAdapter(
-            child: _buildStatsRow(),
-          ),
+          SliverToBoxAdapter(child: _buildStatsRow()),
 
           // Quick Actions
-          SliverToBoxAdapter(
-            child: _buildQuickActions(),
-          ),
+          SliverToBoxAdapter(child: _buildQuickActions()),
 
           // Tabs
-          SliverToBoxAdapter(
-            child: _buildTabs(),
-          ),
+          SliverToBoxAdapter(child: _buildTabs()),
 
           // Tab Content
           SliverFillRemaining(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildActivityTab(),
-                _buildPostsTab(),
-                _buildMarketplaceTab(),
-                _buildWalletTab(),
-                _buildAnalyticsTab(),
-              ],
-            ),
+            child: TabBarView(controller: _tabController, children: [_buildActivityTab(), _buildPostsTab(), _buildMarketplaceTab(), _buildWalletTab(), _buildAnalyticsTab()]),
           ),
         ],
       ),
@@ -105,33 +75,16 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
       children: [
         // Cover Image
         widget.account.coverPhoto != null
-            ? Image.network(
-                widget.account.coverPhoto!,
-                fit: BoxFit.cover,
-              )
+            ? Image.network(widget.account.coverPhoto!, fit: BoxFit.cover)
             : Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.blue.shade400,
-                      Colors.purple.shade400,
-                    ],
-                  ),
+                  gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.blue.shade400, Colors.purple.shade400]),
                 ),
               ),
         // Gradient Overlay
         Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.transparent,
-                Colors.black.withOpacity(0.7),
-              ],
-            ),
+            gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Colors.black.withOpacity(0.7)]),
           ),
         ),
       ],
@@ -148,25 +101,12 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                ),
-              ],
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, spreadRadius: 2)],
             ),
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: widget.account.profilePhoto != null
-                  ? NetworkImage(widget.account.profilePhoto!)
-                  : null,
-              child: widget.account.profilePhoto == null
-                  ? Text(
-                      widget.account.displayName[0].toUpperCase(),
-                      style: const TextStyle(fontSize: 40, color: Colors.white),
-                    )
-                  : null,
+              backgroundImage: widget.account.profilePhoto != null ? NetworkImage(widget.account.profilePhoto!) : null,
+              child: widget.account.profilePhoto == null ? Text(widget.account.displayName[0].toUpperCase(), style: const TextStyle(fontSize: 40, color: Colors.white)) : null,
               backgroundColor: Colors.blue.shade300,
             ),
           ),
@@ -176,44 +116,20 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                widget.account.displayName,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              if (widget.account.verificationStatus ==
-                  VerificationStatus.official) ...[
-                const SizedBox(width: 6),
-                const Icon(
-                  Icons.verified,
-                  color: Colors.blue,
-                  size: 24,
-                ),
-              ],
+              Text(widget.account.displayName, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              if (widget.account.verificationStatus == VerificationStatus.official) ...[const SizedBox(width: 6), const Icon(Icons.verified, color: Colors.blue, size: 24)],
             ],
           ),
 
           // Username
-          Text(
-            '@${widget.account.username}',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey.shade600,
-            ),
-          ),
+          Text('@${widget.account.username}', style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
 
           // Bio
           if (widget.account.bio != null) ...[
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Text(
-                widget.account.bio!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
-              ),
+              child: Text(widget.account.bio!, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14)),
             ),
           ],
 
@@ -228,10 +144,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                   children: [
                     Icon(Icons.location_on, size: 16, color: Colors.grey.shade600),
                     const SizedBox(width: 4),
-                    Text(
-                      widget.account.location!,
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
+                    Text(widget.account.location!, style: TextStyle(color: Colors.grey.shade600)),
                   ],
                 ),
               if (widget.account.website != null)
@@ -240,10 +153,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                   children: [
                     Icon(Icons.link, size: 16, color: Colors.grey.shade600),
                     const SizedBox(width: 4),
-                    Text(
-                      widget.account.website!,
-                      style: const TextStyle(color: Colors.blue),
-                    ),
+                    Text(widget.account.website!, style: const TextStyle(color: Colors.blue)),
                   ],
                 ),
             ],
@@ -256,31 +166,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
   Widget _buildStatsRow() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildStatItem(
-            widget.account.followersCount.toString(),
-            'Followers',
-            () => _navigateToFollowers(),
-          ),
-          _buildStatItem(
-            widget.account.followingCount.toString(),
-            'Following',
-            () => _navigateToFollowing(),
-          ),
-          _buildStatItem(
-            widget.account.postsCount.toString(),
-            'Posts',
-            () => _tabController.animateTo(1),
-          ),
-          _buildStatItem(
-            widget.account.reputationScore.toStringAsFixed(1),
-            'Rating',
-            () => _showReputationDetails(),
-          ),
-        ],
-      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [_buildStatItem(widget.account.followersCount.toString(), 'Followers', () => _navigateToFollowers()), _buildStatItem(widget.account.followingCount.toString(), 'Following', () => _navigateToFollowing()), _buildStatItem(widget.account.postsCount.toString(), 'Posts', () => _tabController.animateTo(1)), _buildStatItem(widget.account.reputationScore.toStringAsFixed(1), 'Rating', () => _showReputationDetails())]),
     );
   }
 
@@ -289,30 +175,16 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
       onTap: onTap,
       child: Column(
         children: [
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade600,
-            ),
-          ),
+          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
         ],
       ),
     );
   }
 
   Widget _buildQuickActions() {
-    final actions = widget.account.accountType == AccountType.business
-        ? _buildBusinessActions()
-        : _buildPersonalActions();
+    final actions = widget.account.accountType == AccountType.business ? _buildBusinessActions() : _buildPersonalActions();
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -323,19 +195,9 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Quick Actions',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const Text('Quick Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: actions,
-              ),
+              Wrap(spacing: 12, runSpacing: 12, children: actions),
             ],
           ),
         ),
@@ -345,92 +207,27 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
 
   List<Widget> _buildPersonalActions() {
     return [
-      _buildActionButton(
-        Icons.post_add,
-        'Create Post',
-        Colors.blue,
-        () => _createPost(),
-      ),
-      _buildActionButton(
-        Icons.shopping_bag,
-        'Sell Item',
-        Colors.green,
-        () => _createListing(),
-      ),
-      _buildActionButton(
-        Icons.payment,
-        'Send Money',
-        Colors.orange,
-        () => _sendMoney(),
-      ),
-      _buildActionButton(
-        Icons.message,
-        'Message',
-        Colors.purple,
-        () => _openMessages(),
-      ),
-      _buildActionButton(
-        Icons.video_call,
-        'Go Live',
-        Colors.red,
-        () => _goLive(),
-      ),
-      _buildActionButton(
-        Icons.event,
-        'Create Event',
-        Colors.teal,
-        () => _createEvent(),
-      ),
+      _buildActionButton(Icons.post_add, 'Create Post', Colors.blue, () => _createPost()),
+      _buildActionButton(Icons.shopping_bag, 'Sell Item', Colors.green, () => _createListing()),
+      _buildActionButton(Icons.payment, 'Send Money', Colors.orange, () => _sendMoney()),
+      _buildActionButton(Icons.message, 'Message', Colors.purple, () => _openMessages()),
+      _buildActionButton(Icons.video_call, 'Go Live', Colors.red, () => _goLive()),
+      _buildActionButton(Icons.event, 'Create Event', Colors.teal, () => _createEvent()),
     ];
   }
 
   List<Widget> _buildBusinessActions() {
     return [
-      _buildActionButton(
-        Icons.post_add,
-        'Create Post',
-        Colors.blue,
-        () => _createPost(),
-      ),
-      _buildActionButton(
-        Icons.add_shopping_cart,
-        'Add Product',
-        Colors.green,
-        () => _addProduct(),
-      ),
-      _buildActionButton(
-        Icons.campaign,
-        'Run Ad',
-        Colors.orange,
-        () => _runAd(),
-      ),
-      _buildActionButton(
-        Icons.receipt,
-        'Send Invoice',
-        Colors.purple,
-        () => _sendInvoice(),
-      ),
-      _buildActionButton(
-        Icons.people,
-        'Customers',
-        Colors.teal,
-        () => _viewCustomers(),
-      ),
-      _buildActionButton(
-        Icons.analytics,
-        'Analytics',
-        Colors.indigo,
-        () => _tabController.animateTo(4),
-      ),
+      _buildActionButton(Icons.post_add, 'Create Post', Colors.blue, () => _createPost()),
+      _buildActionButton(Icons.add_shopping_cart, 'Add Product', Colors.green, () => _addProduct()),
+      _buildActionButton(Icons.campaign, 'Run Ad', Colors.orange, () => _runAd()),
+      _buildActionButton(Icons.receipt, 'Send Invoice', Colors.purple, () => _sendInvoice()),
+      _buildActionButton(Icons.people, 'Customers', Colors.teal, () => _viewCustomers()),
+      _buildActionButton(Icons.analytics, 'Analytics', Colors.indigo, () => _tabController.animateTo(4)),
     ];
   }
 
-  Widget _buildActionButton(
-    IconData icon,
-    String label,
-    Color color,
-    VoidCallback onTap,
-  ) {
+  Widget _buildActionButton(IconData icon, String label, Color color, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -449,11 +246,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
             Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: color,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -493,34 +286,10 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
 
   Widget _buildActivityCard(int index) {
     final activities = [
-      {
-        'icon': Icons.shopping_bag,
-        'color': Colors.green,
-        'title': 'New order received',
-        'description': 'Order #12345 - \$45.99',
-        'time': '2 hours ago',
-      },
-      {
-        'icon': Icons.message,
-        'color': Colors.blue,
-        'title': '3 new messages',
-        'description': 'From customers and followers',
-        'time': '3 hours ago',
-      },
-      {
-        'icon': Icons.favorite,
-        'color': Colors.red,
-        'title': 'Your post got 234 likes',
-        'description': '"Check out my new product!"',
-        'time': '5 hours ago',
-      },
-      {
-        'icon': Icons.payment,
-        'color': Colors.orange,
-        'title': 'Payment received',
-        'description': '\$125.00 from @john_doe',
-        'time': '1 day ago',
-      },
+      {'icon': Icons.shopping_bag, 'color': Colors.green, 'title': 'New order received', 'description': 'Order #12345 - \$45.99', 'time': '2 hours ago'},
+      {'icon': Icons.message, 'color': Colors.blue, 'title': '3 new messages', 'description': 'From customers and followers', 'time': '3 hours ago'},
+      {'icon': Icons.favorite, 'color': Colors.red, 'title': 'Your post got 234 likes', 'description': '"Check out my new product!"', 'time': '5 hours ago'},
+      {'icon': Icons.payment, 'color': Colors.orange, 'title': 'Payment received', 'description': '\$125.00 from @john_doe', 'time': '1 day ago'},
     ];
 
     final activity = activities[index % activities.length];
@@ -530,25 +299,16 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: (activity['color'] as Color).withOpacity(0.1),
-          child: Icon(
-            activity['icon'] as IconData,
-            color: activity['color'] as Color,
-          ),
+          child: Icon(activity['icon'] as IconData, color: activity['color'] as Color),
         ),
-        title: Text(
-          activity['title'] as String,
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
+        title: Text(activity['title'] as String, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
             Text(activity['description'] as String),
             const SizedBox(height: 4),
-            Text(
-              activity['time'] as String,
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-            ),
+            Text(activity['time'] as String, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
           ],
         ),
         trailing: const Icon(Icons.chevron_right),
@@ -560,22 +320,13 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
   Widget _buildPostsTab() {
     return GridView.builder(
       padding: const EdgeInsets.all(8),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 4,
-        mainAxisSpacing: 4,
-      ),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
       itemCount: 24,
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.grey.shade300,
-            image: DecorationImage(
-              image: NetworkImage(
-                'https://picsum.photos/300/300?random=$index',
-              ),
-              fit: BoxFit.cover,
-            ),
+            image: DecorationImage(image: NetworkImage('https://picsum.photos/300/300?random=$index'), fit: BoxFit.cover),
           ),
         );
       },
@@ -597,12 +348,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                 height: 200,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://picsum.photos/400/300?random=${index + 100}',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  image: DecorationImage(image: NetworkImage('https://picsum.photos/400/300?random=${index + 100}'), fit: BoxFit.cover),
                 ),
               ),
               Padding(
@@ -610,29 +356,16 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Product ${index + 1}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text('Product ${index + 1}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 4),
-                    Text(
-                      'High-quality product with amazing features',
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
+                    Text('High-quality product with amazing features', style: TextStyle(color: Colors.grey.shade600)),
                     const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '\$${(index + 1) * 10}.99',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
                         ),
                         Row(
                           children: [
@@ -666,29 +399,17 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
               width: double.infinity,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade700, Colors.blue.shade400],
-                ),
+                gradient: LinearGradient(colors: [Colors.blue.shade700, Colors.blue.shade400]),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Total Balance',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                  ),
+                  const Text('Total Balance', style: TextStyle(color: Colors.white70, fontSize: 16)),
                   const SizedBox(height: 8),
                   const Text(
                     '\$12,345.67',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -698,10 +419,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                           onPressed: () => _sendMoney(),
                           icon: const Icon(Icons.send),
                           label: const Text('Send'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.blue,
-                          ),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.blue),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -710,10 +428,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                           onPressed: () => _receiveMoney(),
                           icon: const Icon(Icons.download),
                           label: const Text('Receive'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.blue,
-                          ),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.blue),
                         ),
                       ),
                     ],
@@ -725,10 +440,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
           const SizedBox(height: 24),
 
           // Recent Transactions
-          const Text(
-            'Recent Transactions',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          const Text('Recent Transactions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ListView.builder(
             shrinkWrap: true,
@@ -740,25 +452,14 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
                 margin: const EdgeInsets.only(bottom: 8),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: isReceived
-                        ? Colors.green.withOpacity(0.1)
-                        : Colors.red.withOpacity(0.1),
-                    child: Icon(
-                      isReceived ? Icons.arrow_downward : Icons.arrow_upward,
-                      color: isReceived ? Colors.green : Colors.red,
-                    ),
+                    backgroundColor: isReceived ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                    child: Icon(isReceived ? Icons.arrow_downward : Icons.arrow_upward, color: isReceived ? Colors.green : Colors.red),
                   ),
-                  title: Text(
-                    isReceived ? 'Received from @user$index' : 'Sent to @user$index',
-                  ),
+                  title: Text(isReceived ? 'Received from @user$index' : 'Sent to @user$index'),
                   subtitle: Text('${index + 1} day${index == 0 ? '' : 's'} ago'),
                   trailing: Text(
                     '${isReceived ? '+' : '-'}\$${(index + 1) * 10}.00',
-                    style: TextStyle(
-                      color: isReceived ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: isReceived ? Colors.green : Colors.red, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
               );
@@ -783,10 +484,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Your Insights',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          const Text('Your Insights', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           _buildAnalyticsCard('Profile Views', '1,234', '+12%', Icons.visibility),
           _buildAnalyticsCard('Post Engagement', '5.2K', '+8%', Icons.favorite),
@@ -803,10 +501,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Business Performance',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          const Text('Business Performance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           _buildAnalyticsCard('Revenue (30 days)', '\$12,345', '+23%', Icons.monetization_on),
           _buildAnalyticsCard('Orders', '234', '+18%', Icons.shopping_cart),
@@ -836,35 +531,18 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
+                  Text(title, style: TextStyle(color: Colors.grey.shade600)),
                   const SizedBox(height: 4),
-                  Text(
-                    value,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: isPositive
-                    ? Colors.green.withOpacity(0.1)
-                    : Colors.red.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: BoxDecoration(color: isPositive ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
               child: Text(
                 change,
-                style: TextStyle(
-                  color: isPositive ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: isPositive ? Colors.green : Colors.red, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -891,17 +569,12 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
   }
 
   Widget _buildFAB() {
-    return FloatingActionButton(
-      onPressed: () => _showCreateOptions(),
-      child: const Icon(Icons.add),
-    );
+    return FloatingActionButton(onPressed: () => _showCreateOptions(), child: const Icon(Icons.add));
   }
 
   // Navigation Methods
   void _navigateToSettings() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Settings - Coming Soon!')),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Settings - Coming Soon!')));
   }
 
   void _showQRCode() {
@@ -922,12 +595,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
             Text('@${widget.account.username}'),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))],
       ),
     );
   }
@@ -955,10 +623,7 @@ class _DigitalIdentityDashboardState extends State<DigitalIdentityDashboard>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Create',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            const Text('Create', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             ListTile(
               leading: const Icon(Icons.post_add, color: Colors.blue),
