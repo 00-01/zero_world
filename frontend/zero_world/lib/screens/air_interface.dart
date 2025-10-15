@@ -9,6 +9,15 @@ import 'dart:async';
 /// - Appears on demand (hotkey/gesture/voice)
 /// - Breathing animations
 /// - Auto-dismisses after use
+///
+/// Design Philosophy (Brightness = Importance):
+/// - Brighter colors (#FFFFFF) = More important
+/// - Darker colors (#000000) = Less important
+/// - Background: #000000 (pure black)
+/// - Chat bubble: #FFFFFF (pure white) - MOST IMPORTANT
+/// - Text in chat bubble: #000000 (pure black) - High contrast
+/// - Input field: Dark gray (#1A1A1A) - Less important
+/// - Icons/hints: Medium gray (#666666) - Least important
 class AirInterface extends StatefulWidget {
   const AirInterface({super.key});
 
@@ -163,7 +172,7 @@ class _AirInterfaceState extends State<AirInterface>
     return GestureDetector(
       onTap: _dismiss,
       child: Container(
-        color: const Color(0xF5000000), // Almost transparent black
+        color: const Color(0xFF000000), // Pure black background - RULE: #000000
         child: Center(
           child: GestureDetector(
             onTap: () {}, // Prevent dismissing when tapping content
@@ -210,27 +219,20 @@ class _AirInterfaceState extends State<AirInterface>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0x1A87CEEB), // Sky blue, very transparent
+        color: const Color(0xFF1A1A1A), // Dark gray - less important than result
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: _isProcessing
-              ? const Color(0xFF00CED1)
-              : const Color(0x5500CED1),
+              ? const Color(0xFF666666) // Medium gray when processing
+              : const Color(0xFF333333), // Dark gray border
           width: _isProcessing ? 2 : 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x3300CED1), // Glow effect
-            blurRadius: _isProcessing ? 30 : 20,
-            spreadRadius: _isProcessing ? 4 : 2,
-          ),
-        ],
       ),
       child: Row(
         children: [
           const Icon(
             Icons.air,
-            color: Color(0xFF87CEEB),
+            color: Color(0xFF666666), // Medium gray - less important
             size: 24,
           ),
           const SizedBox(width: 12),
@@ -240,7 +242,7 @@ class _AirInterfaceState extends State<AirInterface>
               focusNode: _focusNode,
               enabled: !_isProcessing,
               style: const TextStyle(
-                color: Color(0xFFE8E8E8),
+                color: Color(0xFFCCCCCC), // Light gray text - readable but not prominent
                 fontSize: 18,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 0.5,
@@ -248,7 +250,7 @@ class _AirInterfaceState extends State<AirInterface>
               decoration: const InputDecoration(
                 hintText: 'Ask anything... (Cmd+Space)',
                 hintStyle: TextStyle(
-                  color: Color(0xFF888888),
+                  color: Color(0xFF555555), // Dark gray hint - less important
                   fontWeight: FontWeight.w300,
                 ),
                 border: InputBorder.none,
@@ -261,7 +263,7 @@ class _AirInterfaceState extends State<AirInterface>
               width: 20,
               height: 20,
               child: CircularProgressIndicator(
-                color: Color(0xFF00CED1),
+                color: Color(0xFF666666), // Medium gray
                 strokeWidth: 2,
               ),
             )
@@ -269,7 +271,7 @@ class _AirInterfaceState extends State<AirInterface>
             IconButton(
               icon: const Icon(
                 Icons.mic,
-                color: Color(0xFF00CED1),
+                color: Color(0xFF666666), // Medium gray - less important
               ),
               onPressed: () {
                 // TODO: Implement voice input
@@ -292,19 +294,12 @@ class _AirInterfaceState extends State<AirInterface>
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xE6000000), // More opaque for readability
+        color: const Color(0xFFFFFFFF), // Pure white - MOST IMPORTANT (chat bubble)
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0x3387CEEB),
+          color: const Color(0xFFEEEEEE), // Very light gray border
           width: 1,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x2087CEEB),
-            blurRadius: 20,
-            spreadRadius: 2,
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,7 +310,7 @@ class _AirInterfaceState extends State<AirInterface>
                 child: Text(
                   _result ?? '',
                   style: const TextStyle(
-                    color: Color(0xFFE8E8E8),
+                    color: Color(0xFF000000), // Pure black text in white bubble - RULE
                     fontSize: 16,
                     height: 1.5,
                   ),
@@ -324,7 +319,7 @@ class _AirInterfaceState extends State<AirInterface>
               IconButton(
                 icon: const Icon(
                   Icons.close,
-                  color: Color(0xFF888888),
+                  color: Color(0xFF666666), // Medium gray - less important
                   size: 20,
                 ),
                 onPressed: _dismiss,
@@ -380,9 +375,9 @@ class _AirInterfaceState extends State<AirInterface>
       icon: Icon(icon, size: 16),
       label: Text(label),
       style: OutlinedButton.styleFrom(
-        foregroundColor: const Color(0xFF87CEEB),
+        foregroundColor: const Color(0xFF666666), // Medium gray - less important than main content
         side: const BorderSide(
-          color: Color(0x3387CEEB),
+          color: Color(0xFFCCCCCC), // Light gray border
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(
@@ -409,12 +404,12 @@ class AirSummonButton extends StatelessWidget {
       right: 24,
       child: FloatingActionButton.extended(
         onPressed: onPressed,
-        backgroundColor: const Color(0xFF00CED1),
-        icon: const Icon(Icons.air, color: Colors.white),
+        backgroundColor: const Color(0xFF333333), // Dark gray - less important
+        icon: const Icon(Icons.air, color: Color(0xFFCCCCCC)), // Light gray icon
         label: const Text(
           'Cmd+Space',
           style: TextStyle(
-            color: Colors.white,
+            color: Color(0xFFCCCCCC), // Light gray text
             fontWeight: FontWeight.w300,
           ),
         ),
