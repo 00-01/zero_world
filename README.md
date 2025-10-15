@@ -1,17 +1,294 @@
 # Zero World - AI as Air
 
-> **"This app is air for humans"** - Making data access as natural as breathing
+# 🌬️ Zero World
 
-## 🌬️ Philosophy
+**The AI Mediator for Human Existence**
 
-Zero World is an **AI mediator** between humans and data. With this app, humans can access all data in the world easily - like breathing. The interface is invisible, the interaction is natural, and the response is instant.
+Zero World is not an app. **It's air.**
 
-### Core Principles
-- **Invisible**: UI appears on demand, disappears after use
-- **Effortless**: Natural language, no commands or syntax
-- **Instant**: <1 second response time (P95)
-- **Universal**: Access 1000+ data sources seamlessly
-- **Natural**: Like breathing - inhale (ask) → process → exhale (answer)
+Without air, humans cannot survive. Without Zero World, humans cannot function in the digital age.
+
+Zero World is the universal AI mediator between humans and ALL digital services. One interface. Natural language. Instant results. Everything accessible through breathing.
+
+**By 2030, 100% of digital traffic will flow through Zero World.**
+
+---
+
+## � What Is This?
+
+**Current World (2025):**
+```
+Human → Google (search)
+Human → Amazon (shopping)
+Human → Uber (travel)
+Human → Facebook (social)
+... 1000+ different apps
+```
+
+**Zero World (2030):**
+```
+Human → ZERO WORLD → [All Services]
+         ↑
+    ONE interface for EVERYTHING
+```
+
+### Every Digital Interaction
+
+- **Want to know something?** → Zero World (not Google)
+- **Want to buy something?** → Zero World (not Amazon)
+- **Want to go somewhere?** → Zero World (not Uber)
+- **Want to talk to someone?** → Zero World (not WhatsApp)
+- **Want to eat?** → Zero World (not DoorDash)
+
+**Zero World understands your intent and mediates access to ALL services.**
+
+---
+
+## 🚀 Quick Start
+
+### For Users
+
+1. **Summon** the Air Interface
+   ```
+   Press: Cmd+Space (Mac) or Ctrl+Space (Windows/Linux)
+   ```
+
+2. **Speak naturally**
+   ```
+   "What's the weather in Tokyo?"
+   "Order lunch for my team"
+   "Book me a ride to the airport"
+   "What's happening in tech news?"
+   ```
+
+3. **Done**
+   - Zero World understands your intent
+   - Queries all relevant services in parallel
+   - Returns synthesized result in <1 second
+   - Interface fades away automatically
+
+**It's as natural as breathing.**
+
+---
+
+## 📖 Core Philosophy
+
+Read the complete vision: **[ZERO_WORLD_MANIFESTO.md](./ZERO_WORLD_MANIFESTO.md)**
+
+### The Five Principles
+
+1. **INVISIBLE** 🌫️ - UI appears on demand, disappears after use
+2. **EFFORTLESS** 🎯 - Natural language, no learning curve
+3. **INSTANT** ⚡ - <100ms global response time
+4. **UNIVERSAL** 🌍 - Access ALL services through one interface
+5. **ESSENTIAL** 💨 - Like air: you can't live without it
+
+When users describe Zero World:
+> *"I just... breathe now. I don't even remember how we lived before this."*
+
+---
+
+## 🏗️ Architecture
+
+```
+AIR INTERFACE (Flutter)
+    ↓
+INTENT RECOGNITION (AI/ML)
+    ↓
+ORCHESTRATION LAYER (Rust) ← Universal Connector
+    ↓
+1M+ SERVICE ADAPTERS
+    ↓
+ALL EXISTING SERVICES (Google, Amazon, Uber, etc.)
+```
+
+### Current Status
+
+- ✅ **Air Interface** (Flutter) - Breathing UI with Cmd+Space hotkey
+- ✅ **Universal Connector** (Rust) - Parallel data fetching architecture
+- 🔄 **Service Adapters** - 1 working (Wikipedia), 4 stubs, 999,995 to go
+- 📋 **Intent Recognition** (Planned)
+- 📋 **Synthesis Engine** (Planned)
+
+---
+
+## 🎯 The Scale
+
+If Zero World is truly "air for humanity":
+
+- **10 BILLION users** (entire human population)
+- **1 TRILLION requests/second** (every digital action)
+- **100% of world's traffic** (total mediation)
+- **<100ms latency globally** (instant breathing)
+- **100% uptime** (survival-critical infrastructure)
+
+This is not hyperbole. This is the goal.
+
+---
+
+## 💻 For Developers
+
+### Running Locally
+
+**Prerequisites:**
+- Flutter 3.35.2+
+- Rust 1.70+
+- Docker & Docker Compose
+
+**Start the Air Interface:**
+```bash
+cd frontend/zero_world
+flutter run
+# Press Cmd+Space to summon
+```
+
+**Start the Universal Connector:**
+```bash
+cd services/universal-connector
+cargo run
+# API running on http://localhost:8080
+```
+
+### Building Adapters
+
+We need 1,000,000 service adapters. Here's how to build one:
+
+```rust
+// services/universal-connector/src/adapters/your_service.rs
+
+use crate::models::{DataSourceAdapter, Query, SourceResult};
+
+pub struct YourServiceAdapter;
+
+#[async_trait]
+impl DataSourceAdapter for YourServiceAdapter {
+    fn name(&self) -> &str { "your_service" }
+    
+    fn can_handle(&self, query: &Query) -> bool {
+        query.intent == "your_intent"
+    }
+    
+    async fn fetch(&self, query: &Query) -> Result<SourceResult> {
+        // Query your service API
+        // Return structured result
+    }
+}
+```
+
+**See:** [services/universal-connector/README.md](./services/universal-connector/README.md) for complete guide.
+
+---
+
+## 🗺️ Roadmap
+
+### Phase 1: FOUNDATION (2025-2026)
+- ✅ Air Interface
+- ✅ Universal Connector architecture
+- 🔄 50 data adapters
+- Target: 10K users (closed beta)
+
+### Phase 2: EXPANSION (2026-2027)
+- 1,000 service adapters
+- Voice interface ("Hey Zero")
+- Commerce integrations
+- Target: 1M users (public beta)
+
+### Phase 3: DOMINANCE (2027-2028)
+- 10,000 service adapters
+- AR/VR interface
+- Developer platform
+- Target: 100M users (mainstream)
+
+### Phase 4: UBIQUITY (2028-2029)
+- 100,000 service adapters
+- Government services
+- Healthcare integrations
+- Target: 1B users (global presence)
+
+### Phase 5: AIR (2029-2030)
+- 1M+ service adapters
+- 100% digital traffic mediation
+- Target: **10B users (all humanity)**
+
+---
+
+## 🤝 Contributing
+
+Zero World is humanity's infrastructure. We need:
+
+- **AI/ML Engineers** - Natural language understanding
+- **Infrastructure Engineers** - Trillion-request systems
+- **Adapter Developers** - Connect 1M+ services
+- **Security Engineers** - Quantum-resistant encryption
+- **Designers** - Invisible, effortless UX
+
+**Join us:** [CONTRIBUTING.md](./CONTRIBUTING.md) *(coming soon)*
+
+---
+
+## 📄 Documentation
+
+- **[ZERO_WORLD_MANIFESTO.md](./ZERO_WORLD_MANIFESTO.md)** - Complete vision
+- **[docs/architecture/OVERVIEW.md](./docs/architecture/OVERVIEW.md)** - System architecture
+- **[docs/implementation/ROADMAP.md](./docs/implementation/ROADMAP.md)** - Implementation plan
+- **[services/universal-connector/README.md](./services/universal-connector/README.md)** - Adapter guide
+
+---
+
+## 📊 Current Metrics
+
+| Metric | Current | Phase 2 Target | Phase 5 Target |
+|--------|---------|----------------|----------------|
+| Users | Dev only | 1M | 10B |
+| Adapters | 1 | 1,000 | 1M+ |
+| Requests/sec | N/A | 100K | 1T+ |
+| Latency (P95) | ~750ms | <1s | <100ms |
+| Uptime | N/A | 99.9% | 100% |
+
+---
+
+## ⚠️ Status
+
+**Zero World is in active development.**
+
+We're building the foundation:
+- Air Interface ✅
+- Universal Connector ✅
+- First adapters 🔄
+
+**This is a 10-year project to transform human civilization.**
+
+---
+
+## 🌍 The Vision
+
+By 2030, Zero World is not an app people use.
+
+**It's the air they breathe.**
+
+Invisible. Effortless. Instant. Universal. Essential.
+
+---
+
+## 📞 Contact
+
+- **Website:** zero.world *(coming soon)*
+- **Email:** hello@zero.world *(coming soon)*
+- **Discord:** discord.gg/zeroworld *(coming soon)*
+
+---
+
+## 📜 License
+
+MIT License - See [LICENSE](./LICENSE) for details.
+
+This is humanity's infrastructure. Build freely.
+
+---
+
+**"When humans describe what they need, Zero World makes it real. That's not technology. That's air."**
+
+🌬️
 
 ## 🚀 Quick Start
 

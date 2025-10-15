@@ -1,16 +1,24 @@
 # Universal Connector Service
 
-> **"The Lungs of Zero World"** - Breathes in data from 1000+ sources and exhales synthesized results
+> **"The Mediation Layer for Humanity"** - Connects 10 billion humans to 1 million services
 
 ## 🌬️ Philosophy
 
-The Universal Connector is the core service that makes Zero World feel like "air for humans". It's designed around the breathing metaphor:
+The Universal Connector is the **orchestration service** that mediates 100% of digital interactions between humans and services.
 
-- **Inhale**: Fan out queries to 10-50 data sources in parallel
-- **Process**: Each source fetches independently with intelligent timeout management
-- **Exhale**: Collect, deduplicate, and return all results in <400ms (P95)
+This is not just a "data aggregator" - this is the **core of Zero World's total mediation architecture**:
 
-This is where universal data access happens - Google, Wikipedia, Weather, News, Gmail, Slack, Notion, GitHub, and 1000+ more sources, all queried simultaneously.
+- **Inhale**: Fan out requests to 10-1000 services in parallel
+- **Mediate**: Each service adapter handles authentication, rate limiting, protocol translation
+- **Exhale**: Return synthesized results + execute actions (book, buy, send, schedule)
+
+**Every digital interaction flows through this service:**
+- Want to know something? → Query Google, Wikipedia, Wolfram
+- Want to buy something? → Query Amazon, eBay, search, then execute purchase
+- Want to go somewhere? → Query Uber, Lyft, flights, then book ride
+- Want to talk to someone? → Query Slack, email, SMS, then send message
+
+**This is where the "AI Mediator" vision becomes real.**
 
 ## 🎯 Goals
 
