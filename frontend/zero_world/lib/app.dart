@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/main_chat_screen.dart';
+import 'screens/home_screen.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
 import 'state/auth_state.dart';
@@ -61,7 +61,7 @@ class ZeroWorldApp extends StatelessWidget {
             theme: themeManager.getLightTheme(),
             darkTheme: themeManager.getDarkTheme(),
             themeMode: themeManager.themeMode,
-            home: const MainChatScreen(),
+            home: const HomeScreen(),
             debugShowCheckedModeBanner: false,
           );
         },
