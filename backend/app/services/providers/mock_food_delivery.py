@@ -28,6 +28,10 @@ class MockFoodDeliveryProvider(ServiceProvider):
     Mock food delivery service for development and testing
     """
     
+    def __init__(self):
+        """Initialize mock provider (no API key needed)"""
+        super().__init__(api_key="mock_api_key", config={})
+    
     # Mock restaurant database
     MOCK_RESTAURANTS = [
         {
