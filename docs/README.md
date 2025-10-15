@@ -35,14 +35,12 @@
 - **[guides/GET_CERTIFIED.md](./guides/GET_CERTIFIED.md)** - SSL/TLS certificate setup
 - **[guides/HTTPS_QUICKSTART.md](./guides/HTTPS_QUICKSTART.md)** - Quick HTTPS setup
 - **[guides/HTTPS_SETUP_GUIDE.md](./guides/HTTPS_SETUP_GUIDE.md)** - Detailed HTTPS configuration
+- **[guides/MOBILE_APP_DEPLOYMENT.md](./guides/MOBILE_APP_DEPLOYMENT.md)** - Mobile app deployment
+- **[guides/APP_STORE_QUICKSTART.md](./guides/APP_STORE_QUICKSTART.md)** - App store submission
 
 ### 🧪 Testing
 - **[testing/TESTING_GUIDE.md](./testing/TESTING_GUIDE.md)** - Comprehensive testing instructions
 - **[testing/ANDROID_EMULATOR_TESTING.md](./testing/ANDROID_EMULATOR_TESTING.md)** - Android emulator setup
-
-### 🚀 Deployment
-- **[deployment/MOBILE_APP_DEPLOYMENT.md](./deployment/MOBILE_APP_DEPLOYMENT.md)** - Mobile app deployment
-- **[deployment/APP_STORE_QUICKSTART.md](./deployment/APP_STORE_QUICKSTART.md)** - App store submission
 
 ### ⚖️ Legal
 - **[legal/PRIVACY_POLICY.md](./legal/PRIVACY_POLICY.md)** - Privacy policy
