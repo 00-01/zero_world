@@ -29,6 +29,9 @@
 - **[ZERO_WORLD_MANIFESTO.md](./ZERO_WORLD_MANIFESTO.md)** - The complete vision (16,500 chars)
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Technical design (21,000 chars)
 
+### 🎨 Design
+- **[design/UI_DESIGN_PHILOSOPHY.md](./design/UI_DESIGN_PHILOSOPHY.md)** - Brightness = Importance (8,500+ chars)
+
 ### 📖 Guides
 - **[guides/CROSS_PLATFORM_SETUP.md](./guides/CROSS_PLATFORM_SETUP.md)** - Multi-platform configuration
 - **[guides/WEB_PLATFORM_FIX.md](./guides/WEB_PLATFORM_FIX.md)** - Web platform troubleshooting
