@@ -1,47 +1,58 @@
-# Zero World - Super App Platform
+# Zero World - AI as Air
 
-> **Vision**: Building the next-generation super app to rival global tech giants. Designed for massive scale from day one.
+> **"This app is air for humans"** - Making data access as natural as breathing
+
+## 🌬️ Philosophy
+
+Zero World is an **AI mediator** between humans and data. With this app, humans can access all data in the world easily - like breathing. The interface is invisible, the interaction is natural, and the response is instant.
+
+### Core Principles
+- **Invisible**: UI appears on demand, disappears after use
+- **Effortless**: Natural language, no commands or syntax
+- **Instant**: <1 second response time (P95)
+- **Universal**: Access 1000+ data sources seamlessly
+- **Natural**: Like breathing - inhale (ask) → process → exhale (answer)
 
 ## 🚀 Quick Start
 
-### 📱 For Users - Download the App
-
-**Coming Soon to:**
-- 🤖 **Google Play Store** - Android devices
-- 🍎 **Apple App Store** - iPhone & iPad
-- 🌐 **Web App** - https://www.zn-01.com
-
-**Current Access:**
-- Web: https://www.zn-01.com
-- API: https://www.zn-01.com/api
-
-### 👨‍💻 For Developers - Setup
+### � Try the Air Interface
 
 ```bash
-# 1. Clone the repository
+# 1. Clone and setup
 git clone https://github.com/00-01/zero_world.git
 cd zero_world
 
-# 2. Set up environment
-cp .env.example .env
-# Edit .env with your configuration
-
-# 3. Start services
+# 2. Start services
 docker-compose up -d
 
-# 4. Build frontend
+# 3. Run Flutter app
 cd frontend/zero_world
 flutter pub get
-flutter build web
-cd ../..
+flutter run
 
-# 5. Build mobile apps (see MOBILE_APP_DEPLOYMENT.md)
-./scripts/build_mobile_release.sh
+# 4. Press Cmd+Space (or Ctrl+Space) to summon the Air Interface
+# 5. Ask anything: "What's the weather?" "Search for AI news"
 ```
 
-## 📊 System Architecture
+## 🎯 Current Status
 
-### Current (MVP Phase)
+### ✅ Phase 1: Breathing Basics (COMPLETED)
+- Air Interface: Transparent breathing UI
+- Hotkey activation: Cmd+Space / Ctrl+Space
+- Breathing animations: 4-second inhale/exhale cycle
+- Sky blue design with cyan glow effects
+- Auto-dismiss after 5 seconds
+- Documentation: Complete philosophy and architecture
+
+### � Phase 2: Universal Data Access (IN PROGRESS)
+- **Universal Connector** (Rust): Core service for parallel data fetching
+  - ✅ Architecture and orchestration
+  - ✅ Two-tier caching (L1: memory, L2: Redis)
+  - ✅ Wikipedia adapter (working)
+  - 🔄 5 adapters (Google, Weather, News)
+  - Target: 50 adapters by Month 3
+
+## 📊 System Architecture
 ```
 Internet → Nginx → Frontend (Flutter Web)
                  ↓ API Gateway
