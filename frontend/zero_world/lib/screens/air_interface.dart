@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 
 /// Air Interface - The breathing UI
-/// 
+///
 /// Philosophy: UI as natural as breathing
 /// - Invisible by default
 /// - Appears on demand (hotkey/gesture/voice)
@@ -25,12 +25,11 @@ class AirInterface extends StatefulWidget {
   State<AirInterface> createState() => _AirInterfaceState();
 }
 
-class _AirInterfaceState extends State<AirInterface>
-    with SingleTickerProviderStateMixin {
+class _AirInterfaceState extends State<AirInterface> with SingleTickerProviderStateMixin {
   late AnimationController _breathController;
   final TextEditingController _queryController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  
+
   bool _isVisible = false;
   bool _isProcessing = false;
   String? _result;
@@ -39,13 +38,10 @@ class _AirInterfaceState extends State<AirInterface>
   @override
   void initState() {
     super.initState();
-    
+
     // Breathing animation controller (4 seconds cycle)
-    _breathController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-    
+    _breathController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
+
     // Listen for global hotkey (Cmd/Ctrl + Space)
     HardwareKeyboard.instance.addHandler(_handleKeyPress);
   }
@@ -63,9 +59,7 @@ class _AirInterfaceState extends State<AirInterface>
   bool _handleKeyPress(KeyEvent event) {
     if (event is KeyDownEvent) {
       // Cmd/Ctrl + Space to summon
-      if (event.logicalKey == LogicalKeyboardKey.space &&
-          (HardwareKeyboard.instance.isMetaPressed ||
-              HardwareKeyboard.instance.isControlPressed)) {
+      if (event.logicalKey == LogicalKeyboardKey.space && (HardwareKeyboard.instance.isMetaPressed || HardwareKeyboard.instance.isControlPressed)) {
         _summon();
         return true;
       }
@@ -83,10 +77,10 @@ class _AirInterfaceState extends State<AirInterface>
       _isVisible = true;
       _result = null;
     });
-    
+
     // Inhale animation
     _breathController.forward();
-    
+
     // Focus on input
     Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) {
@@ -123,7 +117,7 @@ class _AirInterfaceState extends State<AirInterface>
       // TODO: Call AI Mediator service
       // For now, simulate response
       await Future.delayed(const Duration(milliseconds: 800));
-      
+
       setState(() {
         _result = _generateMockResponse(query);
         _isProcessing = false;
@@ -151,7 +145,7 @@ class _AirInterfaceState extends State<AirInterface>
 
   String _generateMockResponse(String query) {
     final lowerQuery = query.toLowerCase();
-    
+
     if (lowerQuery.contains('weather')) {
       return '🌤️ Current weather: 22°C, Sunny\nTokyo, Japan\nFeels like 21°C • Humidity: 45%';
     } else if (lowerQuery.contains('time')) {
@@ -181,10 +175,7 @@ class _AirInterfaceState extends State<AirInterface>
               builder: (context, child) {
                 return Transform.scale(
                   scale: 0.8 + (_breathController.value * 0.2),
-                  child: Opacity(
-                    opacity: _breathController.value,
-                    child: child,
-                  ),
+                  child: Opacity(opacity: _breathController.value, child: child),
                 );
               },
               child: _buildContent(),
@@ -198,18 +189,13 @@ class _AirInterfaceState extends State<AirInterface>
   Widget _buildContent() {
     return Container(
       width: 600,
-      constraints: BoxConstraints(
-        maxHeight: _result != null ? 400 : 80,
-      ),
+      constraints: BoxConstraints(maxHeight: _result != null ? 400 : 80),
       margin: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildInputField(),
-          if (_result != null) ...[
-            const SizedBox(height: 16),
-            _buildResultCard(),
-          ],
+          if (_result != null) ...[const SizedBox(height: 16), _buildResultCard()],
         ],
       ),
     );
@@ -275,12 +261,7 @@ class _AirInterfaceState extends State<AirInterface>
               ),
               onPressed: () {
                 // TODO: Implement voice input
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Voice input coming soon...'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Voice input coming soon...'), duration: Duration(seconds: 2)));
               },
               tooltip: 'Voice input',
             ),
@@ -334,12 +315,7 @@ class _AirInterfaceState extends State<AirInterface>
                 label: 'Copy',
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: _result ?? ''));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Copied to clipboard'),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied to clipboard'), duration: Duration(seconds: 1)));
                 },
               ),
               const SizedBox(width: 12),
@@ -365,11 +341,7 @@ class _AirInterfaceState extends State<AirInterface>
     );
   }
 
-  Widget _buildActionButton({
-    required IconData icon,
-    required String label,
-    required VoidCallback onPressed,
-  }) {
+  Widget _buildActionButton({required IconData icon, required String label, required VoidCallback onPressed}) {
     return OutlinedButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 16),
@@ -380,9 +352,7 @@ class _AirInterfaceState extends State<AirInterface>
           color: Color(0xFFCCCCCC), // Light gray border
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     );
   }
@@ -392,10 +362,7 @@ class _AirInterfaceState extends State<AirInterface>
 class AirSummonButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const AirSummonButton({
-    super.key,
-    required this.onPressed,
-  });
+  const AirSummonButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

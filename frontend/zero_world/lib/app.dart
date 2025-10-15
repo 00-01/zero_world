@@ -56,14 +56,7 @@ class ZeroWorldApp extends StatelessWidget {
       ],
       child: Consumer<AppThemeManager>(
         builder: (context, themeManager, child) {
-          return MaterialApp(
-            title: 'Zero World - AI Assistant',
-            theme: themeManager.getLightTheme(),
-            darkTheme: themeManager.getDarkTheme(),
-            themeMode: themeManager.themeMode,
-            home: const HomeScreen(),
-            debugShowCheckedModeBanner: false,
-          );
+          return MaterialApp(title: 'Zero World - AI Assistant', theme: themeManager.getLightTheme(), darkTheme: themeManager.getDarkTheme(), themeMode: themeManager.themeMode, home: const HomeScreen(), debugShowCheckedModeBanner: false);
         },
       ),
     );

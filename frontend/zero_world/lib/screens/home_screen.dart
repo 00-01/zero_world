@@ -3,7 +3,7 @@ import 'air_interface.dart';
 import 'main_chat_screen.dart';
 
 /// Home Screen - Combines traditional chat with Air Interface
-/// 
+///
 /// Architecture:
 /// - Background: Traditional chat interface (backward compatibility)
 /// - Overlay: Air Interface (breathing UI) - can be summoned anytime
@@ -39,14 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           // Background: Traditional chat interface
           const MainChatScreen(),
-          
+
           // Overlay: Air Interface (breathing UI)
-          if (_showAirInterface)
-            GestureDetector(
-              onTap: _dismissAir,
-              child: const AirInterface(),
-            ),
-          
+          if (_showAirInterface) GestureDetector(onTap: _dismissAir, child: const AirInterface()),
+
           // Floating action button to summon air interface
           if (!_showAirInterface)
             Positioned(
@@ -58,10 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.air, color: Colors.white),
                 label: const Text(
                   'Cmd+Space',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
                 ),
                 elevation: 8,
                 heroTag: 'air_summon',
