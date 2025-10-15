@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${SERVICE_NAME}
+  labels:
+    app: ${SERVICE_NAME}
+    environment: ${ENVIRONMENT}
+    region: ${REGION}
+    managed-by: terraform
+  annotations:
+    description: "Namespace for ${SERVICE_NAME} microservice"
+    contact: "platform-team@zeroworld.com"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ${SERVICE_NAME}-quota
+  namespace: ${SERVICE_NAME}
+spec:
+  hard:
+    requests.cpu: "1000"
+    requests.memory: 2Ti
+    limits.cpu: "2000"
+    limits.memory: 4Ti
+    persistentvolumeclaims: "100"
+    services.loadbalancers: "10"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ${SERVICE_NAME}-limits
+  namespace: ${SERVICE_NAME}
+spec:
+  limits:
+  - max:
+      cpu: "16"
+      memory: 64Gi
+    min:
+      cpu: "100m"
+      memory: 128Mi
+    default:
+      cpu: "2"
+      memory: 4Gi
+    defaultRequest:
+      cpu: "500m"
+      memory: 1Gi
+    type: Container

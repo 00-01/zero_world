@@ -46,10 +46,7 @@ class AppThemeManager extends ChangeNotifier {
 
     // Load theme mode
     final themeName = prefs.getString(_themeKey) ?? 'system';
-    _themeMode = ThemeMode.values.firstWhere(
-      (mode) => mode.name == themeName,
-      orElse: () => ThemeMode.system,
-    );
+    _themeMode = ThemeMode.values.firstWhere((mode) => mode.name == themeName, orElse: () => ThemeMode.system);
 
     // Load accent color
     final colorValue = prefs.getInt(_colorKey);
@@ -59,10 +56,7 @@ class AppThemeManager extends ChangeNotifier {
 
     // Load layout density
     final densityName = prefs.getString(_layoutKey) ?? 'comfortable';
-    _layoutDensity = LayoutDensity.values.firstWhere(
-      (density) => density.name == densityName,
-      orElse: () => LayoutDensity.comfortable,
-    );
+    _layoutDensity = LayoutDensity.values.firstWhere((density) => density.name == densityName, orElse: () => LayoutDensity.comfortable);
 
     // Load font size scale
     _fontSizeScale = prefs.getDouble(_fontSizeKey) ?? 1.0;
@@ -112,33 +106,19 @@ class AppThemeManager extends ChangeNotifier {
       visualDensity: _layoutDensity.visualDensity,
 
       // Simple, clean app bar
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black87,
-      ),
+      appBarTheme: AppBarTheme(centerTitle: false, elevation: 0, backgroundColor: Colors.transparent, foregroundColor: Colors.black87),
 
       // Card style
       cardTheme: CardThemeData(
         elevation: _layoutDensity == LayoutDensity.compact ? 1 : 2,
-        margin: EdgeInsets.symmetric(
-          horizontal: _layoutDensity == LayoutDensity.compact ? 8 : 16,
-          vertical: _layoutDensity == LayoutDensity.compact ? 4 : 8,
-        ),
+        margin: EdgeInsets.symmetric(horizontal: _layoutDensity == LayoutDensity.compact ? 8 : 16, vertical: _layoutDensity == LayoutDensity.compact ? 4 : 8),
       ),
 
       // Floating action button
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        elevation: _layoutDensity == LayoutDensity.compact ? 4 : 6,
-      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(elevation: _layoutDensity == LayoutDensity.compact ? 4 : 6),
 
       // Bottom navigation
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        elevation: 8,
-        selectedItemColor: _accentColor,
-        showUnselectedLabels: _layoutDensity != LayoutDensity.compact,
-      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(elevation: 8, selectedItemColor: _accentColor, showUnselectedLabels: _layoutDensity != LayoutDensity.compact),
     );
   }
 
@@ -151,7 +131,6 @@ class AppThemeManager extends ChangeNotifier {
 
       // Pure black background
       scaffoldBackgroundColor: const Color(0xFF000000), // Pure black background
-
       // Custom color scheme with vibrant colors
       colorScheme: ColorScheme.dark(
         primary: _accentColor,
@@ -177,17 +156,10 @@ class AppThemeManager extends ChangeNotifier {
       cardTheme: CardThemeData(
         elevation: _layoutDensity == LayoutDensity.compact ? 1 : 2,
         color: const Color(0xFF000000), // Pure black card color
-        margin: EdgeInsets.symmetric(
-          horizontal: _layoutDensity == LayoutDensity.compact ? 8 : 16,
-          vertical: _layoutDensity == LayoutDensity.compact ? 4 : 8,
-        ),
+        margin: EdgeInsets.symmetric(horizontal: _layoutDensity == LayoutDensity.compact ? 8 : 16, vertical: _layoutDensity == LayoutDensity.compact ? 4 : 8),
       ),
 
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        elevation: _layoutDensity == LayoutDensity.compact ? 4 : 6,
-        backgroundColor: _accentColor,
-        foregroundColor: Colors.white,
-      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(elevation: _layoutDensity == LayoutDensity.compact ? 4 : 6, backgroundColor: _accentColor, foregroundColor: Colors.white),
 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         elevation: 8,
