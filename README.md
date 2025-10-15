@@ -73,7 +73,7 @@ Human → ZERO WORLD → [All Services]
 
 ## 📖 Core Philosophy
 
-Read the complete vision: **[ZERO_WORLD_MANIFESTO.md](./ZERO_WORLD_MANIFESTO.md)**
+Read the complete vision: **[ZERO_WORLD_MANIFESTO.md](./docs/ZERO_WORLD_MANIFESTO.md)**
 
 ### The Five Principles
 
@@ -228,9 +228,9 @@ Zero World is humanity's infrastructure. We need:
 
 ## 📄 Documentation
 
-- **[ZERO_WORLD_MANIFESTO.md](./ZERO_WORLD_MANIFESTO.md)** - Complete vision
-- **[docs/architecture/OVERVIEW.md](./docs/architecture/OVERVIEW.md)** - System architecture
-- **[docs/implementation/ROADMAP.md](./docs/implementation/ROADMAP.md)** - Implementation plan
+- **[docs/ZERO_WORLD_MANIFESTO.md](./docs/ZERO_WORLD_MANIFESTO.md)** - Complete vision
+- **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** - System architecture
+- **[frontend/zero_world/README.md](./frontend/zero_world/README.md)** - Air Interface guide
 - **[services/universal-connector/README.md](./services/universal-connector/README.md)** - Adapter guide
 
 ---
