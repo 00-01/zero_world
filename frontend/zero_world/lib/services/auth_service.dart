@@ -41,7 +41,7 @@ class AuthService {
     String? fullName,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/api/auth/signup'),
+      Uri.parse('$baseUrl/auth/signup'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': email,
@@ -73,7 +73,7 @@ class AuthService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/api/auth/login'),
+      Uri.parse('$baseUrl/auth/login'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'username': email, // OAuth2 uses 'username' field
@@ -106,7 +106,7 @@ class AuthService {
     }
 
     final response = await http.get(
-      Uri.parse('$baseUrl/api/auth/me'),
+      Uri.parse('$baseUrl/auth/me'),
       headers: {
         'Authorization': 'Bearer $_accessToken',
       },
@@ -152,7 +152,7 @@ class AuthService {
     }
 
     final response = await http.put(
-      Uri.parse('$baseUrl/api/auth/profile'),
+      Uri.parse('$baseUrl/auth/profile'),
       headers: getAuthHeaders(),
       body: jsonEncode({
         if (fullName != null) 'full_name': fullName,
@@ -180,7 +180,7 @@ class AuthService {
     }
 
     final response = await http.post(
-      Uri.parse('$baseUrl/api/auth/change-password'),
+      Uri.parse('$baseUrl/auth/change-password'),
       headers: getAuthHeaders(),
       body: jsonEncode({
         'old_password': oldPassword,
