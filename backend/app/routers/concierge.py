@@ -55,8 +55,8 @@ from ..dependencies import get_current_user
 # Set up logging
 logger = logging.getLogger(__name__)
 
-# Create router
-router = APIRouter(prefix="/api/concierge", tags=["AI Concierge"])
+# Create router - prefix without /api since nginx proxy strips it
+router = APIRouter(prefix="/concierge", tags=["AI Concierge"])
 
 # Initialize conversation state machine
 state_machine = ConversationStateMachine()

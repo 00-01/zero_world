@@ -65,9 +65,7 @@ class ZeroWorldApp extends StatelessWidget {
             theme: themeManager.getLightTheme(),
             darkTheme: themeManager.getDarkTheme(),
             themeMode: themeManager.themeMode,
-            home: authProvider.isAuthenticated
-                ? const MainNavigationScreen()
-                : const WelcomeScreen(),
+            home: authProvider.isAuthenticated ? const MainNavigationScreen() : const WelcomeScreen(),
             routes: {
               '/welcome': (context) => const WelcomeScreen(),
               '/login': (context) => const LoginScreen(),

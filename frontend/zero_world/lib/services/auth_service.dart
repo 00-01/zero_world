@@ -6,9 +6,9 @@ import '../models/user_model.dart';
 /// Authentication Service
 /// Handles user login, signup, token management, and auth state
 class AuthService {
-  static const String baseUrl = 'http://backend:8000'; // Docker internal network
-  // For local development: 'http://localhost:8000'
-  // For production: Use environment variable
+  // Use relative path - nginx will proxy /api/ to backend
+  // This works in both development and production
+  static const String baseUrl = '/api';
 
   String? _accessToken;
   UserModel? _currentUser;
@@ -21,7 +21,7 @@ class AuthService {
   Future<void> initialize() async {
     final prefs = await SharedPreferences.getInstance();
     _accessToken = prefs.getString('access_token');
-    
+
     if (_accessToken != null) {
       // Validate token and load user data
       try {
@@ -55,11 +55,11 @@ class AuthService {
       final data = jsonDecode(response.body);
       _accessToken = data['access_token'];
       _currentUser = UserModel.fromJson(data['user']);
-      
+
       // Save token
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('access_token', _accessToken!);
-      
+
       return _currentUser!;
     } else {
       final error = jsonDecode(response.body);
@@ -84,14 +84,14 @@ class AuthService {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       _accessToken = data['access_token'];
-      
+
       // Get user data
       await getCurrentUser();
-      
+
       // Save token
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('access_token', _accessToken!);
-      
+
       return _currentUser!;
     } else {
       final error = jsonDecode(response.body);
@@ -125,7 +125,7 @@ class AuthService {
   Future<void> logout() async {
     _accessToken = null;
     _currentUser = null;
-    
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('access_token');
   }

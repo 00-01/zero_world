@@ -29,8 +29,8 @@ class ApiService {
     }
   }
 
-  // Default base URL - configurable via constructor
-  static const String _defaultBaseUrl = 'http://backend:8000';
+  // Default base URL - use relative path for nginx proxy
+  static const String _defaultBaseUrl = '/api';
 
   static bool _configPrinted = false;
   final http.Client httpClient;

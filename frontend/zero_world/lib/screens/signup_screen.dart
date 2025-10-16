@@ -39,9 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
       email: _emailController.text.trim(),
       username: _usernameController.text.trim(),
       password: _passwordController.text,
-      fullName: _fullNameController.text.trim().isNotEmpty
-          ? _fullNameController.text.trim()
-          : null,
+      fullName: _fullNameController.text.trim().isNotEmpty ? _fullNameController.text.trim() : null,
     );
 
     if (success && mounted) {
@@ -202,9 +200,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
                             color: const Color(0xFF888888),
                           ),
                           onPressed: () {
@@ -246,9 +242,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureConfirmPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
                             color: const Color(0xFF888888),
                           ),
                           onPressed: () {
@@ -274,8 +268,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Consumer<AuthProvider>(
                       builder: (context, authProvider, child) {
                         return ElevatedButton(
-                          onPressed:
-                              authProvider.isLoading ? null : _handleSignup,
+                          onPressed: authProvider.isLoading ? null : _handleSignup,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFFFFFFF),
                             foregroundColor: const Color(0xFF000000),

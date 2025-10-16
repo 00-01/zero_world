@@ -185,7 +185,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-
                       Form(
                         key: _formKey,
                         child: Column(
@@ -202,8 +201,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ],
                               decoration: InputDecoration(
                                 labelText: 'Card Number',
-                                labelStyle:
-                                    const TextStyle(color: Color(0xFF888888)),
+                                labelStyle: const TextStyle(color: Color(0xFF888888)),
                                 filled: true,
                                 fillColor: const Color(0xFF1A1A1A),
                                 border: OutlineInputBorder(
@@ -234,8 +232,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               style: const TextStyle(color: Color(0xFFFFFFFF)),
                               decoration: InputDecoration(
                                 labelText: 'Card Holder Name',
-                                labelStyle:
-                                    const TextStyle(color: Color(0xFF888888)),
+                                labelStyle: const TextStyle(color: Color(0xFF888888)),
                                 filled: true,
                                 fillColor: const Color(0xFF1A1A1A),
                                 border: OutlineInputBorder(
@@ -263,8 +260,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   child: TextFormField(
                                     controller: _expiryController,
                                     keyboardType: TextInputType.number,
-                                    style: const TextStyle(
-                                        color: Color(0xFFFFFFFF)),
+                                    style: const TextStyle(color: Color(0xFFFFFFFF)),
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly,
                                       LengthLimitingTextInputFormatter(4),
@@ -272,8 +268,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     ],
                                     decoration: InputDecoration(
                                       labelText: 'MM/YY',
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xFF888888)),
+                                      labelStyle: const TextStyle(color: Color(0xFF888888)),
                                       filled: true,
                                       fillColor: const Color(0xFF1A1A1A),
                                       border: OutlineInputBorder(
@@ -302,16 +297,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     controller: _cvvController,
                                     keyboardType: TextInputType.number,
                                     obscureText: true,
-                                    style: const TextStyle(
-                                        color: Color(0xFFFFFFFF)),
+                                    style: const TextStyle(color: Color(0xFFFFFFFF)),
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly,
                                       LengthLimitingTextInputFormatter(3),
                                     ],
                                     decoration: InputDecoration(
                                       labelText: 'CVV',
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xFF888888)),
+                                      labelStyle: const TextStyle(color: Color(0xFF888888)),
                                       filled: true,
                                       fillColor: const Color(0xFF1A1A1A),
                                       border: OutlineInputBorder(
@@ -401,8 +394,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildPaymentMethodOption(
-      String value, String title, IconData icon) {
+  Widget _buildPaymentMethodOption(String value, String title, IconData icon) {
     final isSelected = _selectedMethod == value;
     return InkWell(
       onTap: () {
@@ -416,9 +408,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           color: const Color(0xFF1A1A1A),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected
-                ? const Color(0xFFFFFFFF)
-                : const Color(0xFF333333),
+            color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF333333),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -426,8 +416,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             Icon(
               icon,
-              color:
-                  isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF888888),
+              color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF888888),
               size: 28,
             ),
             const SizedBox(width: 16),
@@ -435,9 +424,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: isSelected
-                      ? const Color(0xFFFFFFFF)
-                      : const Color(0xFF888888),
+                  color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF888888),
                   fontSize: 16,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),

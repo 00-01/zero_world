@@ -22,7 +22,7 @@ void main() async {
         ChangeNotifierProvider.value(value: authProvider),
         ProxyProvider<AuthProvider, ConciergeService>(
           update: (_, auth, __) => ConciergeService(
-            baseUrl: 'http://localhost:8000',  // TODO: Use environment config
+            baseUrl: '', // Empty - paths already include /api/concierge
             authToken: auth.accessToken,
           ),
         ),

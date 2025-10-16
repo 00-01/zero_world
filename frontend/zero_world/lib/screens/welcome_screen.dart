@@ -9,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
 
   Future<void> _handleGuestLogin(BuildContext context) async {
     final authProvider = context.read<AuthProvider>();
-    
+
     // Try to login as guest first
     bool success = await authProvider.login(
       email: 'guest@zeroworld.com',
@@ -59,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                     color: Color(0xFFFFFFFF),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // App name
                   const Text(
                     'Zero World',
@@ -72,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Tagline
                   const Text(
                     'AI-powered service concierge',
@@ -83,7 +83,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Description
                   const Text(
                     'Order food, book rides, get tasks done\nAll through natural conversation',
@@ -100,9 +100,7 @@ class WelcomeScreen extends StatelessWidget {
                   Consumer<AuthProvider>(
                     builder: (context, authProvider, child) {
                       return ElevatedButton.icon(
-                        onPressed: authProvider.isLoading
-                            ? null
-                            : () => _handleGuestLogin(context),
+                        onPressed: authProvider.isLoading ? null : () => _handleGuestLogin(context),
                         icon: authProvider.isLoading
                             ? const SizedBox(
                                 width: 20,
@@ -114,9 +112,7 @@ class WelcomeScreen extends StatelessWidget {
                               )
                             : const Icon(Icons.explore),
                         label: Text(
-                          authProvider.isLoading
-                              ? 'Setting up...'
-                              : 'Try as Guest',
+                          authProvider.isLoading ? 'Setting up...' : 'Try as Guest',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
