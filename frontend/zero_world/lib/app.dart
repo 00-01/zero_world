@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/home_screen.dart';
+import 'screens/main_navigation_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
 import 'state/auth_state.dart';
+import 'state/auth_provider.dart';
 import 'state/listings_state.dart';
 import 'state/theme_manager.dart';
 
@@ -54,9 +57,23 @@ class ZeroWorldApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AppThemeManager>(create: (_) => AppThemeManager()),
       ],
-      child: Consumer<AppThemeManager>(
-        builder: (context, themeManager, child) {
-          return MaterialApp(title: 'Zero World - AI Assistant', theme: themeManager.getLightTheme(), darkTheme: themeManager.getDarkTheme(), themeMode: themeManager.themeMode, home: const HomeScreen(), debugShowCheckedModeBanner: false);
+      child: Consumer2<AppThemeManager, AuthProvider>(
+        builder: (context, themeManager, authProvider, child) {
+          return MaterialApp(
+            title: 'Zero World - AI Assistant',
+            theme: themeManager.getLightTheme(),
+            darkTheme: themeManager.getDarkTheme(),
+            themeMode: themeManager.themeMode,
+            home: authProvider.isAuthenticated
+                ? const MainNavigationScreen()
+                : const LoginScreen(),
+            routes: {
+              '/login': (context) => const LoginScreen(),
+              '/signup': (context) => const SignupScreen(),
+              '/home': (context) => const MainNavigationScreen(),
+            },
+            debugShowCheckedModeBanner: false,
+          );
         },
       ),
     );

@@ -19,7 +19,9 @@ import 'dart:async';
 /// - Input field: Dark gray (#1A1A1A) - Less important
 /// - Icons/hints: Medium gray (#666666) - Least important
 class AirInterface extends StatefulWidget {
-  const AirInterface({super.key});
+  final VoidCallback? onDismiss;
+  
+  const AirInterface({super.key, this.onDismiss});
 
   @override
   State<AirInterface> createState() => _AirInterfaceState();
@@ -98,6 +100,8 @@ class _AirInterfaceState extends State<AirInterface> with SingleTickerProviderSt
           _queryController.clear();
           _result = null;
         });
+        // Call the onDismiss callback if provided
+        widget.onDismiss?.call();
       }
     });
   }
@@ -275,10 +279,10 @@ class _AirInterfaceState extends State<AirInterface> with SingleTickerProviderSt
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF), // Pure white - MOST IMPORTANT (chat bubble)
+        color: const Color(0xFF0A0A0A), // Near-black background for chat bubble (close to #000000)
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0xFFEEEEEE), // Very light gray border
+          color: const Color(0xFF1A1A1A), // Very dark border
           width: 1,
         ),
       ),
@@ -291,7 +295,7 @@ class _AirInterfaceState extends State<AirInterface> with SingleTickerProviderSt
                 child: Text(
                   _result ?? '',
                   style: const TextStyle(
-                    color: Color(0xFF000000), // Pure black text in white bubble - RULE
+                    color: Color(0xFFFFFFFF), // White text in dark bubble
                     fontSize: 16,
                     height: 1.5,
                   ),
@@ -300,7 +304,7 @@ class _AirInterfaceState extends State<AirInterface> with SingleTickerProviderSt
               IconButton(
                 icon: const Icon(
                   Icons.close,
-                  color: Color(0xFF666666), // Medium gray - less important
+                  color: Color(0xFF999999), // Lighter gray for visibility
                   size: 20,
                 ),
                 onPressed: _dismiss,
