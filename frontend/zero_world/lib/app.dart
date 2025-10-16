@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'screens/main_navigation_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
+import 'screens/welcome_screen.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
 import 'state/auth_state.dart';
@@ -66,8 +67,9 @@ class ZeroWorldApp extends StatelessWidget {
             themeMode: themeManager.themeMode,
             home: authProvider.isAuthenticated
                 ? const MainNavigationScreen()
-                : const LoginScreen(),
+                : const WelcomeScreen(),
             routes: {
+              '/welcome': (context) => const WelcomeScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignupScreen(),
               '/home': (context) => const MainNavigationScreen(),

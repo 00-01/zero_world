@@ -317,6 +317,55 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                     ),
+
+                    const SizedBox(height: 16),
+
+                    // Guest mode button
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        // Login as guest
+                        final authProvider = context.read<AuthProvider>();
+                        final success = await authProvider.login(
+                          email: 'guest@zeroworld.com',
+                          password: 'guest123',
+                        );
+
+                        if (success && mounted) {
+                          Navigator.of(context).pushReplacementNamed('/home');
+                        } else if (mounted) {
+                          // If guest account doesn't exist, create it
+                          final signupSuccess = await authProvider.signup(
+                            email: 'guest@zeroworld.com',
+                            username: 'guest',
+                            password: 'guest123',
+                            fullName: 'Guest User',
+                          );
+
+                          if (signupSuccess && mounted) {
+                            Navigator.of(context).pushReplacementNamed('/home');
+                          }
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.person_outline,
+                        color: Color(0xFF888888),
+                      ),
+                      label: const Text(
+                        'Try as Guest',
+                        style: TextStyle(
+                          color: Color(0xFF888888),
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        side: const BorderSide(
+                          color: Color(0xFF333333),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
